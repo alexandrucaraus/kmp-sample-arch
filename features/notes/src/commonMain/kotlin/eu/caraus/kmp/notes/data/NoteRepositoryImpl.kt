@@ -7,11 +7,9 @@ import eu.caraus.kmp.notes.domain.NoteId
 import eu.caraus.kmp.notes.domain.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.update
 
 class NoteRepositoryRoom(
     private val noteDao: NoteDao
