@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.caraus.kmp.database.AppDatabase
-import eu.caraus.kmp.notes.data.NoteRepositoryInMem
 import eu.caraus.kmp.notes.data.NoteRepositoryRoom
 import eu.caraus.kmp.notes.domain.CreateNoteUseCase
 import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
