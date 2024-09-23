@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.caraus.kmp.data.AppDatabase
-import eu.caraus.kmp.notes.data.NoteRepositoryImpl
+import eu.caraus.kmp.database.AppDatabase
+import eu.caraus.kmp.notes.data.NoteRepositoryInMem
+import eu.caraus.kmp.notes.data.NoteRepositoryRoom
 import eu.caraus.kmp.notes.domain.CreateNoteUseCase
 import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
 import eu.caraus.kmp.notes.domain.GetNoteUseCase
@@ -30,7 +31,25 @@ object NoteFactory {
     }
 
     private val noteDao by lazy { db?.getNoteDao() ?: throw IllegalStateException("Database not set") }
-    private val repository by lazy { NoteRepositoryImpl(noteDao) }
+
+    private val repository by lazy {
+        NoteRepositoryRoom(noteDao)
+    }
+
+    private fun getNoteListUseCase() = GetNotesListUseCase(repository)
+
+    private fun getNoteUseCase() = GetNoteUseCase(repository)
+
+    private fun saveNoteUseCase() = SaveNoteUseCase(updateNoteUseCase(), createNoteUseCase())
+
+    private fun createNoteUseCase() = CreateNoteUseCase(repository)
+
+    private fun updateNoteUseCase() = UpdateNoteUseCase(repository)
+
+    private fun deleteNoteUseCase() = DeleteNoteUseCase(repository)
+
+    private fun createViewModelCoroutineScope(): CoroutineScope =
+        CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     fun createNoteListViewModel(
         coroutineScope: CoroutineScope = createViewModelCoroutineScope(),
@@ -50,21 +69,6 @@ object NoteFactory {
         deleteNote = deleteNoteUseCase(),
         coroutineScope = coroutineScope,
     )
-
-    private fun getNoteListUseCase() = GetNotesListUseCase(repository)
-
-    private fun getNoteUseCase() = GetNoteUseCase(repository)
-
-    private fun saveNoteUseCase() = SaveNoteUseCase(updateNoteUseCase(), createNoteUseCase())
-
-    private fun createNoteUseCase() = CreateNoteUseCase(repository)
-
-    private fun updateNoteUseCase() = UpdateNoteUseCase(repository)
-
-    private fun deleteNoteUseCase() = DeleteNoteUseCase(repository)
-
-    private fun createViewModelCoroutineScope(): CoroutineScope =
-        CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
 }
 

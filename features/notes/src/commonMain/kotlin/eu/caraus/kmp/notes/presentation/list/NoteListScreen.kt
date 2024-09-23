@@ -92,34 +92,36 @@ internal fun NoteListItem(
     isSelected: Boolean = false,
     openNote: (Note) -> Unit,
     selectNote: (Note) -> Unit,
-) = Card(modifier = modifier
-    .fillMaxWidth()
-    .combinedClickable(
-        enabled = true,
-        onClick = { openNote(note) },
-        onLongClick = { selectNote(note) }
-    )
 ) {
     val borderWidth = if (isSelected) 2.dp else (0.5).dp
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else DarkGray
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(borderWidth, borderColor)
-            .padding(8.dp),
+    Card(modifier = modifier
+        .fillMaxWidth()
+        .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
+        .combinedClickable(
+            enabled = true,
+            onClick = { openNote(note) },
+            onLongClick = { selectNote(note) }
+        )
     ) {
-        Text(
-            style = MaterialTheme.typography.titleLarge,
-            text = note.title,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-        Text(
-            style = MaterialTheme.typography.bodyLarge,
-            text = note.content,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        ) {
+            Text(
+                style = MaterialTheme.typography.titleLarge,
+                text = note.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                style = MaterialTheme.typography.bodyLarge,
+                text = note.content,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
 

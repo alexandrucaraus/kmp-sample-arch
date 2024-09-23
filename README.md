@@ -1,2 +1,2 @@
-# kmp-samplearch
-Kotlin Multiplatform Multimodule Boilerplate
+# kmp-sample-arch
+Kotlin multiplatform multi-module boilerplate

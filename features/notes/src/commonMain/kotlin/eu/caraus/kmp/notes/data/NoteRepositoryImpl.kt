@@ -1,17 +1,21 @@
 package eu.caraus.kmp.notes.data
 
-import eu.caraus.kmp.data.NoteDao
-import eu.caraus.kmp.data.NoteDto
+import eu.caraus.kmp.database.NoteDao
+import eu.caraus.kmp.database.NoteDto
+import eu.caraus.kmp.notes.NoteFactory
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteId
 import eu.caraus.kmp.notes.domain.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 
-class NoteRepositoryImpl(
+class NoteRepositoryRoom(
     private val noteDao: NoteDao
 ) : NoteRepository {
 
@@ -48,3 +52,41 @@ private fun NoteDto.toEntity() = Note(
     createdAt = createdAt,
     updatedAt = updatedAt,
 )
+
+class NoteRepositoryInMem : NoteRepository {
+
+    private val mutableList = mutableListOf<Note>(
+        Note(id = "2131", title = "one", content = "one content"),
+        Note(id = "2132", title = "two", content = "two content"),
+    )
+    private val shared = MutableStateFlow<List<Note>>(mutableList)
+
+    override suspend fun save(note: Note)  {
+        mutableList.add(note)
+        shared.update { mutableList.toList() }
+    }
+
+    override suspend fun delete(note: Note) {
+        mutableList.remove(note)
+        shared.update { mutableList.toList() }
+    }
+
+    override suspend fun delete(notes: List<Note>) {
+        notes.forEach(mutableList::remove)
+        shared.update { mutableList.toList() }
+    }
+
+    override suspend fun deleteById(noteId: NoteId) {
+        mutableList.find { it.id == noteId }.let(mutableList::remove)
+        shared.update { mutableList.toList() }
+    }
+
+    override suspend fun findById(noteId: NoteId): Note? =
+        mutableList.find { it.id == noteId }
+
+    override suspend fun findAll(): List<Note> =
+        mutableList
+
+    override fun allAsFlow(): Flow<List<Note>> = shared
+
+}
