@@ -51,7 +51,6 @@ room = "2.7.0-alpha08"
 
 3. Clone repository and open in Android Studio
 
-4. 
 ```bash
 git clone https://github.com/alexandrucaraus/kmp-sample-arch.git
 ```
