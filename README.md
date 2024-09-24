@@ -18,7 +18,7 @@ graph LR
   subgraph :features
     :features:notes["notes"]
   end
-  :androidApp(iosApp) --> :composeApp
+  :nativeApp --> :composeApp
   :composeApp --> :features:notes
   :composeApp --> :data:database
 ```
