@@ -1,7 +1,8 @@
 # kmp-sample-arch
 Modular Kotlin Multiplatform Application Boilerplate
 
-### Module Structure  
+
+# Module Structure  
 
 ```mermaid
 %%{
