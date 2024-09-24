@@ -8,7 +8,7 @@ Kotlin multiplatform multi-module boilerplate
 
 | Android                                                                                   | iOS                                                                            |
 |-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| ![Android App](https://github.com/alexandrucarus/kmp-sample-arch/docs/images/android.gif) | ![iOS App](https://github.com/alexandrucarus/kmp-sample-arch/docs/images/ios.gif) |
+| ![Android App](https://github.com/alexandrucarus/kmp-sample-arch/blob/main/docs/images/android.gif) | ![iOS App](https://github.com/alexandrucarus/kmp-sample-arch/blob/main/docs/images/ios.gif) |
 
 
 # Build steps
