@@ -4,16 +4,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
+import org.koin.core.annotation.Factory
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+@Factory
 class GetNotesListUseCase(
     private val repository: NoteRepository
 ) {
     operator fun invoke(): Flow<List<Note>> =
-        repository.allAsFlow().map { list -> list.sortedByDescending { it.updatedAt } }
+        repository
+            .allAsFlow()
+            .map { list -> list.sortedByDescending { it.updatedAt } }
 }
 
+@Factory
 class GetNoteUseCase(
     private val repository: NoteRepository
 ) {
@@ -21,6 +26,7 @@ class GetNoteUseCase(
         flowOf(noteId).map { repository.findById(noteId) ?: Note(id = noteId) }
 }
 
+@Factory
 class SaveNoteUseCase(
     private val updateNote: UpdateNoteUseCase,
     private val createNote: CreateNoteUseCase,
@@ -47,7 +53,7 @@ class SaveNoteUseCase(
     }
 }
 
-
+@Factory
 class CreateNoteUseCase(
     private val repository: NoteRepository
 ) {
@@ -69,6 +75,7 @@ class CreateNoteUseCase(
     }
 }
 
+@Factory
 class UpdateNoteUseCase(
     private val repository: NoteRepository
 ) {
@@ -89,6 +96,7 @@ class UpdateNoteUseCase(
     }
 }
 
+@Factory
 class DeleteNoteUseCase(
     private val repository: NoteRepository
 ) {

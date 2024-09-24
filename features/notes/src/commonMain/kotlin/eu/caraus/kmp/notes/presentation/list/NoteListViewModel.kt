@@ -6,15 +6,18 @@ import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
 import eu.caraus.kmp.notes.domain.GetNotesListUseCase
 import eu.caraus.kmp.notes.domain.Note
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class NoteListViewModel(
-    notesList: GetNotesListUseCase,
+    private val notesList: GetNotesListUseCase,
     private val deleteUseCase: DeleteNoteUseCase,
     scope: CoroutineScope,
 ) : ViewModel(scope) {
@@ -28,8 +31,13 @@ class NoteListViewModel(
     )
     val state = notesState.asStateFlow()
 
-    init {
-        notesList()
+    init { observeNotes() }
+
+    private var job : Job? = null
+    // normally this would be called in init once, rooms stops sending updates after rotation
+    fun observeNotes() {
+        job?.cancel()
+        job = notesList()
             .onEach { notes -> notesState.update { it.copy(notes = notes) } }
             .launchIn(viewModelScope)
     }

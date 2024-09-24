@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import org.koin.core.annotation.Factory
 
-class NoteRepositoryRoom(
+@Factory(binds = [NoteRepository::class])
+class NoteRepositoryImpl(
     private val noteDao: NoteDao
 ) : NoteRepository {
 

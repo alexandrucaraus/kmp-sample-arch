@@ -27,10 +27,22 @@ kotlin {
             implementation(libs.sqlite.bundled)
 
             implementation(libs.kotlinx.coroutines.core)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
+        
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
+    }
+
+    sourceSets.named("commonMain").configure {
+        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
     }
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -52,7 +64,7 @@ android {
 }
 
 dependencies {
-    add("kspCommonMainMetadata", libs.room.compiler)
+   // add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)

@@ -6,7 +6,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 
-
 @Database(
     version = 1,
     entities = [

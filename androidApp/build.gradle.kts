@@ -37,12 +37,15 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared)
+    implementation(projects.composeApp)
     implementation(projects.features.notes)
     implementation(projects.data.database)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
     debugImplementation(libs.compose.ui.tooling)
 }

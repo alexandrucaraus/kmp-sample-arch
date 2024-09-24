@@ -22,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "composeApp"
             isStatic = true
             linkerOpts.add("-lsqlite3")
         }
@@ -39,9 +39,17 @@ kotlin {
 
             implementation(libs.compose.navigation)
             implementation(libs.compose.navigation.common)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        androidMain.dependencies {
+            implementation(libs.koin.android)
         }
     }
 }
@@ -57,3 +65,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+
+

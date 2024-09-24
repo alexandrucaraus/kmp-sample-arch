@@ -7,9 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.NoteFactory
-import eu.caraus.kmp.notes.viewModelOf
 import kotlinx.serialization.Serializable
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Serializable
 data class NoteDetailsRoute(val noteId: String)
@@ -23,10 +23,8 @@ fun NavController.createNoteDetails() =
 fun NavGraphBuilder.noteDetailRoute(
     close: () -> Unit
 ) = composable<NoteDetailsRoute> { params ->
-    val viewModel = viewModelOf<NoteDetailsViewModel> {
-        NoteFactory.createNoteDetailsViewModel(
-            noteId = params.toRoute<NoteDetailsRoute>().noteId
-        )
+    val viewModel = koinViewModel<NoteDetailsViewModel> {
+        parametersOf(params.toRoute<NoteDetailsRoute>().noteId)
     }
     val noteState by viewModel.state.collectAsStateWithLifecycle()
     NoteDetailsScreen(

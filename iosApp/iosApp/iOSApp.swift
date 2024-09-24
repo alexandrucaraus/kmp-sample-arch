@@ -1,13 +1,9 @@
 import SwiftUI
-import shared
+import composeApp
 
 @main
 struct iOSApp: App {
-    
-    init() {
-       SetupDiKt.setupDi()
-    }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
