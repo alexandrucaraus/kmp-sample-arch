@@ -27,7 +27,7 @@ sqlite = "2.5.0-alpha08"
 ksp = "2.0.20-1.0.25"
 uuid = "0.8.4"
 
-dependency-graph-generator="0.7.0"
+modulegraph="0.10.1" # https://github.com/vanniktech/gradle-dependency-graph-generator-plugin/issues/194
 
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -85,3 +85,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 room-schema = { id = "androidx.room", version.ref="room"  }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }

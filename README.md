@@ -1,10 +1,31 @@
 # kmp-sample-arch
-Kotlin multiplatform multi-module boilerplate
+Modular Kotlin Multiplatform Application Boilerplate
 
-# App Structure
+### Module Structure  
+
+```mermaid
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {"primaryTextColor":"#fff","primaryColor":"#5a4f7c","primaryBorderColor":"#5a4f7c","lineColor":"#f5a623","tertiaryColor":"#40375c","fontSize":"12px"}
+  }
+}%%
+
+graph LR
+  subgraph :data
+    :data:database["database"]
+  end
+  subgraph :features
+    :features:notes["notes"]
+  end
+  :androidApp(iosApp) --> :composeApp
+  :composeApp --> :features:notes
+  :composeApp --> :data:database
+```
 
 
-# Note app feature
+# Features
+### Note Taking
 
 | Android                                                                                                                    | iOS                                                                                                               |
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
@@ -12,3 +33,4 @@ Kotlin multiplatform multi-module boilerplate
 
 
 # Build steps
+### 
