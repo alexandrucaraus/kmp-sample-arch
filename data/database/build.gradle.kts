@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room.schema)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -30,6 +31,9 @@ kotlin {
 
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+            implementation(libs.koin.annotations)
+
+            implementation(libs.sqldelight.coroutine.ext)
 
         }
         commonTest.dependencies {
@@ -38,6 +42,7 @@ kotlin {
         
         androidMain.dependencies {
             implementation(libs.koin.android)
+            implementation(libs.sqldelight.driver)
         }
     }
 
@@ -48,6 +53,14 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("eu.caraus.kmp.database.sql")
+        }
     }
 }
 
@@ -70,6 +83,15 @@ dependencies {
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
 }
+
+dependencies {
+ //   add("kspCommonMainMetadata", libs.koin.compiler)
+    add("kspAndroid", libs.koin.compiler)
+    add("kspIosX64", libs.koin.compiler)
+    add("kspIosArm64",libs.koin.compiler)
+    add("kspIosSimulatorArm64", libs.koin.compiler)
+}
+
 
 room {
     schemaDirectory("$projectDir/schema")

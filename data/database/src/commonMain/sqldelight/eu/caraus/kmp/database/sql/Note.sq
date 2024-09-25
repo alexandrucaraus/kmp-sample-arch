@@ -1,0 +1,29 @@
+
+CREATE TABLE Note (
+  id TEXT PRIMARY KEY NOT NULL,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  createdAt INTEGER NOT NULL,
+  updatedAt INTEGER NOT NULL
+);
+
+CREATE INDEX Note_id ON Note(id);
+
+insert:
+INSERT INTO Note (id, title, content, createdAt, updatedAt)
+VALUES (?, ?, ?, ?, ?);
+
+update:
+UPDATE Note
+SET title = ?, content = ?, updatedAt = ?, createdAt = ?
+WHERE id = ?;
+
+selectOne:
+SELECT * FROM Note WHERE id=:id;
+
+selectAll:
+SELECT *
+FROM Note;
+
+delete:
+DELETE FROM Note WHERE id=:id;

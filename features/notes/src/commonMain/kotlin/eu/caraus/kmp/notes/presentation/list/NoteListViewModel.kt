@@ -6,9 +6,9 @@ import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
 import eu.caraus.kmp.notes.domain.GetNotesListUseCase
 import eu.caraus.kmp.notes.domain.Note
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -30,24 +30,21 @@ class NoteListViewModel(
         )
     )
     val state = notesState.asStateFlow()
+    private fun state() = state.value
 
-    init { observeNotes() }
-
-    private var job : Job? = null
-    // normally this would be called in init once, rooms stops sending updates after rotation
-    fun observeNotes() {
-        job?.cancel()
-        job = notesList()
+    init {
+        notesList()
+            .distinctUntilChanged()
             .onEach { notes -> notesState.update { it.copy(notes = notes) } }
-            .launchIn(viewModelScope)
+        .launchIn(viewModelScope)
     }
 
     private fun toggleNoteSelection(note: Note) {
-        if (notesState.value.selectedNotes.contains(note)) {
-            notesState.update { it.copy(selectedNotes = it.selectedNotes - note) }
-        } else {
-            notesState.update { it.copy(selectedNotes = it.selectedNotes + note) }
-        }
+        val updateOp : (Iterable<Note>, Note) -> List<Note> =
+            if (state().selectedNotes.contains(note))
+                Iterable<Note>::minus else Iterable<Note>::plus
+
+        notesState.update { it.copy(selectedNotes = updateOp(it.selectedNotes, note)) }
     }
 
     private fun deleteSelectedNotes() {

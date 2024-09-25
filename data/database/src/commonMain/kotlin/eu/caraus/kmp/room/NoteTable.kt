@@ -1,4 +1,4 @@
-package eu.caraus.kmp.database
+package eu.caraus.kmp.room
 
 
 import androidx.room.Dao
@@ -9,6 +9,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Single
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -43,4 +44,7 @@ interface NoteDao {
     fun getAllAsFlow(): Flow<List<NoteDto>>
 
 }
+
+@Single
+fun provideNoteDao(appDatabase: AppDatabase): NoteDao = appDatabase.getNoteDao()
 

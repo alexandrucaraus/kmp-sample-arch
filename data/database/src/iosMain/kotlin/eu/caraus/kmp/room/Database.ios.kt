@@ -1,13 +1,18 @@
-package eu.caraus.kmp.database
+package eu.caraus.kmp.room
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.cinterop.ExperimentalForeignApi
+import org.koin.core.annotation.Single
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
+
+@Single
+fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
+
+@Single
 fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = documentDirectory() + "/notes_room.db"
     return Room

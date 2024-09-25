@@ -1,9 +1,7 @@
 package eu.caraus.kmp.samplearch
 
-import org.koin.dsl.KoinAppDeclaration
+import org.koin.core.context.startKoin
 
-fun koinAppDeclaration(): KoinAppDeclaration {
-    return {
-        modules(*appDiModules.toTypedArray())
-    }
+fun startKoin() = startKoin {
+    modules(*appDiModules.toTypedArray())
 }

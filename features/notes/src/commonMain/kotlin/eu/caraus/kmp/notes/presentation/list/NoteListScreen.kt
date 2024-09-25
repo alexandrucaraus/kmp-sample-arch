@@ -74,7 +74,7 @@ internal fun NoteList(
     modifier = modifier.padding(8.dp),
     verticalArrangement = Arrangement.spacedBy(8.dp),
 ) {
-    items(state.notes, key = { it.id }) { note ->
+    items(state.notes) { note ->
         NoteListItem(
             note = note,
             openNote = openNote,

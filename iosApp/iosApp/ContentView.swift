@@ -4,7 +4,7 @@ import composeApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        AppIosKt.App()
+        App_IosKt.IosComposeApp()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

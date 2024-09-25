@@ -1,5 +1,4 @@
-
-package eu.caraus.kmp.database
+package eu.caraus.kmp.room
 
 import androidx.room.ConstructedBy
 import androidx.room.Database

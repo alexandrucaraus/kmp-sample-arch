@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.modulegraph) apply true
+    alias(libs.plugins.modulegraph) apply false
 }
 
 android {
@@ -53,20 +53,20 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 }
 
-moduleGraphConfig {
-    readmePath.set("./../README.md")
-    heading = "### Module Graph"
-    theme.set(
-        Theme.BASE(
-            mapOf(
-                "primaryTextColor" to "#fff",
-                "primaryColor" to "#5a4f7c",
-                "primaryBorderColor" to "#5a4f7c",
-                "lineColor" to "#f5a623",
-                "tertiaryColor" to "#40375c",
-                "fontSize" to "12px",
-            ),
-            focusColor = "#FA8140"
-        ),
-    )
-}
+//moduleGraphConfig {
+//    readmePath.set("./../README.md")
+//    heading = "### Module Graph"
+//    theme.set(
+//        Theme.BASE(
+//            mapOf(
+//                "primaryTextColor" to "#fff",
+//                "primaryColor" to "#5a4f7c",
+//                "primaryBorderColor" to "#5a4f7c",
+//                "lineColor" to "#f5a623",
+//                "tertiaryColor" to "#40375c",
+//                "fontSize" to "12px",
+//            ),
+//            focusColor = "#FA8140"
+//        ),
+//    )
+//}
