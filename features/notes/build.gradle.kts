@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.ext
-import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
