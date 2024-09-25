@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.modulegraph) apply false
+   // alias(libs.plugins.modulegraph) apply false
 }
 
 android {
