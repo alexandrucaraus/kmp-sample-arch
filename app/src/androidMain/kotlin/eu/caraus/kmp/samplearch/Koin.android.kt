@@ -10,5 +10,5 @@ import org.koin.ksp.generated.module
 fun startKoin(applicationContext: Context) = startKoin {
     androidContext(applicationContext)
     androidLogger(Level.ERROR)
-    modules(AppModule().modules)
+    modules(AppDi().module)
 }

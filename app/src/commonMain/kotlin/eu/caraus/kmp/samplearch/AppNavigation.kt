@@ -11,8 +11,9 @@ import eu.caraus.kmp.notes.presentation.details.openNoteDetails
 import eu.caraus.kmp.notes.presentation.list.NoteListRoute
 import eu.caraus.kmp.notes.presentation.list.noteListRoute
 
+// Todo: move to navigation module
 @Composable
-internal fun Navigation(navController: NavHostController) = NavHost(
+internal fun AppNavigation(navController: NavHostController) = NavHost(
     modifier = Modifier.fillMaxSize(),
     navController = navController,
     startDestination = NoteListRoute,

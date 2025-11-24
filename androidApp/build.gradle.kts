@@ -1,17 +1,35 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-   // alias(libs.plugins.modulegraph) apply false
+    alias(libs.plugins.ktlint)
+    // alias(libs.plugins.modulegraph) apply false
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 android {
     namespace = "eu.caraus.kmp.samplearch.android"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
     defaultConfig {
         applicationId = "eu.caraus.kmp.samplearch.android"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -32,26 +50,24 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
 }
 
 dependencies {
-    implementation(projects.composeApp)
-    implementation(projects.features.notes)
-    implementation(projects.data.database)
+    implementation(projects.app)
+
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    debugImplementation(libs.compose.ui.tooling)
+
     implementation(libs.androidx.activity.compose)
+
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-    debugImplementation(libs.compose.ui.tooling)
 }
 
-//moduleGraphConfig {
+// moduleGraphConfig {
 //    readmePath.set("./../README.md")
 //    heading = "### Module Graph"
 //    theme.set(
@@ -67,4 +83,7 @@ dependencies {
 //            focusColor = "#FA8140"
 //        ),
 //    )
-//}
+// }
+
+ktlint {
+}

@@ -3,7 +3,6 @@ package eu.caraus.kmp.notes.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Clock
 import org.koin.core.annotation.Factory
 import kotlin.time.ExperimentalTime
 import kotlin.uuid.ExperimentalUuidApi

@@ -18,6 +18,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "KMP_Sample_Arch"
 include(":androidApp")
-include(":composeApp")
+include(":app")
 include(":features:notes")
 include(":data:database")

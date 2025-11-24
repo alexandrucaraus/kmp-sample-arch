@@ -1,10 +1,11 @@
+@file:Suppress("NO_ACTUAL_FOR_EXPECT", "EXPECT_ACTUAL_MISMATCH")
+
 package eu.caraus.kmp.database.room
 
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
-
 
 expect class PlatformContextWrapper
 

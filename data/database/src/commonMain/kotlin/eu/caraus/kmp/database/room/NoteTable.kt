@@ -43,5 +43,4 @@ interface NoteDao {
 
     @Query("SELECT * FROM NoteDto")
     fun getAllAsFlow(): Flow<List<NoteDto>>
-
 }
