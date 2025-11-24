@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
@@ -11,15 +10,10 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    androidTarget()
+//    iosX64()
+//    iosArm64()
+//    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
@@ -52,16 +46,17 @@ kotlin {
         }
     }
 
-    sourceSets.named("commonMain").configure {
-        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-    }
+//    sourceSets.named("commonMain").configure {
+//        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+//    }
 }
 
 android {
     namespace = "eu.caraus.kmp.notes"
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -72,9 +67,9 @@ android {
 dependencies {
     add("kspCommonMainMetadata", libs.koin.compiler)
     add("kspAndroid", libs.koin.compiler)
-    add("kspIosX64", libs.koin.compiler)
-    add("kspIosArm64",libs.koin.compiler)
-    add("kspIosSimulatorArm64", libs.koin.compiler)
+//    add("kspIosX64", libs.koin.compiler)
+//    add("kspIosArm64",libs.koin.compiler)
+//    add("kspIosSimulatorArm64", libs.koin.compiler)
 }
 
 ksp {
@@ -82,8 +77,8 @@ ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
 
-project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
-    if(name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
+//project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+//    if(name != "kspCommonMainKotlinMetadata") {
+//        dependsOn("kspCommonMainKotlinMetadata")
+//    }
+//}

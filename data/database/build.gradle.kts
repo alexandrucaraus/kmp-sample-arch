@@ -7,19 +7,14 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room.schema)
-    alias(libs.plugins.sqldelight)
+//    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    androidTarget {}
+//    iosX64()
+//    iosArm64()
+//    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
@@ -39,16 +34,19 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
-        
+
         androidMain.dependencies {
             implementation(libs.koin.android)
             implementation(libs.sqldelight.driver)
         }
     }
 
-    sourceSets.named("commonMain").configure {
-        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-    }
+//    sourceSets.named("commonMain").configure {
+//        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+//    }
+//    sourceSets.named("androidMain").configure {
+//        kotlin.srcDir("build/generated/ksp/android/androidDebug/kotlin")
+//    }
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
@@ -56,19 +54,21 @@ kotlin {
     }
 }
 
-sqldelight {
-    databases {
-        create("Database") {
-            packageName.set("eu.caraus.kmp.database.sql")
-        }
-    }
-}
+//sqldelight {
+//    databases {
+//        create("Database") {
+//            packageName.set("eu.caraus.kmp.database.sql")
+//        }
+//    }
+//}
 
 android {
-    namespace = "eu.caraus.kmp.notes"
-    compileSdk = 34
+    namespace = "eu.caraus.kmp.database"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -79,20 +79,30 @@ android {
 dependencies {
    // add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
+    //add("kspIosX64", libs.room.compiler)
+//    add("kspIosArm64", libs.room.compiler)
+//    add("kspIosSimulatorArm64", libs.room.compiler)
 }
 
 dependencies {
- //   add("kspCommonMainMetadata", libs.koin.compiler)
+    add("kspCommonMainMetadata", libs.koin.compiler)
     add("kspAndroid", libs.koin.compiler)
-    add("kspIosX64", libs.koin.compiler)
-    add("kspIosArm64",libs.koin.compiler)
-    add("kspIosSimulatorArm64", libs.koin.compiler)
+//    add("kspIosX64", libs.koin.compiler)
+//    add("kspIosArm64",libs.koin.compiler)
+//    add("kspIosSimulatorArm64", libs.koin.compiler)
 }
 
+//tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+//    dependsOn("kspCommonMainDebugKotlinMetadata") // For commonMain
+//    dependsOn("kspDebugKotlinAndroid")      // For androidDebug variant
+//    // Add other KSP tasks if you have more build variants or targets
+//    // e.g., dependsOn("kspReleaseKotlinAndroid")
+//}
 
 room {
     schemaDirectory("$projectDir/schema")
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK", "false")
 }

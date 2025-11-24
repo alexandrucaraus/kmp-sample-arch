@@ -1,4 +1,4 @@
-package eu.caraus.kmp.room
+package eu.caraus.kmp.database.room
 
 
 import androidx.room.Dao

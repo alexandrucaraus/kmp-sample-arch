@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import org.koin.core.annotation.Factory
+import kotlin.time.ExperimentalTime
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -57,12 +58,12 @@ class SaveNoteUseCase(
 class CreateNoteUseCase(
     private val repository: NoteRepository
 ) {
-    @OptIn(ExperimentalUuidApi::class)
+    @OptIn(ExperimentalUuidApi::class, ExperimentalTime::class)
     suspend operator fun invoke(
         title: String,
         content: String,
     ) {
-        val time = Clock.System.now().toEpochMilliseconds()
+        val time = kotlin.time.Clock.System.now().toEpochMilliseconds()
         repository.save(
             Note(
                 id = Uuid.random().toString(),
@@ -79,6 +80,7 @@ class CreateNoteUseCase(
 class UpdateNoteUseCase(
     private val repository: NoteRepository
 ) {
+    @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
         id: NoteId,
         title: String,
@@ -89,7 +91,7 @@ class UpdateNoteUseCase(
                 note.copy(
                     title = title,
                     content = content,
-                    updatedAt = Clock.System.now().toEpochMilliseconds(),
+                    updatedAt = kotlin.time.Clock.System.now().toEpochMilliseconds(),
                 )
             )
         } ?: throw IllegalStateException("Note not found")

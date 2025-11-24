@@ -7,7 +7,7 @@ import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
 @Module
-@ComponentScan
+@ComponentScan("eu.caraus.kmp")
 class PlatformDatabaseDiModule
 
 actual fun platformDatabaseDiModule(): List<DiModule> = listOf(

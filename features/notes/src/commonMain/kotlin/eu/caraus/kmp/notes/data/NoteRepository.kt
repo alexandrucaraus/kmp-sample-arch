@@ -3,8 +3,8 @@ package eu.caraus.kmp.notes.data
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteId
 import eu.caraus.kmp.notes.domain.NoteRepository
-import eu.caraus.kmp.room.NoteDao
-import eu.caraus.kmp.room.NoteDto
+import eu.caraus.kmp.database.room.NoteDao
+import eu.caraus.kmp.database.room.NoteDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
