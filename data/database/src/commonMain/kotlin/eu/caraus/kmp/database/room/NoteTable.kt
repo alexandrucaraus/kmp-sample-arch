@@ -9,10 +9,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.annotation.Single
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+
+// Todo move this to the corresponding domain module
 @Entity
 data class NoteDto @OptIn(ExperimentalUuidApi::class) constructor(
     @PrimaryKey val id: String = Uuid.random().toString(),
@@ -44,7 +45,3 @@ interface NoteDao {
     fun getAllAsFlow(): Flow<List<NoteDto>>
 
 }
-
-@Single
-fun provideNoteDao(appDatabase: AppDatabase): NoteDao = appDatabase.getNoteDao()
-

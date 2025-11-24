@@ -6,19 +6,16 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.scope.Scope
 
+actual class PlatformContextWrapper(val ctx: Context)
 
-actual class ContextWrapper(val ctx: Context)
+actual fun platformContextWrapper(scope: Scope) : PlatformContextWrapper =
+    PlatformContextWrapper(scope.get())
 
-actual fun providesContextWrapper(scope: Scope) : ContextWrapper =
-    ContextWrapper(scope.get())
-
-//@Single
 actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
 
-//@Single
-actual fun appDatabaseBuilder(ctx: ContextWrapper): RoomDatabase.Builder<AppDatabase> {
+actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
     val appContext = ctx.ctx.applicationContext
-    val dbFile = appContext.getDatabasePath("notes_room.db")
+    val dbFile = appContext.getDatabasePath(DATABASE_FILE_NAME)
     return Room.databaseBuilder<AppDatabase>(
         context = appContext,
         name = dbFile.absolutePath
