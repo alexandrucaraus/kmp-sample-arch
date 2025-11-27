@@ -7,18 +7,21 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
+   // alias(libs.plugins.room.schema)
+    id("kmp.compilation.host")
+    id("kmp.room.ksp")
+    id("kmp.koin.ksp")
 }
 
 kotlin {
     androidTarget()
-//    iosX64()
-//    iosArm64()
-//    iosSimulatorArm64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.data.database)
-           // api(libs.room.runtime)
+            //implementation(projects.data.database)
+            implementation(libs.room.runtime)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -45,10 +48,6 @@ kotlin {
             implementation(kotlin("test"))
         }
     }
-
-//    sourceSets.named("commonMain").configure {
-//        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-//    }
 }
 
 android {
@@ -64,18 +63,22 @@ android {
     }
 }
 
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    add("kspAndroid", libs.koin.compiler)
-//    add("kspIosX64", libs.koin.compiler)
-//    add("kspIosArm64",libs.koin.compiler)
-//    add("kspIosSimulatorArm64", libs.koin.compiler)
-}
+//dependencies {
+//    add("kspCommonMainMetadata", libs.koin.compiler)
+//    add("kspAndroid", libs.koin.compiler)
+////    add("kspIosX64", libs.koin.compiler)
+////    add("kspIosArm64",libs.koin.compiler)
+////    add("kspIosSimulatorArm64", libs.koin.compiler)
+//}
 
 ksp {
     arg("KOIN_CONFIG_CHECK", "false")
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
+
+//room {
+//    schemaDirectory("$projectDir/schema")
+//}
 
 //project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
 //    if(name != "kspCommonMainKotlinMetadata") {

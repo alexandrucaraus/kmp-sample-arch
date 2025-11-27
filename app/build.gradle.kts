@@ -7,24 +7,22 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
+    //id("kmp.compilation.host")
 }
 
 kotlin {
-    androidTarget {}
+    androidTarget()
 
-
-
-//    listOf(
-//        iosX64(),
-//        iosArm64(),
-//        iosSimulatorArm64()
-//    ).forEach {
-//        it.binaries.framework {
-//            baseName = "composeApp"
-//            isStatic = true
-//            linkerOpts.add("-lsqlite3")
-//        }
-//    }
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "composeApp"
+            isStatic = true
+            linkerOpts.add("-lsqlite3")
+        }
+    }
 
     sourceSets {
 

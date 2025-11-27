@@ -2,6 +2,7 @@ package eu.caraus.kmp.room
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import eu.caraus.kmp.database.room.AppDatabase
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.koin.core.annotation.Single
 import platform.Foundation.NSDocumentDirectory
@@ -18,7 +19,7 @@ fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     return Room
         .databaseBuilder<AppDatabase>(name = dbFilePath)
         .fallbackToDestructiveMigration(false)
-        .setDriver(BundledSQLiteDriver())
+        .setDriver(androidx.sqlite.driver.bundled.BundledSQLiteDriver())
 }
 
 @OptIn(ExperimentalForeignApi::class)

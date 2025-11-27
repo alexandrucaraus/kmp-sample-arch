@@ -3,14 +3,21 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
+        includeBuild("gradlePlugins")
         google()
         gradlePluginPortal()
         mavenCentral()
+
     }
+//    plugins {
+//        kotlin("multiplatform") version "2.2.21"
+//    }
 }
 
 dependencyResolutionManagement {
     repositories {
+        includeBuild("gradlePlugins")
+        mavenLocal()
         google()
         mavenCentral()
     }

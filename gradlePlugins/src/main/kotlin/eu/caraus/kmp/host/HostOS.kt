@@ -1,6 +1,4 @@
-package eu.caraus.kmp.build.host
-
-import org.gradle.api.Project
+package eu.caraus.kmp.host
 
 enum class HostOS {
     LINUX,

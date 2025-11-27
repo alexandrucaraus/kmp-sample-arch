@@ -3,6 +3,8 @@ package eu.caraus.kmp.database.room
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import eu.caraus.kmp.notes.data.NoteDao
+import eu.caraus.kmp.notes.data.NoteDto
 
 const val DATABASE_FILE_NAME = "notes_room.db"
 
