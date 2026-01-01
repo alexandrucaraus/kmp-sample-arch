@@ -34,6 +34,8 @@ kotlin {
 
             implementation(libs.sqldelight.coroutine.ext)
 
+
+
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
@@ -78,4 +80,6 @@ room {
 
 ksp {
     arg("KOIN_CONFIG_CHECK", "false")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
 }

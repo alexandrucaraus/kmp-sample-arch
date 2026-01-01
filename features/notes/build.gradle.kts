@@ -7,10 +7,22 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
-   // alias(libs.plugins.room.schema)
+    alias(libs.plugins.room.schema)
     id("kmp.compilation.host")
     id("kmp.room.ksp")
     id("kmp.koin.ksp")
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK", "false")
+    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
+room {
+    schemaDirectory("$projectDir/schema")
 }
 
 kotlin {
@@ -62,26 +74,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-
-//dependencies {
-//    add("kspCommonMainMetadata", libs.koin.compiler)
-//    add("kspAndroid", libs.koin.compiler)
-////    add("kspIosX64", libs.koin.compiler)
-////    add("kspIosArm64",libs.koin.compiler)
-////    add("kspIosSimulatorArm64", libs.koin.compiler)
-//}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "false")
-    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
-}
-
-//room {
-//    schemaDirectory("$projectDir/schema")
-//}
-
-//project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
-//    if(name != "kspCommonMainKotlinMetadata") {
-//        dependsOn("kspCommonMainKotlinMetadata")
-//    }
-//}

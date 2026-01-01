@@ -27,6 +27,7 @@ class KMPRoomKsp : Plugin<Project> {
             } else {
                 add("kspCommonMainMetadata", koinCompiler)
                 add("kspAndroid", koinCompiler)
+                //add("kspDebugAndroid", koinCompiler)
             }
         }
     }
