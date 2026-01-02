@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
 
-            api(projects.features.notes)
+            api(projects.features.notes.data)
 
             api(libs.room.runtime)
             implementation(libs.sqlite.bundled)
@@ -80,6 +80,6 @@ room {
 
 ksp {
     arg("KOIN_CONFIG_CHECK", "false")
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
+//    arg("room.incremental", "true")
+//    arg("room.expandProjection", "true")
 }

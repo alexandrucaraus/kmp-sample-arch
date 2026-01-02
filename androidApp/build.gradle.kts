@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.app)
+    api(projects.app)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)

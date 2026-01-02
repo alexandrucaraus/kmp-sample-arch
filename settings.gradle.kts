@@ -26,5 +26,9 @@ dependencyResolutionManagement {
 rootProject.name = "KMP_Sample_Arch"
 include(":androidApp")
 include(":app")
-include(":features:notes")
+
+include(":features:notes:domain")
+include(":features:notes:data")
+include(":features:notes:ui")
+
 include(":data:database")

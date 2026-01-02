@@ -8,8 +8,8 @@ import org.koin.core.annotation.Module
 @ComponentScan("eu.caraus")
 @Module(
     includes = [
-        NoteDiModule::class,
         DatabaseDiModule::class,
+        NoteDiModule::class,
     ]
 )
 class AppDi

@@ -44,7 +44,9 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(projects.features.notes)
+            implementation(projects.features.notes.domain)
+            implementation(projects.features.notes.data)
+            implementation(projects.features.notes.ui)
             implementation(projects.data.database)
 
             implementation(compose.runtime)
