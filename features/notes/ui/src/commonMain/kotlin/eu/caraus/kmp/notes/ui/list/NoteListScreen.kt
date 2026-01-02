@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.presentation.list
+package eu.caraus.kmp.notes.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border

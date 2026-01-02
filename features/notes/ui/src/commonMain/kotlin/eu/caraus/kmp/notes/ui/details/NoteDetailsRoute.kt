@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.presentation.details
+package eu.caraus.kmp.notes.ui.details
 
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle

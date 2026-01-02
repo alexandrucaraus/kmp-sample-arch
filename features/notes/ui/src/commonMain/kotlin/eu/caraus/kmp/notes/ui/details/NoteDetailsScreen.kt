@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.presentation.details
+package eu.caraus.kmp.notes.ui.details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight

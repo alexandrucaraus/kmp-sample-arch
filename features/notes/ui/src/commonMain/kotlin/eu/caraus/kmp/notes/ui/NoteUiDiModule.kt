@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes
+package eu.caraus.kmp.notes.ui
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

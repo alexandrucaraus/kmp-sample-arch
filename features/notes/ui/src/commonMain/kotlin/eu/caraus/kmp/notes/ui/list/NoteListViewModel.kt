@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.presentation.list
+package eu.caraus.kmp.notes.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
