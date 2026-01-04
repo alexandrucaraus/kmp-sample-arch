@@ -1,25 +1,35 @@
-package eu.caraus.kmp.room
+package eu.caraus.kmp.database.room
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import eu.caraus.kmp.database.room.AppDatabase
+import androidx.room.RoomDatabaseConstructor
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.core.annotation.Single
+import org.koin.core.scope.Scope
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
+actual class PlatformContextWrapper
 
 @Single
-fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
+actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper =
+    PlatformContextWrapper()
 
 @Single
-fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase =
+    builder.build()
+
+@Single
+actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = documentDirectory() + "/notes_room.db"
     return Room
         .databaseBuilder<AppDatabase>(name = dbFilePath)
         .fallbackToDestructiveMigration(false)
         .setDriver(androidx.sqlite.driver.bundled.BundledSQLiteDriver())
+        .setQueryCoroutineContext(Dispatchers.IO)
 }
 
 @OptIn(ExperimentalForeignApi::class)

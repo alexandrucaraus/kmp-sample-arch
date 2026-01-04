@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
-    //alias(libs.plugins.room.schema)
+    alias(libs.plugins.room.schema)
     id("kmp.compilation.host")
     id("kmp.room.ksp")
     id("kmp.koin.ksp")
@@ -19,9 +19,9 @@ ksp {
 //    arg("room.expandProjection", "true")
 }
 
-//room {
-//    schemaDirectory("$rootDir/data/database/schema")
-//}
+room {
+    schemaDirectory("$rootDir/data/database/schema")
+}
 
 kotlin {
     androidTarget()
@@ -48,7 +48,7 @@ kotlin {
 //            implementation(libs.compose.navigation)
 //            implementation(libs.compose.navigation.common)
 
-            implementation(project.dependencies.platform(libs.koin.bom))
+            //implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
 //            implementation(libs.koin.compose.viewmodel)
 //            implementation(libs.koin.core.viewmodel)

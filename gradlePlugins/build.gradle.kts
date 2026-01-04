@@ -11,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.kotlin.gradle.plugin.dev)
-    implementation(libs.multiplatform.gradle.plugin.dev)
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
+    implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
     implementation(gradleApi())
 }
 

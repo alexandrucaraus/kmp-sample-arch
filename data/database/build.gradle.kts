@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.android
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -28,7 +29,7 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.core)
 
-            implementation(project.dependencies.platform(libs.koin.bom))
+            //implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
 

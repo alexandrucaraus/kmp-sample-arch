@@ -8,10 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
 
-
 @Single
 actual class PlatformContextWrapper(val androidContext: Context)
-
 
 @Single
 actual fun platformContextWrapper(scope: Scope) : PlatformContextWrapper =

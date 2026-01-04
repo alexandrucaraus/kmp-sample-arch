@@ -14,3 +14,7 @@ import org.koin.core.annotation.Module
 @ComponentScan("eu.caraus.kmp.notes.ui")
 @Configuration
 class NoteUiDiModule
+
+@Factory
+fun createViewModelCoroutineScope(): CoroutineScope =
+    CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
