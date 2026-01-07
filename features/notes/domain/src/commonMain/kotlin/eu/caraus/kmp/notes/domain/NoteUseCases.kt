@@ -28,9 +28,12 @@ class GetNoteUseCase(
 
 @Factory
 class SaveNoteUseCase(
-    private val updateNote: UpdateNoteUseCase,
-    private val createNote: CreateNoteUseCase,
+    repository: NoteRepository
 ) {
+
+    private val updateNote: UpdateNoteUseCase = UpdateNoteUseCase(repository)
+    private val createNote: CreateNoteUseCase = CreateNoteUseCase(repository)
+
     suspend operator fun invoke(
         noteId: NoteId,
         title: String,
@@ -53,8 +56,7 @@ class SaveNoteUseCase(
     }
 }
 
-@Factory
-class CreateNoteUseCase(
+internal class CreateNoteUseCase(
     private val repository: NoteRepository
 ) {
     @OptIn(ExperimentalUuidApi::class, ExperimentalTime::class)
@@ -75,8 +77,7 @@ class CreateNoteUseCase(
     }
 }
 
-@Factory
-class UpdateNoteUseCase(
+internal class UpdateNoteUseCase(
     private val repository: NoteRepository
 ) {
     @OptIn(ExperimentalTime::class)

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
 
 plugins {
     alias(libs.plugins.android.application)

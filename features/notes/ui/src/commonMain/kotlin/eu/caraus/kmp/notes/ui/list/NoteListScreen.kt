@@ -137,7 +137,10 @@ internal fun CreateNoteButton(
     createNote: () -> Unit
 ) {
     Button(onClick = createNote) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = null)
+        Icon(
+            imageVector = Icons.Default.PlusOne,
+            contentDescription = null
+        )
     }
 }
 

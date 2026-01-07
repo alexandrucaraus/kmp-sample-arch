@@ -22,12 +22,10 @@ class KMPRoomKsp : Plugin<Project> {
             if (project.isMac()) {
                 add("kspCommonMainMetadata", koinCompiler)
                 add("kspAndroid", koinCompiler)
-                add("kspIosArm64", koinCompiler)
-                add("kspIosSimulatorArm64", koinCompiler)
+                add("ksp", koinCompiler)
             } else {
                 add("kspCommonMainMetadata", koinCompiler)
                 add("kspAndroid", koinCompiler)
-                //add("kspDebugAndroid", koinCompiler)
             }
         }
     }

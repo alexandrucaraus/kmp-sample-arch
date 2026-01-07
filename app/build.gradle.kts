@@ -1,15 +1,25 @@
+import com.android.build.api.dsl.androidLibrary
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
-    id("kmp.compilation.host")
     id("kmp.koin.ksp")
 }
 
 kotlin {
-    androidTarget()
+
+    val appId = "eu.caraus.kmp.samplearch"
+
+    androidLibrary {
+        namespace = appId
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
+        withJava()
+    }
 
     listOf(
         iosArm64(),
@@ -17,13 +27,36 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "composeApp"
+            freeCompilerArgs += "-Xbinary=bundleId=$appId"
             isStatic = true
             linkerOpts.add("-lsqlite3")
         }
     }
 
     sourceSets {
+        commonMain.dependencies {
+            implementation(projects.features.notes.domain)
+            implementation(projects.features.notes.data)
+            implementation(projects.features.notes.ui)
+            implementation(projects.data.database)
 
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+
+            implementation(libs.compose.navigation)
+            implementation(libs.compose.navigation.common)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.annotations)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
 
         all {
             languageSettings {
@@ -40,47 +73,9 @@ kotlin {
                 }
             }
         }
-
-        commonMain.dependencies {
-            implementation(projects.features.notes.domain)
-            implementation(projects.features.notes.data)
-            implementation(projects.features.notes.ui)
-            implementation(projects.data.database)
-
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-
-            implementation(libs.compose.navigation)
-            implementation(libs.compose.navigation.common)
-
-            //implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.annotations)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
-        androidMain.dependencies {
-            implementation(libs.koin.android)
-        }
-    }
-}
-
-android {
-    namespace = "eu.caraus.kmp.samplearch"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 ksp {
-    arg("KOIN_CONFIG_CHECK", "false")
+    arg("KOIN_CONFIG_CHECK", "true")
 }
