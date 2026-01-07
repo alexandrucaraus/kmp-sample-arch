@@ -17,6 +17,7 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
+        withHostTest {}
     }
     iosArm64()
     iosSimulatorArm64()
@@ -49,9 +50,12 @@ kotlin {
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
         }
+
+
     }
 }
 
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
+
