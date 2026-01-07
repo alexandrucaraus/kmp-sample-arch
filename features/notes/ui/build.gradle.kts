@@ -43,11 +43,11 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(kotlin("test-annotations-common"))
+            implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
 
             implementation(libs.koin.test)
+            implementation(libs.koin.core.viewmodel)
         }
     }
 }

@@ -17,9 +17,11 @@ class KMPKoinKsp : Plugin<Project> {
             val koinCompiler = libs.findLibrary("koin-compiler").get()
             // Add KSP dependencies for different targets
             if (project.isMac()) {
+                add("ksp", koinCompiler)
                 add("kspCommonMainMetadata", koinCompiler)
                 add("kspAndroid", koinCompiler)
-                add("ksp", koinCompiler)
+                //add("ksp", koinCompiler)
+                //add("kspIosSimulatorArm64", koinCompiler)
             } else {
                 add("kspCommonMainMetadata", koinCompiler)
                 add("kspAndroid", koinCompiler)
