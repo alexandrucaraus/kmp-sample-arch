@@ -57,6 +57,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.koin.android)
         }
+        androidUnitTest.dependencies {
+            implementation(libs.koin.test)
+            implementation(libs.junit)
+        }
 
         all {
             languageSettings {
@@ -73,6 +77,9 @@ kotlin {
                 }
             }
         }
+    }
+    sourceSets.androidUnitTest.dependencies {
+        implementation(kotlin("test"))
     }
 }
 
