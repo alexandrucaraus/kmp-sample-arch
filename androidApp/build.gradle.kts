@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
     // alias(libs.plugins.modulegraph) apply false
 }
 
@@ -65,6 +66,7 @@ dependencies {
 
     //implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
+    implementation(libs.koin.annotations)
     implementation(libs.koin.android)
 
     testImplementation(libs.kotlin.test)

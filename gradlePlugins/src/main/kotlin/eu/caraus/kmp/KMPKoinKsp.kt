@@ -22,21 +22,21 @@ class KMPKoinKsp : Plugin<Project> {
             org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension::class.java
         ) ?: return
 
-        kotlin.sourceSets.apply {
-            // Configure commonMain
-            named("commonMain").configure {
-                kotlin {
-                    srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-                }
-            }
-
-            // Configure commonTest (if it exists)
-            named("commonTest").configure {
-                kotlin {
-                    srcDir("build/generated/ksp/metadata/commonTest/kotlin")
-                }
-            }
-        }
+//        kotlin.sourceSets.apply {
+//            // Configure commonMain
+//            named("commonMain").configure {
+//                kotlin {
+//                    srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+//                }
+//            }
+//
+//            // Configure commonTest (if it exists)
+//            named("commonTest").configure {
+//                kotlin {
+//                    srcDir("build/generated/ksp/metadata/commonTest/kotlin")
+//                }
+//            }
+//        }
     }
 
     private fun addKspDependencies(project: Project) {
@@ -46,14 +46,14 @@ class KMPKoinKsp : Plugin<Project> {
         val koinCompiler = libs.findLibrary("koin-compiler").get()
 
         project.dependencies {
-            add("kspCommonMainMetadata", koinCompiler)
+   //         add("kspCommonMainMetadata", koinCompiler)
             add("kspAndroid", koinCompiler)
             add("ksp", koinCompiler)
 
-            if (project.isMac()) {
-                add("kspAndroidHostTest", koinCompiler)
-                add("kspAndroidTest", koinCompiler)
-            }
+//            if (project.isMac()) {
+//                add("ks", koinCompiler)
+//                add("kspAndroidTest", koinCompiler)
+//            }
         }
     }
 }

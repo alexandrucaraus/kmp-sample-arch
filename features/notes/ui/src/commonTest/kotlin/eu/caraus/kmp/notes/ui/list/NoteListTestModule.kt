@@ -5,7 +5,6 @@ import eu.caraus.kmp.notes.ui.NoteUiDiModule
 import org.koin.core.annotation.Module
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
-import org.koin.test.KoinTest
 
 @Module(
     includes = [
@@ -20,11 +19,7 @@ class NoteListTestModule
 // TODO needs clarification
 
 // meanwhile
-fun testModules() = module {
+fun noteUiTestKoinModule() = module {
     includes(NoteDiModule().module, NoteUiDiModule().module)
     //includes(NoteListTestModule().module)
-}
-
-fun KoinTest.startTestKoin() = org.koin.core.context.startKoin {
-    modules(testModules())
 }

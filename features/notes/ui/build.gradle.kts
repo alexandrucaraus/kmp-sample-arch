@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalComposeLibrary::class)
+
 import com.android.build.api.dsl.androidLibrary
+import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -30,6 +33,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
+            implementation(compose.components.uiToolingPreview)
             implementation(compose.components.resources)
 
             implementation(libs.compose.navigation)
@@ -50,9 +54,18 @@ kotlin {
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
         }
-
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(compose.uiTooling)
+        }
 
     }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.compiler)
+    //add("kspAndroid", libs.koin.compiler)
+    add("ksp", libs.koin.compiler)
 }
 
 ksp {

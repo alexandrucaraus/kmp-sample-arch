@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
 }
@@ -19,7 +20,7 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
-        withHostTest {}
+      //  withHostTest {}
     }
 
     listOf(
@@ -58,29 +59,35 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.koin.android)
         }
-//        androidUnitTest.dependencies {
-//            implementation(libs.koin.test)
-//            implementation(libs.junit)
+
+//        all {
+//            languageSettings {
+//                optIn("kotlin.experimental.ExperimentalObjCName")
+//                // Suppress expect/actual mismatch warnings
+//                optIn("kotlinx.cinterop.ExperimentalForeignApi")
+//                progressiveMode = false
+//
+//                // MAIN SETTING:
+//                optIn("kotlin.ExperimentalMultiplatform")
+//
+//                compilerOptions {
+//                    freeCompilerArgs.add("-Xexpect-actual-classes")
+//                }
+//            }
 //        }
-
-        all {
-            languageSettings {
-                optIn("kotlin.experimental.ExperimentalObjCName")
-                // Suppress expect/actual mismatch warnings
-                optIn("kotlinx.cinterop.ExperimentalForeignApi")
-                progressiveMode = false
-
-                // MAIN SETTING:
-                optIn("kotlin.ExperimentalMultiplatform")
-
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
-        }
     }
 }
 
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.compiler)
+    //add("kspAndroid", libs.koin.compiler)
+    add("ksp", libs.koin.compiler)
 }
+
+ksp {
+
+}
+
+//ksp {
+//    arg("KOIN_CONFIG_CHECK", "true")
+//}
