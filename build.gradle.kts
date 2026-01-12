@@ -7,3 +7,5 @@ plugins {
     alias(libs.plugins.paparazzi) apply false
 }
 
+// Design system
+// https://atomicdesign.bradfrost.com/chapter-2/

@@ -61,6 +61,12 @@ kotlin {
     }
 }
 
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.compiler)
+    add("kspAndroid", libs.koin.compiler)
+    add("ksp", libs.koin.compiler)
+}
+
 ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
