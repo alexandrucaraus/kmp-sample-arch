@@ -1,8 +1,3 @@
-@file:OptIn(ExperimentalComposeLibrary::class)
-
-import com.android.build.api.dsl.androidLibrary
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -10,6 +5,10 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
+    // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
+    // https://github.com/cashapp/paparazzi/pull/2115/files
+    // when 2.0.0-alpha04 is out apply it
+    //alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
 }
 
@@ -29,12 +28,10 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.features.notes.domain)
 
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.components.uiToolingPreview)
-            implementation(compose.components.resources)
+            implementation(libs.compose.material3.icons.extended)
+            implementation(libs.compose.material3)
+
+            implementation(libs.compose.ui.tooling.preview)
 
             implementation(libs.compose.navigation)
             implementation(libs.compose.navigation.common)
@@ -55,11 +52,13 @@ kotlin {
             implementation(libs.koin.core.viewmodel)
         }
         androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(compose.uiTooling)
+            implementation(libs.compose.ui.tooling)
         }
-
     }
+}
+
+dependencies {
+    add("androidHostTestImplementation", libs.paparazzi.classgraph)
 }
 
 dependencies {

@@ -1,6 +1,3 @@
-import com.android.build.api.dsl.androidLibrary
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -34,14 +31,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
 
-            implementation(libs.sqldelight.coroutine.ext)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
     }
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }

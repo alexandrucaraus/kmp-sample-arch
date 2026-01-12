@@ -1,6 +1,5 @@
 package eu.caraus.kmp
 
-import eu.caraus.kmp.host.isMac
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -46,7 +45,7 @@ class KMPKoinKsp : Plugin<Project> {
         val koinCompiler = libs.findLibrary("koin-compiler").get()
 
         project.dependencies {
-   //         add("kspCommonMainMetadata", koinCompiler)
+            add("kspCommonMainMetadata", koinCompiler)
             add("kspAndroid", koinCompiler)
             add("ksp", koinCompiler)
 

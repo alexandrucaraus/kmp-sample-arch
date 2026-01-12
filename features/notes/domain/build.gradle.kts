@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.androidLibrary
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -32,14 +30,4 @@ kotlin {
             implementation(kotlin("test"))
         }
     }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    //add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "false")
 }

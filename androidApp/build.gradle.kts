@@ -1,9 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
@@ -57,21 +53,18 @@ android {
 dependencies {
     api(projects.app)
 
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-    debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.androidx.activity.compose)
 
-    //implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     implementation(libs.koin.android)
 
     testImplementation(libs.kotlin.test)
-    //testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
+
+    implementation(libs.compose.ui.tooling)
 }
 
 // moduleGraphConfig {
