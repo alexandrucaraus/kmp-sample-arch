@@ -40,6 +40,9 @@ espressoCore = "3.7.0"
 
 
 ktlint="14.0.1"
+coreKtx = "1.10.1"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 
 [libraries]
@@ -91,6 +94,9 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 kotlin-gradle-plugin-dev = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 multiplatform-gradle-plugin-dev = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -110,3 +116,4 @@ paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+android-library = { id = "com.android.library", version.ref = "agp" }

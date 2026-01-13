@@ -35,7 +35,9 @@ class NoteListViewModel(
     init {
         notesList()
             .distinctUntilChanged()
-            .onEach { notes -> notesState.update { it.copy(notes = notes) } }
+            .onEach { notes ->
+                notesState.update { it.copy(notes = notes) }
+            }
         .launchIn(viewModelScope)
     }
 

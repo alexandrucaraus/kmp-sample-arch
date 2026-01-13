@@ -1,15 +1,19 @@
-package eu.caraus.kmp.notes.ui.list
+package eu.caraus.kmp.test.common.koin
 
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.core.module.Module
 import org.koin.test.KoinTest
-import kotlin.test.Test
 
-fun KoinTest.startTestKoin() = org.koin.core.context.startKoin {
-    modules(noteUiTestKoinModule())
+fun KoinTest.startTestKoin(
+    modules: List<Module> = emptyList()
+) = startKoin {
+    modules(modules)
 }
 
-fun KoinTest.stopTestKoin() = org.koin.core.context.stopKoin()
+fun KoinTest.stopTestKoin() = stopKoin()
 
 fun test(
     before: () -> Unit = {},

@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.caraus.kmp.notes.domain.Note
@@ -136,7 +137,10 @@ internal fun EmptyNoteList() {
 internal fun CreateNoteButton(
     createNote: () -> Unit
 ) {
-    Button(onClick = createNote) {
+    Button(
+        modifier = Modifier.testTag("CreateNoteButton"),
+        onClick = createNote
+    ) {
         Icon(
             imageVector = Icons.Default.PlusOne,
             contentDescription = null

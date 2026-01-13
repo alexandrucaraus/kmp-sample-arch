@@ -19,7 +19,7 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     androidLibrary {
-        namespace = "eu.caraus.kmp.notes.ui"
+        namespace = "eu.caraus.kmp.test.common"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
@@ -47,8 +47,6 @@ kotlin {
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
 
-            implementation(libs.compose.ui.tooling.preview)
-
             implementation(libs.compose.navigation)
             implementation(libs.compose.navigation.common)
 
@@ -59,10 +57,6 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
-        }
-        commonTest.dependencies {
-
-            implementation(projects.testCommon)
 
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
@@ -72,16 +66,14 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling)
-        }
-        val androidDeviceTest by getting {
-            dependencies {
-                implementation(libs.koin.test)
-                implementation(libs.koin.core.viewmodel)
-                implementation("androidx.compose.ui:ui-test-junit4:1.5.4")
-                implementation("androidx.compose.ui:ui-test-manifest:1.5.4")
-                implementation("androidx.test.ext:junit:1.1.5")
-                implementation("androidx.test.espresso:espresso-core:3.5.1")
-            }
+
+            implementation(libs.koin.test)
+            implementation(libs.koin.core.viewmodel)
+
+            implementation("androidx.compose.ui:ui-test-junit4:1.5.4")
+            implementation("androidx.compose.ui:ui-test-manifest:1.5.4")
+            implementation("androidx.test.ext:junit:1.1.5")
+            implementation("androidx.test.espresso:espresso-core:3.5.1")
         }
     }
 }
@@ -99,4 +91,3 @@ dependencies {
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
-

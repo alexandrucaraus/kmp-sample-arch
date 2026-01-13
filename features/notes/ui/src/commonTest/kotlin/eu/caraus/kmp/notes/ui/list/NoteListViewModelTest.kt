@@ -4,6 +4,9 @@ package eu.caraus.kmp.notes.ui.list
 
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteRepository
+import eu.caraus.kmp.test.common.koin.startTestKoin
+import eu.caraus.kmp.test.common.koin.stopTestKoin
+import eu.caraus.kmp.test.common.koin.test
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -12,15 +15,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import org.koin.test.KoinTest
-import kotlin.test.Test
-import kotlin.test.assertTrue
 import org.koin.test.inject
 import org.koin.test.mock.declare
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class NoteListViewModelTest : KoinTest {
 
     @Test
-    fun list_notes_on_init() = test {
+    fun list_notes_on_init() = utest {
         declare<CoroutineScope> { this }
         declare<NoteRepository>{
             object : NoteRepositoryMock() {
@@ -40,7 +43,7 @@ class NoteListViewModelTest : KoinTest {
     }
 
     @Test
-    fun select_multiple_notes() = test {
+    fun select_multiple_notes() = utest {
         declare<CoroutineScope> { this }
         declare<NoteRepository>{
             object : NoteRepositoryMock() {
@@ -82,7 +85,7 @@ class NoteListViewModelTest : KoinTest {
     }
 
     @Test
-    fun delete_selected_notes() = test {
+    fun delete_selected_notes() = utest {
         startTestKoin()
         declare<CoroutineScope> { this }
         declare<NoteRepository>{
@@ -128,6 +131,6 @@ class NoteListViewModelTest : KoinTest {
         assertTrue { vm.state.value.notes.size == 2 }
     }
 
-    fun test(block: suspend TestScope.() -> Unit) =
+    private fun utest(block: suspend TestScope.() -> Unit) =
         test(before = { startTestKoin() }, after = { stopTestKoin()}, block = block)
 }

@@ -16,6 +16,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 
@@ -39,31 +40,24 @@ fun NoteDetailsScreen(
         TopAppBar(
             title = { },
             navigationIcon = {
-                IconButton(onClick = { note.leave(close) }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null
-                    )
-                }
+                BackButton { note.leave(close) }
             },
             actions = {
-                IconButton(onClick = { note.delete(close) }) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = null)
-                }
+                DeleteButton { note.delete(close) }
             }
         )
     },
     content = { padding ->
         Column(modifier = Modifier.padding(padding).fillMaxWidth()) {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.testTag("TitleField").fillMaxWidth(),
                 value = note.title,
                 onValueChange = note.updateTitle,
                 textStyle = TextStyle(fontSize = 20.sp),
                 placeholder = { Text("Title") }
             )
             TextField(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                modifier = Modifier.testTag("ContentField").fillMaxWidth().fillMaxHeight(),
                 value = note.content,
                 onValueChange = note.updateContent,
                 placeholder = { Text("Note") }
@@ -71,3 +65,30 @@ fun NoteDetailsScreen(
         }
     },
 )
+
+@Composable
+internal fun BackButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        modifier = Modifier.testTag("BackButton"),
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = null
+        )
+    }
+}
+
+@Composable
+internal fun DeleteButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        modifier = Modifier.testTag("DeleteButton"),
+        onClick = onClick
+    ) {
+        Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+    }
+}

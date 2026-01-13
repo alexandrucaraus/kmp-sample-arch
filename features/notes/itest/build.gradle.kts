@@ -7,10 +7,6 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
-    // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
-    // https://github.com/cashapp/paparazzi/pull/2115/files
-    // when 2.0.0-alpha04 is out apply it
-    //alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
 }
 
@@ -19,15 +15,13 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     androidLibrary {
-        namespace = "eu.caraus.kmp.notes.ui"
+        namespace = "eu.caraus.kmp.notes.itest"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
-        withHostTest {}
         withDeviceTest {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            //instrumentationRunner = "eu.caraus.kmp.notes.ui.DeviceTestRunner"
             execution = "HOST"
         }
         androidResources {
@@ -42,12 +36,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+
+            implementation(projects.testCommon)
+
             implementation(projects.features.notes.domain)
+            implementation(projects.features.notes.ui)
+            implementation(projects.features.notes.data)
+            implementation(projects.data.database)
 
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
-
-            implementation(libs.compose.ui.tooling.preview)
 
             implementation(libs.compose.navigation)
             implementation(libs.compose.navigation.common)
@@ -61,17 +59,11 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
-
-            implementation(projects.testCommon)
-
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
 
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
-        }
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling)
         }
         val androidDeviceTest by getting {
             dependencies {
@@ -87,10 +79,6 @@ kotlin {
 }
 
 dependencies {
-    add("androidHostTestImplementation", libs.paparazzi.classgraph)
-}
-
-dependencies {
     add("kspCommonMainMetadata", libs.koin.compiler)
     //add("kspAndroid", libs.koin.compiler)
     add("ksp", libs.koin.compiler)
@@ -99,4 +87,3 @@ dependencies {
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
-
