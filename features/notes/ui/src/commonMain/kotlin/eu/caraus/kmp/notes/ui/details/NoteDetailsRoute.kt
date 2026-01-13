@@ -13,7 +13,6 @@ import org.koin.core.parameter.parametersOf
 
 @Serializable
 data class NoteDetailsRoute(val noteId: String)
-
 fun NavController.openNoteDetails(note: Note) =
     navigate(NoteDetailsRoute(noteId = note.id))
 

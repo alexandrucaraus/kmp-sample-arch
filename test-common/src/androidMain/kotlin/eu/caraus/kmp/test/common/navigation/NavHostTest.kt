@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 
-// todo add to a shared instrumented test module
 @Composable
 fun NavHostTest(
     startDestination: Any,

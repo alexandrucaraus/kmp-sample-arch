@@ -19,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import eu.caraus.kmp.notes.domain.Note.Companion.NO_ID
 
 data class NoteState(
+    val id: String = NO_ID,
     val title: String = "",
     val content: String = "",
     val updateTitle: (String) -> Unit = {},

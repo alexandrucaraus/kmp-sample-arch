@@ -38,6 +38,7 @@ class NoteDetailsViewModel(
         getNote(noteId = noteId).onEach { note ->
             noteState.update {
                 it.copy(
+                    id = note.id,
                     title = note.title,
                     content = note.content,
                 )
