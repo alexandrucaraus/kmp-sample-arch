@@ -68,10 +68,10 @@ kotlin {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.koin.core.viewmodel)
-                implementation("androidx.compose.ui:ui-test-junit4:1.5.4")
-                implementation("androidx.compose.ui:ui-test-manifest:1.5.4")
-                implementation("androidx.test.ext:junit:1.1.5")
-                implementation("androidx.test.espresso:espresso-core:3.5.1")
+                implementation(libs.androidx.test.compose.manifest)
+                implementation(libs.androidx.test.compose.junit)
+                implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.espresso)
             }
         }
     }

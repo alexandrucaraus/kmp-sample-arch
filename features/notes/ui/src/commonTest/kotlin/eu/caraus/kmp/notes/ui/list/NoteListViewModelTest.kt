@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package eu.caraus.kmp.notes.ui.list
 
 import eu.caraus.kmp.notes.domain.Note
@@ -8,7 +6,6 @@ import eu.caraus.kmp.test.common.koin.koinRunTest
 import eu.caraus.kmp.test.common.koin.startTestKoin
 import eu.caraus.kmp.test.common.koin.stopTestKoin
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
