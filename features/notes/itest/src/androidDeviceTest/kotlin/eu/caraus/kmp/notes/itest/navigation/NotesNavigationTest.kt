@@ -9,7 +9,8 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.notes.itest.NoteIntegrationTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListRoute
-import eu.caraus.kmp.notes.ui.navigation.notesNavGraph
+import eu.caraus.kmp.notes.ui.navigation.NotesNavGraph
+import eu.caraus.kmp.notes.ui.navigation.NotesSerializerModule
 import eu.caraus.kmp.test.common.navigation.NavHostTest
 import eu.caraus.kmp.test.common.rules.KoinTestRule
 import org.junit.Rule
@@ -33,11 +34,12 @@ class NotesNavigationTest : KoinTest {
         composeTestRule.setContent {
             NavHostTest(
                 startDestination = NoteListRoute,
-            ) { navController ->
-                notesNavGraph(navController)
+                serializerModule = NotesSerializerModule
+            ) { key, backStack ->
+                NotesNavGraph(key, backStack)
+                    ?: error("Destination not found $key")
             }
         }
-
         composeTestRule
             .onNodeWithTag("CreateNoteButton")
             .assertIsDisplayed()

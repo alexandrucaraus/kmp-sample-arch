@@ -49,8 +49,7 @@ kotlin {
 
             implementation(libs.compose.ui.tooling.preview)
 
-            implementation(libs.compose.navigation)
-            implementation(libs.compose.navigation.common)
+            implementation(libs.compose.nav3)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)

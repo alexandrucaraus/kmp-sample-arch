@@ -15,7 +15,7 @@ fun KoinTest.startTestKoin(
 
 fun KoinTest.stopTestKoin() = stopKoin()
 
-fun test(
+fun koinRunTest(
     before: () -> Unit = {},
     after: () -> Unit = {},
     block: suspend TestScope.() -> Unit,
@@ -24,7 +24,7 @@ fun test(
         before()
         block()
     } catch (e: Throwable) {
-
+        throw e
     } finally {
         after()
     }

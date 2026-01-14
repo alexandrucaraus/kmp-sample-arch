@@ -12,6 +12,8 @@ plugins {
 
 kotlin {
 
+    applyDefaultHierarchyTemplate()
+
     val appId = "eu.caraus.kmp.samplearch"
 
     androidLibrary {
@@ -20,6 +22,7 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
+        withHostTest { }
     }
 
     listOf(
@@ -44,8 +47,7 @@ kotlin {
 
                 implementation(libs.compose.material3)
 
-                implementation(libs.compose.navigation)
-                implementation(libs.compose.navigation.common)
+                implementation(libs.compose.nav3)
 
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)

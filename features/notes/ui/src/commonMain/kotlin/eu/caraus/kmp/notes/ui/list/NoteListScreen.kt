@@ -101,8 +101,12 @@ internal fun NoteListItem(
         .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
         .combinedClickable(
             enabled = true,
-            onClick = { openNote(note) },
-            onLongClick = { selectNote(note) }
+            onClick = {
+                openNote(note)
+            },
+            onLongClick = {
+                selectNote(note)
+            }
         )
     ) {
         Column(

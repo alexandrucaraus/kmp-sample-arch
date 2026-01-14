@@ -47,8 +47,7 @@ kotlin {
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
 
-            implementation(libs.compose.navigation)
-            implementation(libs.compose.navigation.common)
+            implementation(libs.compose.nav3)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)

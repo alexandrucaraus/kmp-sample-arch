@@ -3,17 +3,37 @@ package eu.caraus.kmp.samplearch
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import eu.caraus.kmp.notes.ui.list.NoteListRoute
-import eu.caraus.kmp.notes.ui.navigation.notesNavGraph
+import eu.caraus.kmp.notes.ui.navigation.NotesNavGraph
+import eu.caraus.kmp.notes.ui.navigation.NotesSerializerModule
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
 
-// Todo: move to navigation module
+private val savedStateConfig = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(NavKey::class) {
+            include(NotesSerializerModule)
+        }
+    }
+}
+
 @Composable
-internal fun AppNavigation(navController: NavHostController) = NavHost(
-    modifier = Modifier.fillMaxSize(),
-    navController = navController,
-    startDestination = NoteListRoute,
-) {
-    notesNavGraph(navController)
+internal fun AppNavigation() {
+    val backStack = rememberNavBackStack(
+        configuration = savedStateConfig,
+        NoteListRoute
+    )
+    NavDisplay(
+        modifier = Modifier.fillMaxSize(),
+        backStack = backStack,
+        onBack = { backStack.removeLastOrNull() },
+        entryProvider = { key ->
+            NotesNavGraph(key, backStack)
+                ?: error("Destination not found $key")
+        }
+    )
 }

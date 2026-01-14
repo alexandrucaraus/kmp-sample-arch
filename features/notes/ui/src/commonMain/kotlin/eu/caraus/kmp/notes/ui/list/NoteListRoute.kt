@@ -1,21 +1,21 @@
 package eu.caraus.kmp.notes.ui.list
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.NavKey
 import eu.caraus.kmp.notes.domain.Note
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
-data object NoteListRoute
+data object NoteListRoute: NavKey
 
-fun NavGraphBuilder.noteListRoute(
+@Composable
+fun NoteListRoute(
     openNote: (Note) -> Unit,
     createNote: () -> Unit,
-) = composable<NoteListRoute> {
+) {
 
     val state by koinViewModel<NoteListViewModel>()
         .state

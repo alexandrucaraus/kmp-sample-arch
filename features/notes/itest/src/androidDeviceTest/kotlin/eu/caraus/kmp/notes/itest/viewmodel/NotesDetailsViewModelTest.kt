@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.notes.domain.GetNoteUseCase
 import eu.caraus.kmp.notes.domain.GetNotesListUseCase
 import eu.caraus.kmp.notes.domain.Note
+import eu.caraus.kmp.notes.domain.NoteRepository
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
 import eu.caraus.kmp.notes.itest.NoteIntegrationTestModule
 import eu.caraus.kmp.notes.ui.details.NoteDetailsViewModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,12 +28,17 @@ import org.koin.test.inject
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
-
 @RunWith(AndroidJUnit4::class)
 class NotesDetailsViewModelTest : KoinTest {
 
     @get:Rule
     val koinTestRule = KoinTestRule(modules = listOf(NoteIntegrationTestModule().module))
+
+    @Before
+    fun setup() {
+        val notesRepository by inject<NoteRepository>()
+        runBlocking { notesRepository.deleteAll() }
+    }
 
     @Test
     fun load_edit_and_save_note() = runBlocking {

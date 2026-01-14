@@ -35,6 +35,9 @@ class NoteRepositoryRoom(
     override fun allAsFlow(): Flow<List<Note>> = noteDao
         .getAllAsFlow()
         .flatMapLatest { list -> flowOf(list.map(NoteDto::toEntity)) }
+
+    override suspend fun deleteAll() =
+        noteDao.deleteAll()
 }
 
 private fun Note.toDto() = NoteDto(
@@ -87,5 +90,8 @@ class NoteRepositoryInMem() : NoteRepository {
     }
 
     override fun allAsFlow(): Flow<List<Note>> = listFlow
+    override suspend fun deleteAll() {
+        list = emptyList()
+    }
 
 }

@@ -20,6 +20,9 @@ interface NoteDao {
     @Delete
     suspend fun delete(vararg note: NoteDto)
 
+    @Query("DELETE FROM NoteDto")
+    suspend fun deleteAll()
+
     @Query("DELETE FROM NoteDto WHERE id = :noteId")
     suspend fun deleteById(noteId: String)
 

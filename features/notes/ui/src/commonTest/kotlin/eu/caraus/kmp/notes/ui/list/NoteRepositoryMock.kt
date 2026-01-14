@@ -33,4 +33,8 @@ open class NoteRepositoryMock: NoteRepository {
     override fun allAsFlow(): Flow<List<Note>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteAll() {
+        TODO("Not yet implemented")
+    }
 }

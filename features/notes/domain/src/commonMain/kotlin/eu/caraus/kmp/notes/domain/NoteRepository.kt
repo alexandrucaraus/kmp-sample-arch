@@ -10,4 +10,5 @@ interface NoteRepository {
     suspend fun findById(noteId: NoteId): Note?
     suspend fun findAll(): List<Note>
     fun allAsFlow(): Flow<List<Note>>
+    suspend fun deleteAll()
 }

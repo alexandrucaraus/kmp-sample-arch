@@ -4,6 +4,7 @@ package eu.caraus.kmp.notes.itest.viewmodel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.notes.domain.Note
+import eu.caraus.kmp.notes.domain.NoteRepository
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
 import eu.caraus.kmp.notes.itest.NoteIntegrationTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListViewModel
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +29,12 @@ class NotesListViewModelTest : KoinTest {
 
     @get:Rule
     val koinTestRule = KoinTestRule(modules = listOf(NoteIntegrationTestModule().module))
+
+    @Before
+    fun setup() {
+        val notesRepository by inject<NoteRepository>()
+        runBlocking { notesRepository.deleteAll() }
+    }
 
     @Test
     fun load_select_delete_notes() = runBlocking {
