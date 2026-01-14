@@ -5,6 +5,20 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
+    alias(libs.plugins.kover) apply true
+}
+
+
+dependencies {
+    kover(project(":app"))
+    kover(project(":features:notes:itest"))
+    kover(project(":features:notes:ui"))
+}
+
+kover {
+    currentProject {
+        createVariant("debug") { }
+    }
 }
 
 // Design system

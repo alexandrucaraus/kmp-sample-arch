@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
+    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -22,7 +23,12 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
-        withHostTest { }
+        withHostTest {
+            enableCoverage = true
+        }
+        withDeviceTest {
+            enableCoverage = true
+        }
     }
 
     listOf(
@@ -71,4 +77,26 @@ dependencies {
 
 ksp {
     arg("KOIN_CONFIG_CHECK", "true")
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                classes(
+                    "*Fragment",
+                    "*Fragment\$*",
+                    "*Activity",
+                    "*Activity\$*",
+                    "*.BuildConfig"
+                )
+            }
+        }
+
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
+    }
 }

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
+    id ("org.jetbrains.kotlinx.kover")
 }
 
 kotlin {
@@ -21,6 +22,7 @@ kotlin {
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
         withDeviceTest {
+            enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             execution = "HOST"
         }
@@ -85,4 +87,12 @@ dependencies {
 
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
+}
+
+kover {
+    currentProject {
+        createVariant("custom") {
+            add("android")
+        }
+    }
 }

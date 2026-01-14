@@ -12,6 +12,7 @@ plugins {
     // when 2.0.0-alpha04 is out apply it
     //alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
+    id ("org.jetbrains.kotlinx.kover")
 }
 
 kotlin {
@@ -24,8 +25,11 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
         withJava()
-        withHostTest {}
+        withHostTest {
+            enableCoverage = true
+        }
         withDeviceTest {
+            enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             //instrumentationRunner = "eu.caraus.kmp.notes.ui.DeviceTestRunner"
             execution = "HOST"
@@ -36,6 +40,7 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+        testCoverage {}
     }
     iosArm64()
     iosSimulatorArm64()
@@ -97,5 +102,13 @@ dependencies {
 
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
+}
+
+kover {
+    currentProject {
+        createVariant("custom") {
+            add("android")
+        }
+    }
 }
 
