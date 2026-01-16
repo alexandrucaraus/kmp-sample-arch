@@ -7,7 +7,7 @@ android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
 
-agp = "9.0.0-rc03"
+agp = "9.0.0"
 kotlin = "2.3.0"
 ksp = "2.3.4"
 
@@ -17,7 +17,7 @@ compose-icons = "1.7.3"
 compose-nav3 = "1.0.0-alpha06"
 
 androidx-activityCompose = "1.12.2"
-androidx-uiTest = "1.10.0"
+androidx-uiTest = "1.10.1"
 
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
@@ -40,15 +40,10 @@ espressoCore = "3.7.0"
 
 
 ktlint="14.0.1"
-coreKtx = "1.10.1"
-appcompat = "1.6.1"
-material = "1.10.0"
-
 
 [libraries]
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-
 
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3" }
 compose-material3-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-icons" }
@@ -93,11 +88,9 @@ androidx-test-compose-junit = { module = "androidx.compose.ui:ui-test-junit4", v
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
+# Local plugin dev deps
 kotlin-gradle-plugin-dev = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 multiplatform-gradle-plugin-dev = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

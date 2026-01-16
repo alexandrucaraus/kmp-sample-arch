@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-
-
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
@@ -12,6 +9,9 @@ pluginManagement {
         mavenCentral()
 
     }
+}
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 dependencyResolutionManagement {
