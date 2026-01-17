@@ -4,9 +4,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
     suspend fun save(note: Note)
+
     suspend fun delete(notes: List<Note>)
+
     suspend fun deleteById(noteId: NoteId)
+
     suspend fun findById(noteId: NoteId): Note?
+
     fun allAsFlow(): Flow<List<Note>>
+
     suspend fun deleteAll()
 }

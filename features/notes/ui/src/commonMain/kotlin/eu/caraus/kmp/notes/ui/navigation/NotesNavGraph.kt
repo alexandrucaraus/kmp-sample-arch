@@ -11,37 +11,39 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
 @Suppress("VariableName")
-val NotesSerializerModule = SerializersModule {
-    polymorphic(NavKey::class) {
-        subclass(NoteListRoute::class, NoteListRoute.serializer())
-        subclass(NoteDetailsRoute::class, NoteDetailsRoute.serializer())
+val NotesSerializerModule =
+    SerializersModule {
+        polymorphic(NavKey::class) {
+            subclass(NoteListRoute::class, NoteListRoute.serializer())
+            subclass(NoteDetailsRoute::class, NoteDetailsRoute.serializer())
+        }
     }
-}
 
 @Suppress("FunctionName")
 fun NotesNavGraph(
     key: NavKey,
-    backStack: NavBackStack<NavKey>
-): NavEntry<NavKey>? {
-    return when (key) {
-        is NoteListRoute -> NavEntry(key) {
-            NoteListRoute(
-                openNote = { note ->
-                    backStack.add(NoteDetailsRoute(note.id))
-                },
-                createNote = {
-                    backStack.add(NoteDetailsRoute(Note.NO_ID))
-                }
-            )
-        }
-        is NoteDetailsRoute -> NavEntry(key) { params ->
-            NoteDetailRoute(
-                params = params as NoteDetailsRoute,
-                close = {
-                    backStack.remove(params)
-                }
-            )
-        }
+    backStack: NavBackStack<NavKey>,
+): NavEntry<NavKey>? =
+    when (key) {
+        is NoteListRoute ->
+            NavEntry(key) {
+                NoteListRoute(
+                    openNote = { note ->
+                        backStack.add(NoteDetailsRoute(note.id))
+                    },
+                    createNote = {
+                        backStack.add(NoteDetailsRoute(Note.NO_ID))
+                    },
+                )
+            }
+        is NoteDetailsRoute ->
+            NavEntry(key) { params ->
+                NoteDetailRoute(
+                    params = params as NoteDetailsRoute,
+                    close = {
+                        backStack.remove(params)
+                    },
+                )
+            }
         else -> null
     }
-}

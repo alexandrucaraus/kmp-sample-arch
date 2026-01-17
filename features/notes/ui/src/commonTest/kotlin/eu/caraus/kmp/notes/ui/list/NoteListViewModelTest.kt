@@ -26,111 +26,140 @@ import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
 class NoteListViewModelTest : KoinTest {
-
     @Test
-    fun list_notes_on_init() = test {
-        declare<CoroutineScope> { backgroundScope }
-        declare<NoteRepository> {
-            NoteRepositoryInMem(
-                listOf(
-                    Note(id = "1", "test", "test")
+    fun list_notes_on_init() =
+        test {
+            declare<CoroutineScope> { backgroundScope }
+            declare<NoteRepository> {
+                NoteRepositoryInMem(
+                    listOf(
+                        Note(id = "1", "test", "test"),
+                    ),
                 )
-            )
-        }
-        val vm by inject<NoteListViewModel>()
-        vm.state.first()
-        runCurrent()
-        assertTrue(vm.state.value.notes.isNotEmpty())
-    }
-
-    @Test
-    fun select_multiple_notes() = test {
-        declare<CoroutineScope> { backgroundScope }
-        declare<NoteRepository> {
-            NoteRepositoryInMem(
-                listOf(
-                    Note(id = "1", "test1", "test1"),
-                    Note(id = "2", "test2", "test2"),
-                    Note(id = "3", "test3", "test3"),
-                    Note(id = "4", "test4", "test4")
-                )
+            }
+            val vm by inject<NoteListViewModel>()
+            vm.state.first()
+            runCurrent()
+            assertTrue(
+                vm.state.value.notes
+                    .isNotEmpty(),
             )
         }
 
-        val vm by inject<NoteListViewModel>()
+    @Test
+    fun select_multiple_notes() =
+        test {
+            declare<CoroutineScope> { backgroundScope }
+            declare<NoteRepository> {
+                NoteRepositoryInMem(
+                    listOf(
+                        Note(id = "1", "test1", "test1"),
+                        Note(id = "2", "test2", "test2"),
+                        Note(id = "3", "test3", "test3"),
+                        Note(id = "4", "test4", "test4"),
+                    ),
+                )
+            }
 
-        vm.state.takeWhile { it.notes.isEmpty() }.timeout(3.seconds).collect()
+            val vm by inject<NoteListViewModel>()
 
-        runCurrent()
+            vm.state
+                .takeWhile { it.notes.isEmpty() }
+                .timeout(3.seconds)
+                .collect()
 
-        val notes = vm.state.value.notes
+            runCurrent()
 
-        vm.state.value.toggleSelection(notes[0])
+            val notes = vm.state.value.notes
 
-        runCurrent()
+            vm.state.value.toggleSelection(notes[0])
 
-        assertTrue(vm.state.value.selectedNotes.contains(notes[0]))
+            runCurrent()
 
-        vm.state.value.toggleSelection(notes[1])
+            assertTrue(
+                vm.state.value.selectedNotes
+                    .contains(notes[0]),
+            )
 
-        runCurrent()
+            vm.state.value.toggleSelection(notes[1])
 
-        assertTrue { vm.state.value.selectedNotes.contains(notes[1]) }
+            runCurrent()
 
-        vm.state.value.clearSelected()
+            assertTrue {
+                vm.state.value.selectedNotes
+                    .contains(notes[1])
+            }
 
-        runCurrent()
+            vm.state.value.clearSelected()
 
-        assertTrue("Selected notes not empty") { vm.state.value.selectedNotes.isEmpty() }
-    }
+            runCurrent()
+
+            assertTrue("Selected notes not empty") {
+                vm.state.value.selectedNotes
+                    .isEmpty()
+            }
+        }
 
     @Test
-    fun delete_selected_notes() = test {
-        declare<CoroutineScope> { backgroundScope }
-        declare<NoteRepository> {
-            NoteRepositoryInMem(
-                listOf(
-                    Note(id = "1", "test1", "test1"),
-                    Note(id = "2", "test2", "test2"),
-                    Note(id = "3", "test3", "test3"),
-                    Note(id = "4", "test4", "test4")
+    fun delete_selected_notes() =
+        test {
+            declare<CoroutineScope> { backgroundScope }
+            declare<NoteRepository> {
+                NoteRepositoryInMem(
+                    listOf(
+                        Note(id = "1", "test1", "test1"),
+                        Note(id = "2", "test2", "test2"),
+                        Note(id = "3", "test3", "test3"),
+                        Note(id = "4", "test4", "test4"),
+                    ),
                 )
-            )
+            }
+            val vm by inject<NoteListViewModel>()
+
+            vm.state
+                .takeWhile { it.notes.isEmpty() }
+                .timeout(3.seconds)
+                .collect()
+
+            runCurrent()
+
+            assertTrue("Failed to load") { vm.state.value.notes.size == 4 }
+
+            val notes = vm.state.value.notes
+
+            vm.state.value.toggleSelection(notes[0])
+
+            runCurrent()
+
+            assertTrue("No note 1") {
+                vm.state.value.selectedNotes
+                    .contains(notes[0])
+            }
+
+            vm.state.value.toggleSelection(notes[1])
+
+            runCurrent()
+
+            assertTrue("No note 2") {
+                vm.state.value.selectedNotes
+                    .contains(notes[1])
+            }
+
+            vm.state.value.deleteSelected()
+
+            runCurrent()
+
+            assertTrue("Selected notes not empty") {
+                vm.state.value.selectedNotes
+                    .isEmpty()
+            }
+            assertTrue("Note size does not match") { vm.state.value.notes.size == 2 }
         }
-        val vm by inject<NoteListViewModel>()
-
-        vm.state.takeWhile { it.notes.isEmpty() }.timeout(3.seconds).collect()
-
-        runCurrent()
-
-        assertTrue("Failed to load") { vm.state.value.notes.size == 4 }
-
-        val notes = vm.state.value.notes
-
-        vm.state.value.toggleSelection(notes[0])
-
-        runCurrent()
-
-        assertTrue("No note 1") { vm.state.value.selectedNotes.contains(notes[0]) }
-
-        vm.state.value.toggleSelection(notes[1])
-
-        runCurrent()
-
-        assertTrue("No note 2") { vm.state.value.selectedNotes.contains(notes[1]) }
-
-        vm.state.value.deleteSelected()
-
-        runCurrent()
-
-        assertTrue("Selected notes not empty") { vm.state.value.selectedNotes.isEmpty() }
-        assertTrue("Note size does not match") { vm.state.value.notes.size == 2 }
-    }
 
     private fun test(block: suspend TestScope.() -> Unit) =
         koinRunTest(
             before = { startTestKoin(modules = listOf(noteUiTestKoinModule())) },
             after = { stopTestKoin() },
-            block = block
+            block = block,
         )
 }

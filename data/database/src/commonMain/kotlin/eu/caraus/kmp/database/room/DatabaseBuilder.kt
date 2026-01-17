@@ -10,7 +10,7 @@ import org.koin.core.scope.Scope
 expect class PlatformContextWrapper
 
 @Single
-expect fun platformContextWrapper(scope: Scope) : PlatformContextWrapper
+expect fun platformContextWrapper(scope: Scope): PlatformContextWrapper
 
 @Single
 expect fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase

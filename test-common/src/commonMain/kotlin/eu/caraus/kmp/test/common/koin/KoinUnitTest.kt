@@ -7,11 +7,10 @@ import org.koin.core.context.stopKoin
 import org.koin.core.module.Module
 import org.koin.test.KoinTest
 
-fun KoinTest.startTestKoin(
-    modules: List<Module> = emptyList()
-) = startKoin {
-    modules(modules)
-}
+fun KoinTest.startTestKoin(modules: List<Module> = emptyList()) =
+    startKoin {
+        modules(modules)
+    }
 
 fun KoinTest.stopTestKoin() = stopKoin()
 

@@ -22,28 +22,29 @@ class NoteDetailsViewModel(
     private val deleteNote: DeleteNoteUseCase,
     coroutineScope: CoroutineScope,
 ) : ViewModel(coroutineScope) {
-
-    private val noteState = MutableStateFlow(
-        NoteState(
-            updateTitle = ::updateTitle,
-            updateContent = ::updateContent,
-            leave = ::saveWithAction,
-            delete = ::deleteWithAction,
+    private val noteState =
+        MutableStateFlow(
+            NoteState(
+                updateTitle = ::updateTitle,
+                updateContent = ::updateContent,
+                leave = ::saveWithAction,
+                delete = ::deleteWithAction,
+            ),
         )
-    )
 
     val state: StateFlow<NoteState> = noteState
 
     init {
-        observeOneNote(noteId = noteId).onEach { note ->
-            noteState.update {
-                it.copy(
-                    id = note.id,
-                    title = note.title,
-                    content = note.content,
-                )
-            }
-        }.launchIn(viewModelScope)
+        observeOneNote(noteId = noteId)
+            .onEach { note ->
+                noteState.update {
+                    it.copy(
+                        id = note.id,
+                        title = note.title,
+                        content = note.content,
+                    )
+                }
+            }.launchIn(viewModelScope)
     }
 
     private fun updateTitle(title: String) {
@@ -54,15 +55,17 @@ class NoteDetailsViewModel(
         noteState.update { it.copy(content = content) }
     }
 
-    private fun saveWithAction(action: () -> Unit) = viewModelScope.launch {
-        with(state.value) {
-            saveNote(noteId = noteId, title = title, content = content)
+    private fun saveWithAction(action: () -> Unit) =
+        viewModelScope.launch {
+            with(state.value) {
+                saveNote(noteId = noteId, title = title, content = content)
+            }
+            action()
         }
-        action()
-    }
 
-    private fun deleteWithAction(action: () -> Unit) = viewModelScope.launch {
-        deleteNote(noteId = noteId)
-        action()
-    }
+    private fun deleteWithAction(action: () -> Unit) =
+        viewModelScope.launch {
+            deleteNote(noteId = noteId)
+            action()
+        }
 }

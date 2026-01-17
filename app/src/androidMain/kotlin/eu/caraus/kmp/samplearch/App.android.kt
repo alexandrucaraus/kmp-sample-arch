@@ -5,6 +5,7 @@ package eu.caraus.kmp.samplearch
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
-fun ComponentActivity.AndroidApp() = setContent {
-    AppUi()
-}
+fun ComponentActivity.AndroidApp() =
+    setContent {
+        AppUi()
+    }

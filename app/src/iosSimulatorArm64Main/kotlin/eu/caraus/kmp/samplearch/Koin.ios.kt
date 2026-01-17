@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName","Unused")
+@file:Suppress("FunctionName", "Unused")
 
 package eu.caraus.kmp.samplearch
 

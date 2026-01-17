@@ -1,6 +1,5 @@
 package eu.caraus.kmp.notes.data
 
-
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: NoteDto)
 

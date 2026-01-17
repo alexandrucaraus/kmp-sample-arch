@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.update
 import kotlin.properties.Delegates
 
 open class NoteRepositoryInMem(
-    initialList: List<Note> = emptyList()
+    initialList: List<Note> = emptyList(),
 ) : NoteRepository {
-
     private var list: List<Note> by Delegates.observable(initialList) { _, _, new ->
         listFlow.update { new }
     }
@@ -27,9 +26,7 @@ open class NoteRepositoryInMem(
         list = list.filter { it.id != noteId }
     }
 
-    override suspend fun findById(noteId: NoteId): Note? {
-        return list.find { it.id == noteId }
-    }
+    override suspend fun findById(noteId: NoteId): Note? = list.find { it.id == noteId }
 
     override fun allAsFlow(): Flow<List<Note>> = listFlow
 

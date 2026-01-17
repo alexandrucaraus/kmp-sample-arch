@@ -9,12 +9,14 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Serializable
-data class NoteDetailsRoute(val noteId: String): NavKey
+data class NoteDetailsRoute(
+    val noteId: String,
+) : NavKey
 
 @Composable
 fun NoteDetailRoute(
     params: NoteDetailsRoute,
-    close: () -> Unit
+    close: () -> Unit,
 ) {
     val state by koinViewModel<NoteDetailsViewModel>(key = params.noteId) {
         parametersOf(params.noteId)
@@ -23,6 +25,6 @@ fun NoteDetailRoute(
 
     NoteDetailsScreen(
         note = state,
-        close = close
+        close = close,
     )
 }

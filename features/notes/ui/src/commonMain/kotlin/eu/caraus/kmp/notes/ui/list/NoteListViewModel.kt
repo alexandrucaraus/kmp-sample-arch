@@ -3,8 +3,8 @@ package eu.caraus.kmp.notes.ui.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
-import eu.caraus.kmp.notes.domain.ObserveNotesList
 import eu.caraus.kmp.notes.domain.Note
+import eu.caraus.kmp.notes.domain.ObserveNotesList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,15 +21,16 @@ class NoteListViewModel(
     private val deleteUseCase: DeleteNoteUseCase,
     scope: CoroutineScope,
 ) : ViewModel(scope) {
-
-    private val notesState = MutableStateFlow(
-        NoteListState(
-            toggleSelection = ::toggleNoteSelection,
-            deleteSelected = ::deleteSelectedNotes,
-            clearSelected = ::clearSelectedNotes,
+    private val notesState =
+        MutableStateFlow(
+            NoteListState(
+                toggleSelection = ::toggleNoteSelection,
+                deleteSelected = ::deleteSelectedNotes,
+                clearSelected = ::clearSelectedNotes,
+            ),
         )
-    )
     val state = notesState.asStateFlow()
+
     private fun state() = state.value
 
     init {
@@ -37,14 +38,16 @@ class NoteListViewModel(
             .distinctUntilChanged()
             .onEach { notes ->
                 notesState.update { it.copy(notes = notes) }
-            }
-        .launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
     }
 
     private fun toggleNoteSelection(note: Note) {
-        val updateOp : (Iterable<Note>, Note) -> List<Note> =
-            if (state().selectedNotes.contains(note))
-                Iterable<Note>::minus else Iterable<Note>::plus
+        val updateOp: (Iterable<Note>, Note) -> List<Note> =
+            if (state().selectedNotes.contains(note)) {
+                Iterable<Note>::minus
+            } else {
+                Iterable<Note>::plus
+            }
 
         notesState.update { it.copy(selectedNotes = updateOp(it.selectedNotes, note)) }
     }

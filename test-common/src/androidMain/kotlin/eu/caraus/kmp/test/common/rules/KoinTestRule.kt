@@ -11,13 +11,13 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 
 class KoinTestRule(
-    private val modules: List<Module>
+    private val modules: List<Module>,
 ) : TestWatcher() {
     override fun starting(description: Description) {
         if (getKoinApplicationOrNull() == null) {
             startKoin {
                 androidContext(
-                    InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+                    InstrumentationRegistry.getInstrumentation().targetContext.applicationContext,
                 )
                 modules(modules)
             }
@@ -25,6 +25,7 @@ class KoinTestRule(
             loadKoinModules(modules)
         }
     }
+
     override fun finished(description: Description) {
         unloadKoinModules(modules)
     }

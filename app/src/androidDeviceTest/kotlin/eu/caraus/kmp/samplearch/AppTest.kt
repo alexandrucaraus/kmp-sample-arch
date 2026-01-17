@@ -13,7 +13,6 @@ import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
 class AppTest : KoinTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 

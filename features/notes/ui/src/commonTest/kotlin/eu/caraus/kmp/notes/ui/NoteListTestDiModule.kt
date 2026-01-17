@@ -8,8 +8,8 @@ import org.koin.ksp.generated.module
 @Module(
     includes = [
         NoteDiModule::class,
-        NoteUiDiModule::class
-    ]
+        NoteUiDiModule::class,
+    ],
 )
 class NoteListTestModule
 // This is probably a bug. The module is only generated in androidHostTest module
@@ -18,7 +18,8 @@ class NoteListTestModule
 // TODO needs clarification
 
 // meanwhile
-fun noteUiTestKoinModule() = module {
-    includes(NoteDiModule().module, NoteUiDiModule().module)
-    //includes(NoteListTestModule().module)
-}
+fun noteUiTestKoinModule() =
+    module {
+        includes(NoteDiModule().module, NoteUiDiModule().module)
+        // includes(NoteListTestModule().module)
+    }

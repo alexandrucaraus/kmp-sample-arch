@@ -12,17 +12,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class NoteDetailsScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
     fun displayNotesListScreen() {
-
         composeTestRule.setContent {
             NoteDetailsScreen(
                 note = NoteState(),
-                close = {}
+                close = {},
             )
         }
 

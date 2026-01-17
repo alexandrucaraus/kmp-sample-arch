@@ -13,21 +13,24 @@ import eu.caraus.kmp.notes.ui.navigation.NotesSerializerModule
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
-private val savedStateConfig = SavedStateConfiguration {
-    serializersModule = SerializersModule {
-        polymorphic(NavKey::class) {
-            // include here any other navigation serializer modules
-            include(NotesSerializerModule)
-        }
+private val savedStateConfig =
+    SavedStateConfiguration {
+        serializersModule =
+            SerializersModule {
+                polymorphic(NavKey::class) {
+                    // include here any other navigation serializer modules
+                    include(NotesSerializerModule)
+                }
+            }
     }
-}
 
 @Composable
 internal fun AppNavigation() {
-    val backStack = rememberNavBackStack(
-        configuration = savedStateConfig,
-        NoteListRoute
-    )
+    val backStack =
+        rememberNavBackStack(
+            configuration = savedStateConfig,
+            NoteListRoute,
+        )
     NavDisplay(
         modifier = Modifier.fillMaxSize(),
         backStack = backStack,
@@ -35,6 +38,6 @@ internal fun AppNavigation() {
         entryProvider = { key ->
             NotesNavGraph(key, backStack)
                 ?: error("Destination not found $key")
-        }
+        },
     )
 }

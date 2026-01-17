@@ -26,7 +26,6 @@ import org.koin.test.inject
 
 @RunWith(AndroidJUnit4::class)
 class NotesNavigationTest : KoinTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -43,7 +42,7 @@ class NotesNavigationTest : KoinTest {
         composeTestRule.setContent {
             NavHostTest(
                 startDestination = NoteListRoute,
-                serializerModule = NotesSerializerModule
+                serializerModule = NotesSerializerModule,
             ) { key, backStack ->
                 NotesNavGraph(key, backStack)
                     ?: error("Destination not found $key")

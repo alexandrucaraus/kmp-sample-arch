@@ -10,7 +10,7 @@ plugins {
     // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
     // https://github.com/cashapp/paparazzi/pull/2115/files
     // when 2.0.0-alpha04 is out apply it
-    //alias(libs.plugins.paparazzi) apply true
+    // alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
 }
 
@@ -20,14 +20,23 @@ kotlin {
 
     androidLibrary {
         namespace = "eu.caraus.kmp.test.common"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        lint.targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         withJava()
         withHostTest {}
         withDeviceTest {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            //instrumentationRunner = "eu.caraus.kmp.notes.ui.DeviceTestRunner"
+            // instrumentationRunner = "eu.caraus.kmp.notes.ui.DeviceTestRunner"
             execution = "HOST"
         }
         androidResources {
@@ -79,7 +88,7 @@ dependencies {
 
 dependencies {
     add("kspCommonMainMetadata", libs.koin.compiler)
-    //add("kspAndroid", libs.koin.compiler)
+    // add("kspAndroid", libs.koin.compiler)
     add("ksp", libs.koin.compiler)
 }
 

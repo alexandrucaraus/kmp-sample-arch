@@ -9,7 +9,7 @@ import eu.caraus.kmp.notes.data.NoteDto
 @Database(
     version = AppDatabase.LATEST_VERSION,
     entities = [
-        NoteDto::class
+        NoteDto::class,
     ],
     exportSchema = true,
 )

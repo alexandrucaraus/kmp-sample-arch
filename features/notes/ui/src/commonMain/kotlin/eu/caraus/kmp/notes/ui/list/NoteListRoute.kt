@@ -9,14 +9,13 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
-data object NoteListRoute: NavKey
+data object NoteListRoute : NavKey
 
 @Composable
 fun NoteListRoute(
     openNote: (Note) -> Unit,
     createNote: () -> Unit,
 ) {
-
     val state by koinViewModel<NoteListViewModel>()
         .state
         .collectAsStateWithLifecycle()

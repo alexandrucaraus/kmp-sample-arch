@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
-   // id("kmp.jacoco")
+    // id("kmp.jacoco")
 }
 
 kotlin {
@@ -17,9 +17,18 @@ kotlin {
 
     androidLibrary {
         namespace = "eu.caraus.kmp.notes.itest"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        lint.targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         withJava()
         withDeviceTest {
             enableCoverage = true
@@ -75,7 +84,7 @@ kotlin {
 
 dependencies {
     add("kspCommonMainMetadata", libs.koin.compiler)
-    //add("kspAndroid", libs.koin.compiler)
+    // add("kspAndroid", libs.koin.compiler)
     add("ksp", libs.koin.compiler)
 }
 

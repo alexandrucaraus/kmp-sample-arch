@@ -15,23 +15,26 @@ import kotlinx.serialization.modules.SerializersModule
 fun NavHostTest(
     startDestination: NavKey,
     serializerModule: SerializersModule,
-    guest: (NavKey, NavBackStack<NavKey>) -> NavEntry<NavKey>?
+    guest: (NavKey, NavBackStack<NavKey>) -> NavEntry<NavKey>?,
 ) {
-    val savedStateConfig = SavedStateConfiguration {
-        serializersModule = SerializersModule {
-            include(serializerModule)
+    val savedStateConfig =
+        SavedStateConfiguration {
+            serializersModule =
+                SerializersModule {
+                    include(serializerModule)
+                }
         }
-    }
-    val backStack = rememberNavBackStack(
-        configuration = savedStateConfig,
-        startDestination
-    )
+    val backStack =
+        rememberNavBackStack(
+            configuration = savedStateConfig,
+            startDestination,
+        )
     NavDisplay(
         modifier = Modifier.fillMaxSize(),
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->
             guest(key, backStack) ?: error("Destination nav key found $key")
-        }
+        },
     )
 }

@@ -10,18 +10,27 @@ plugins {
     id("kmp.koin.ksp")
 }
 
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
+}
+
 kotlin {
-
     applyDefaultHierarchyTemplate()
-
     val appId = "eu.caraus.kmp.samplearch"
-
     androidLibrary {
         namespace = appId
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
-        //withJava()
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        lint.targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         withHostTest {
             enableCoverage = true
             isIncludeAndroidResources = true
@@ -36,10 +45,9 @@ kotlin {
         }
         testCoverage {}
     }
-
     listOf(
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "composeApp"
@@ -48,7 +56,6 @@ kotlin {
             linkerOpts.add("-lsqlite3")
         }
     }
-
     sourceSets {
         commonMain {
             dependencies {
@@ -56,11 +63,8 @@ kotlin {
                 implementation(projects.features.notes.data)
                 implementation(projects.features.notes.ui)
                 implementation(projects.data.database)
-
                 implementation(libs.compose.material3)
-
                 implementation(libs.compose.nav3)
-
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.annotations)
@@ -91,11 +95,3 @@ dependencies {
     add("kspAndroid", libs.koin.compiler)
     add("ksp", libs.koin.compiler)
 }
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
-}
-
-//jacoco {
-//    toolVersion = "0.8.10"
-//}

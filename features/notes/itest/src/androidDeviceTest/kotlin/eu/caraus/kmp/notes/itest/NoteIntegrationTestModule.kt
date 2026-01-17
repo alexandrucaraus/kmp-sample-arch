@@ -16,7 +16,7 @@ import org.koin.core.annotation.Single
         NoteDiModule::class,
         NoteUiDiModule::class,
         NoteDataDiModule::class,
-    ]
+    ],
 )
 @ComponentScan("eu.caraus.kmp.nots.ui")
 class NoteIntegrationTestModule {

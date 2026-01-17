@@ -53,16 +53,20 @@ fun NoteListScreen(
         TopAppBar(
             title = { Text("Notes") },
             actions = { DeleteSelectionsButton(state) },
-            navigationIcon = { ClearSelectionsButton(state) }
+            navigationIcon = { ClearSelectionsButton(state) },
         )
     },
     floatingActionButton = { CreateNoteButton(createNote) },
     content = { padding ->
-        if (state.notes.isEmpty()) EmptyNoteList() else NoteList(
-            modifier = Modifier.padding(padding),
-            state = state,
-            openNote = openNote,
-        )
+        if (state.notes.isEmpty()) {
+            EmptyNoteList()
+        } else {
+            NoteList(
+                modifier = Modifier.padding(padding),
+                state = state,
+                openNote = openNote,
+            )
+        }
     },
 )
 
@@ -80,7 +84,7 @@ internal fun NoteList(
             note = note,
             openNote = openNote,
             isSelected = note in state.selectedNotes,
-            selectNote = state.toggleSelection
+            selectNote = state.toggleSelection,
         )
     }
 }
@@ -96,23 +100,26 @@ internal fun NoteListItem(
 ) {
     val borderWidth = if (isSelected) 2.dp else (0.5).dp
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else DarkGray
-    Card(modifier = modifier
-        .fillMaxWidth()
-        .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
-        .combinedClickable(
-            enabled = true,
-            onClick = {
-                openNote(note)
-            },
-            onLongClick = {
-                selectNote(note)
-            }
-        )
+    Card(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
+                .combinedClickable(
+                    enabled = true,
+                    onClick = {
+                        openNote(note)
+                    },
+                    onLongClick = {
+                        selectNote(note)
+                    },
+                ),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge,
@@ -124,7 +131,7 @@ internal fun NoteListItem(
                 style = MaterialTheme.typography.bodyLarge,
                 text = note.content,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -138,49 +145,43 @@ internal fun EmptyNoteList() {
 }
 
 @Composable
-internal fun CreateNoteButton(
-    createNote: () -> Unit
-) {
+internal fun CreateNoteButton(createNote: () -> Unit) {
     Button(
         modifier = Modifier.testTag("CreateNoteButton"),
-        onClick = createNote
+        onClick = createNote,
     ) {
         Icon(
             imageVector = Icons.Default.PlusOne,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }
 
 @Composable
-internal fun DeleteSelectionsButton(
-    state: NoteListState
-) {
+internal fun DeleteSelectionsButton(state: NoteListState) {
     if (state.selectedNotes.isNotEmpty()) {
         IconButton(
             modifier = Modifier.testTag("DeleteSelectionsButton"),
-            onClick = state.deleteSelected
+            onClick = state.deleteSelected,
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
 }
 
 @Composable
-internal fun ClearSelectionsButton(
-    state: NoteListState
-) {
+internal fun ClearSelectionsButton(state: NoteListState) {
     if (state.selectedNotes.isNotEmpty()) {
         IconButton(
             modifier = Modifier.testTag("ClearSelectionsButton"),
-            onClick = state.clearSelected
+            onClick = state.clearSelected,
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }

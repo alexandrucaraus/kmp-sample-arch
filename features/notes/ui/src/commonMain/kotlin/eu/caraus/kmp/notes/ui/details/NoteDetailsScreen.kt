@@ -46,7 +46,7 @@ fun NoteDetailsScreen(
             },
             actions = {
                 DeleteButton { note.delete(close) }
-            }
+            },
         )
     },
     content = { padding ->
@@ -56,40 +56,36 @@ fun NoteDetailsScreen(
                 value = note.title,
                 onValueChange = note.updateTitle,
                 textStyle = TextStyle(fontSize = 20.sp),
-                placeholder = { Text("Title") }
+                placeholder = { Text("Title") },
             )
             TextField(
                 modifier = Modifier.testTag("ContentField").fillMaxWidth().fillMaxHeight(),
                 value = note.content,
                 onValueChange = note.updateContent,
-                placeholder = { Text("Note") }
+                placeholder = { Text("Note") },
             )
         }
     },
 )
 
 @Composable
-internal fun BackButton(
-    onClick: () -> Unit
-) {
+internal fun BackButton(onClick: () -> Unit) {
     IconButton(
         modifier = Modifier.testTag("BackButton"),
-        onClick = onClick
+        onClick = onClick,
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }
 
 @Composable
-internal fun DeleteButton(
-    onClick: () -> Unit
-) {
+internal fun DeleteButton(onClick: () -> Unit) {
     IconButton(
         modifier = Modifier.testTag("DeleteButton"),
-        onClick = onClick
+        onClick = onClick,
     ) {
         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
     }

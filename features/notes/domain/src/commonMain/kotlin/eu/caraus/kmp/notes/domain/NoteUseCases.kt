@@ -10,7 +10,7 @@ import kotlin.uuid.Uuid
 
 @Factory
 class ObserveNotesList(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
     operator fun invoke(): Flow<List<Note>> =
         repository
@@ -20,17 +20,15 @@ class ObserveNotesList(
 
 @Factory
 class ObserveOneNote(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
-    operator fun invoke(noteId: NoteId): Flow<Note> =
-        flowOf(noteId).map { repository.findById(noteId) ?: Note(id = noteId) }
+    operator fun invoke(noteId: NoteId): Flow<Note> = flowOf(noteId).map { repository.findById(noteId) ?: Note(id = noteId) }
 }
 
 @Factory
 class SaveNoteUseCase(
-    repository: NoteRepository
+    repository: NoteRepository,
 ) {
-
     private val updateNote: UpdateNoteUseCase = UpdateNoteUseCase(repository)
     private val createNote: CreateNoteUseCase = CreateNoteUseCase(repository)
 
@@ -57,14 +55,17 @@ class SaveNoteUseCase(
 }
 
 internal class CreateNoteUseCase(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
     @OptIn(ExperimentalUuidApi::class, ExperimentalTime::class)
     suspend operator fun invoke(
         title: String,
         content: String,
     ) {
-        val time = kotlin.time.Clock.System.now().toEpochMilliseconds()
+        val time =
+            kotlin.time.Clock.System
+                .now()
+                .toEpochMilliseconds()
         repository.save(
             Note(
                 id = Uuid.random().toString(),
@@ -72,14 +73,14 @@ internal class CreateNoteUseCase(
                 content = content,
                 createdAt = time,
                 updatedAt = time,
-            )
+            ),
         )
     }
 }
 
 // Todo remove time dependency
 internal class UpdateNoteUseCase(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
     @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
@@ -92,8 +93,11 @@ internal class UpdateNoteUseCase(
                 note.copy(
                     title = title,
                     content = content,
-                    updatedAt = kotlin.time.Clock.System.now().toEpochMilliseconds(),
-                )
+                    updatedAt =
+                        kotlin.time.Clock.System
+                            .now()
+                            .toEpochMilliseconds(),
+                ),
             )
         } ?: throw IllegalStateException("Note not found")
     }
@@ -101,7 +105,7 @@ internal class UpdateNoteUseCase(
 
 @Factory
 class DeleteNoteUseCase(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
     suspend operator fun invoke(noteId: NoteId) {
         repository.deleteById(noteId = noteId)

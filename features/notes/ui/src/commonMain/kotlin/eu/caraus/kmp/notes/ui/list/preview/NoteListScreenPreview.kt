@@ -11,6 +11,6 @@ fun NoteListScreenPreview() {
     NoteListScreen(
         state = NoteListState(),
         openNote = {},
-        createNote = {}
+        createNote = {},
     )
 }

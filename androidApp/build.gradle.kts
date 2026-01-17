@@ -1,3 +1,5 @@
+@file:Suppress("All")
+
 import dev.iurysouza.modulegraph.Theme
 
 plugins {
@@ -16,11 +18,20 @@ kotlin {
 
 android {
     namespace = "eu.caraus.kmp.samplearch.android"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
     defaultConfig {
         applicationId = "eu.caraus.kmp.samplearch.android"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -54,19 +65,14 @@ android {
 
 dependencies {
     implementation(projects.app)
-
     implementation(libs.compose.material3)
-
     implementation(libs.androidx.activity.compose)
-
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     implementation(libs.koin.android)
-
+    implementation(libs.compose.ui.tooling)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
-
-    implementation(libs.compose.ui.tooling)
 }
 
 moduleGraphConfig {
@@ -87,14 +93,9 @@ moduleGraphConfig {
                 "tertiaryColor" to "#40375c",
                 "fontSize" to "12px",
             ),
-            focusColor = "#FA8140"
+            focusColor = "#FA8140",
         ),
     )
 }
 
-//jacoco {
-//    toolVersion = "0.8.14"
-//}
-
-ktlint {
-}
+ktlint {}

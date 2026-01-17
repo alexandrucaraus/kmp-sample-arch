@@ -13,40 +13,40 @@ import java.lang.reflect.Method
 
 // todo move this to a test support module
 class ComposePreviewsAggregator {
-
-
-    fun scan(vararg packagesName: String): List<Method> {
-        return ClassGraph()
+    fun scan(vararg packagesName: String): List<Method> =
+        ClassGraph()
             .enableMethodInfo()
             .enableAnnotationInfo()
             .acceptPackages(*packagesName)
-            .scan().use { scanResult ->
-                scanResult.getClassesWithMethodAnnotation(Preview::class.java.name)
+            .scan()
+            .use { scanResult ->
+                scanResult
+                    .getClassesWithMethodAnnotation(Preview::class.java.name)
                     .flatMap { clazz -> clazz.methodInfo }
-                    //.filter { method -> method.hasAnnotation(Preview::class.java.name) }
+                    // .filter { method -> method.hasAnnotation(Preview::class.java.name) }
                     .map(::extractMethod)
             }
-    }
 
     private fun extractMethod(methodInfo: MethodInfo): Method {
         val clazz = Class.forName(methodInfo.className)
-        val method = clazz.declaredMethods.find { it.name == methodInfo.name }
-            ?: throw NoSuchMethodException("${methodInfo.className} in ${methodInfo.className} not found")
+        val method =
+            clazz.declaredMethods.find { it.name == methodInfo.name }
+                ?: throw NoSuchMethodException("${methodInfo.className} in ${methodInfo.className} not found")
         method.isAccessible = true
         return method
     }
-
 }
 
 @Composable
 fun SnapshotDarkBackground(
     modifier: Modifier = Modifier,
-    toSnapshot: @Composable () -> Unit
+    toSnapshot: @Composable () -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .background(Color.Black)
-            .fillMaxSize()
+        modifier =
+            modifier
+                .background(Color.Black)
+                .fillMaxSize(),
     ) {
         toSnapshot()
     }

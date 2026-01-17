@@ -10,29 +10,31 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AppDatabaseTest {
-
     private val migrationTestDB = "migration-test"
 
     @get:Rule
-    val migrationTestHelper = MigrationTestHelper(
-        InstrumentationRegistry.getInstrumentation(),
-        AppDatabase::class.java
-    )
+    val migrationTestHelper =
+        MigrationTestHelper(
+            InstrumentationRegistry.getInstrumentation(),
+            AppDatabase::class.java,
+        )
 
     @Test
     fun validateSchema() {
-        migrationTestHelper.createDatabase(
-            migrationTestDB, AppDatabase.
-            LATEST_VERSION
-        ).apply {
-            close()
-        }
+        migrationTestHelper
+            .createDatabase(
+                migrationTestDB,
+                AppDatabase
+                    .LATEST_VERSION,
+            ).apply {
+                close()
+            }
 
         migrationTestHelper.runMigrationsAndValidate(
             migrationTestDB,
             AppDatabase.LATEST_VERSION,
             true,
-            *arrayOf()
+            *arrayOf(),
         )
     }
 
