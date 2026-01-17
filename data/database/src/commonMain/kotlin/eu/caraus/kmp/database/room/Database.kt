@@ -6,10 +6,8 @@ import androidx.room.RoomDatabase
 import eu.caraus.kmp.notes.data.NoteDao
 import eu.caraus.kmp.notes.data.NoteDto
 
-const val DATABASE_FILE_NAME = "notes_room.db"
-
 @Database(
-    version = 1,
+    version = AppDatabase.LATEST_VERSION,
     entities = [
         NoteDto::class
     ],
@@ -18,4 +16,10 @@ const val DATABASE_FILE_NAME = "notes_room.db"
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
+
+    companion object {
+        const val LATEST_VERSION = 1
+    }
 }
+
+val AppDatabase.Companion.DATABASE_FILE_NAME: String get() = "notes_room.db"

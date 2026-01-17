@@ -157,7 +157,10 @@ internal fun DeleteSelectionsButton(
     state: NoteListState
 ) {
     if (state.selectedNotes.isNotEmpty()) {
-        IconButton(onClick = state.deleteSelected) {
+        IconButton(
+            modifier = Modifier.testTag("DeleteSelectionsButton"),
+            onClick = state.deleteSelected
+        ) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = null
@@ -171,7 +174,10 @@ internal fun ClearSelectionsButton(
     state: NoteListState
 ) {
     if (state.selectedNotes.isNotEmpty()) {
-        IconButton(onClick = state.clearSelected) {
+        IconButton(
+            modifier = Modifier.testTag("ClearSelectionsButton"),
+            onClick = state.clearSelected
+        ) {
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = null

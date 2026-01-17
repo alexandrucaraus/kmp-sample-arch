@@ -1,7 +1,6 @@
-package eu.caraus.kmp.notes.ui.list
+package eu.caraus.kmp.notes.ui
 
 import eu.caraus.kmp.notes.domain.NoteDiModule
-import eu.caraus.kmp.notes.ui.NoteUiDiModule
 import org.koin.core.annotation.Module
 import org.koin.dsl.module
 import org.koin.ksp.generated.module

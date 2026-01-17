@@ -16,6 +16,7 @@ import kotlinx.serialization.modules.polymorphic
 private val savedStateConfig = SavedStateConfiguration {
     serializersModule = SerializersModule {
         polymorphic(NavKey::class) {
+            // include here any other navigation serializer modules
             include(NotesSerializerModule)
         }
     }

@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
-    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -22,13 +21,20 @@ kotlin {
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
         lint.targetSdk = libs.versions.android.targetSdk.get().toInt()
-        withJava()
+        //withJava()
         withHostTest {
             enableCoverage = true
+            isIncludeAndroidResources = true
         }
         withDeviceTest {
             enableCoverage = true
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            execution = "HOST"
+            androidResources {
+                enable = true
+            }
         }
+        testCoverage {}
     }
 
     listOf(
@@ -66,6 +72,17 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.koin.android)
         }
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(projects.testCommon)
+                implementation(libs.koin.test)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.androidx.test.compose.manifest)
+                implementation(libs.androidx.test.compose.junit)
+                implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.espresso)
+            }
+        }
     }
 }
 
@@ -79,24 +96,6 @@ ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
 
-kover {
-    reports {
-        filters {
-            excludes {
-                classes(
-                    "*Fragment",
-                    "*Fragment\$*",
-                    "*Activity",
-                    "*Activity\$*",
-                    "*.BuildConfig"
-                )
-            }
-        }
-
-        verify {
-            rule {
-                minBound(80)
-            }
-        }
-    }
-}
+//jacoco {
+//    toolVersion = "0.8.10"
+//}

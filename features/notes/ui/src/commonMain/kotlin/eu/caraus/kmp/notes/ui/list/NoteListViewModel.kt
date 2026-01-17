@@ -3,7 +3,7 @@ package eu.caraus.kmp.notes.ui.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
-import eu.caraus.kmp.notes.domain.GetNotesListUseCase
+import eu.caraus.kmp.notes.domain.ObserveNotesList
 import eu.caraus.kmp.notes.domain.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class NoteListViewModel(
-    private val notesList: GetNotesListUseCase,
+    private val notesList: ObserveNotesList,
     private val deleteUseCase: DeleteNoteUseCase,
     scope: CoroutineScope,
 ) : ViewModel(scope) {

@@ -9,7 +9,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Factory
-class GetNotesListUseCase(
+class ObserveNotesList(
     private val repository: NoteRepository
 ) {
     operator fun invoke(): Flow<List<Note>> =
@@ -19,7 +19,7 @@ class GetNotesListUseCase(
 }
 
 @Factory
-class GetNoteUseCase(
+class ObserveOneNote(
     private val repository: NoteRepository
 ) {
     operator fun invoke(noteId: NoteId): Flow<Note> =
@@ -77,6 +77,7 @@ internal class CreateNoteUseCase(
     }
 }
 
+// Todo remove time dependency
 internal class UpdateNoteUseCase(
     private val repository: NoteRepository
 ) {
@@ -104,10 +105,6 @@ class DeleteNoteUseCase(
 ) {
     suspend operator fun invoke(noteId: NoteId) {
         repository.deleteById(noteId = noteId)
-    }
-
-    suspend operator fun invoke(note: Note) {
-        repository.delete(note = note)
     }
 
     suspend operator fun invoke(notes: List<Note>) {

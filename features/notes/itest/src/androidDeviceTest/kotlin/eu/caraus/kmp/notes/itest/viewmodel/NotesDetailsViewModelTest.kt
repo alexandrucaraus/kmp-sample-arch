@@ -3,10 +3,10 @@
 package eu.caraus.kmp.notes.itest.viewmodel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import eu.caraus.kmp.notes.domain.GetNoteUseCase
-import eu.caraus.kmp.notes.domain.GetNotesListUseCase
+import eu.caraus.kmp.database.room.AppDatabase
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.domain.NoteRepository
+import eu.caraus.kmp.notes.domain.ObserveNotesList
+import eu.caraus.kmp.notes.domain.ObserveOneNote
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
 import eu.caraus.kmp.notes.itest.NoteIntegrationTestModule
 import eu.caraus.kmp.notes.ui.details.NoteDetailsViewModel
@@ -36,16 +36,16 @@ class NotesDetailsViewModelTest : KoinTest {
 
     @Before
     fun setup() {
-        val notesRepository by inject<NoteRepository>()
-        runBlocking { notesRepository.deleteAll() }
+        inject<AppDatabase>().value.clearAllTables()
+        inject<AppDatabase>().value.openHelper.readableDatabase
     }
 
     @Test
     fun load_edit_and_save_note() = runBlocking {
 
         val saveNoteUseCase by inject<SaveNoteUseCase>()
-        val getNotesListUseCase by inject<GetNotesListUseCase>()
-        val getNoteUseCase by inject<GetNoteUseCase>()
+        val getNotesListUseCase by inject<ObserveNotesList>()
+        val observeOneNote by inject<ObserveOneNote>()
 
         saveNoteUseCase(
             noteId = Note.NO_ID,
@@ -94,7 +94,7 @@ class NotesDetailsViewModelTest : KoinTest {
             .timeout(3.seconds)
             .collect()
 
-        val loadedNote = getNoteUseCase(noteId).first()
+        val loadedNote = observeOneNote(noteId).first()
 
         assertTrue("Title not updated in db") {
             loadedNote.title == "test1TitleUpdated"

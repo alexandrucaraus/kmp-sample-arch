@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.kover) apply true
+    id("kmp.jacoco") apply true
 }
 
 
@@ -19,6 +20,10 @@ kover {
     currentProject {
         createVariant("debug") { }
     }
+}
+
+jacoco {
+    toolVersion = "0.8.14"
 }
 
 // Design system

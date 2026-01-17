@@ -3,8 +3,8 @@
 package eu.caraus.kmp.notes.itest.viewmodel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import eu.caraus.kmp.database.room.AppDatabase
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.domain.NoteRepository
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
 import eu.caraus.kmp.notes.itest.NoteIntegrationTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListViewModel
@@ -32,8 +32,8 @@ class NotesListViewModelTest : KoinTest {
 
     @Before
     fun setup() {
-        val notesRepository by inject<NoteRepository>()
-        runBlocking { notesRepository.deleteAll() }
+        inject<AppDatabase>().value.clearAllTables()
+        inject<AppDatabase>().value.openHelper.readableDatabase
     }
 
     @Test

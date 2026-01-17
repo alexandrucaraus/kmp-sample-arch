@@ -3,7 +3,7 @@ package eu.caraus.kmp.notes.ui.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
-import eu.caraus.kmp.notes.domain.GetNoteUseCase
+import eu.caraus.kmp.notes.domain.ObserveOneNote
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class NoteDetailsViewModel(
     private val noteId: String,
-    getNote: GetNoteUseCase,
+    observeOneNote: ObserveOneNote,
     private val saveNote: SaveNoteUseCase,
     private val deleteNote: DeleteNoteUseCase,
     coroutineScope: CoroutineScope,
@@ -35,7 +35,7 @@ class NoteDetailsViewModel(
     val state: StateFlow<NoteState> = noteState
 
     init {
-        getNote(noteId = noteId).onEach { note ->
+        observeOneNote(noteId = noteId).onEach { note ->
             noteState.update {
                 it.copy(
                     id = note.id,

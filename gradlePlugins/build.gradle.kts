@@ -40,5 +40,9 @@ gradlePlugin {
             id = "kmp.room.ksp"
             implementationClass = "eu.caraus.kmp.KMPRoomKsp"
         }
+        create("jacoco") {
+            id = "kmp.jacoco"
+            implementationClass = "eu.caraus.kmp.KMPJacoco"
+        }
     }
 }

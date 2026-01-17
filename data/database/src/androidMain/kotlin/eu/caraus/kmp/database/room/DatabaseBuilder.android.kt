@@ -21,7 +21,7 @@ actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase 
 @Single
 actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
     val appContext = ctx.androidContext.applicationContext
-    val dbFile = appContext.getDatabasePath(DATABASE_FILE_NAME)
+    val dbFile = appContext.getDatabasePath(AppDatabase.DATABASE_FILE_NAME)
     return Room.databaseBuilder<AppDatabase>(
         context = appContext,
         name = dbFile.absolutePath

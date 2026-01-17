@@ -7,12 +7,8 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ksp)
-    // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
-    // https://github.com/cashapp/paparazzi/pull/2115/files
-    // when 2.0.0-alpha04 is out apply it
-    //alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
-    id ("org.jetbrains.kotlinx.kover")
+    //id("kmp.jacoco")
 }
 
 kotlin {
@@ -27,11 +23,11 @@ kotlin {
         withJava()
         withHostTest {
             enableCoverage = true
+            isIncludeAndroidResources = true
         }
         withDeviceTest {
             enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            //instrumentationRunner = "eu.caraus.kmp.notes.ui.DeviceTestRunner"
             execution = "HOST"
         }
         androidResources {
@@ -103,12 +99,3 @@ dependencies {
 ksp {
     arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }
-
-kover {
-    currentProject {
-        createVariant("custom") {
-            add("android")
-        }
-    }
-}
-
