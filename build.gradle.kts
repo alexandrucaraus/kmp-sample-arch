@@ -7,27 +7,16 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
-    alias(libs.plugins.kover) apply true
+    alias(libs.plugins.kover) apply false
     alias(libs.plugins.ktlint)
     id("kmp.jacoco") apply true
-}
-
-dependencies {
-    kover(project(":app"))
-    kover(project(":features:notes:itest"))
-    kover(project(":features:notes:ui"))
-}
-
-kover {
-    currentProject {
-        createVariant("debug") { }
-    }
 }
 
 jacoco {
     toolVersion = "0.8.14"
 }
 
+// Todo put below behind a ktlin local plugin
 buildscript {
     dependencies {
         classpath("io.nlopez.compose.rules:ktlint:0.5.3") {

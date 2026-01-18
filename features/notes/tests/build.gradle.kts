@@ -6,17 +6,17 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
-    // https://github.com/cashapp/paparazzi/pull/2115/files
-    // when 2.0.0-alpha04 is out apply it
-    // alias(libs.plugins.paparazzi) apply true
     id("kmp.koin.ksp")
+}
+
+kmpKoinKsp {
+    useKoinViewModel = true
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
     androidLibrary {
-        namespace = "eu.caraus.kmp.test.common"
+        namespace = "eu.caraus.kmp.notes.tests"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -30,8 +30,12 @@ kotlin {
                 .get()
                 .toInt()
         withJava()
-        withHostTest {}
+        withHostTest {
+            enableCoverage = true
+            isIncludeAndroidResources = true
+        }
         withDeviceTest {
+            enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             execution = "HOST"
         }
@@ -41,40 +45,43 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+        testCoverage {}
     }
     iosArm64()
     iosSimulatorArm64()
-
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.compose.material3.icons.extended)
-            implementation(libs.compose.material3)
-
-            implementation(libs.compose.nav3)
-
+            implementation(projects.testCommon)
+            api(projects.features.notes.domain)
+            api(projects.features.notes.ui)
+            api(projects.features.notes.data)
+            api(projects.data.database)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
-
+            implementation(libs.compose.material3.icons.extended)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.nav3)
+        }
+        commonTest.dependencies {
+            implementation(libs.koin.core)
+            implementation(libs.koin.test)
+            implementation(libs.koin.core.viewmodel)
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
-
-            implementation(libs.koin.test)
-            implementation(libs.koin.core.viewmodel)
         }
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling)
-            api(libs.paparazzi.classgraph)
-            implementation(libs.koin.test)
-            implementation(libs.koin.core.viewmodel)
-            implementation(libs.androidx.test.compose.manifest)
-            implementation(libs.androidx.test.compose.junit)
-            implementation(libs.androidx.test.junit)
-            implementation(libs.androidx.test.espresso)
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(libs.koin.test)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.androidx.test.compose.manifest)
+                implementation(libs.androidx.test.compose.junit)
+                implementation(libs.androidx.test.junit)
+                implementation(libs.androidx.test.espresso)
+            }
         }
     }
 }
