@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.test.ui
+package eu.caraus.kmp.notes.tests.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

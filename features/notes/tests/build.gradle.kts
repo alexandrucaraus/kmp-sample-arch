@@ -50,7 +50,24 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     sourceSets {
-        commonMain.dependencies {
+//        commonMain.dependencies {
+//            implementation(projects.testCommon)
+//            api(projects.features.notes.domain)
+//            api(projects.features.notes.ui)
+//            api(projects.features.notes.data)
+//            api(projects.data.database)
+//            implementation(libs.kotlinx.coroutines.core)
+//            implementation(libs.kotlinx.datetime)
+//            implementation(libs.kotlinx.serialization.json)
+//            implementation(libs.koin.core)
+//            implementation(libs.koin.annotations)
+//            implementation(libs.koin.compose.viewmodel)
+//            implementation(libs.compose.material3.icons.extended)
+//            implementation(libs.compose.material3)
+//            implementation(libs.compose.nav3)
+//        }
+        commonTest.dependencies {
+
             implementation(projects.testCommon)
             api(projects.features.notes.domain)
             api(projects.features.notes.ui)
@@ -65,8 +82,7 @@ kotlin {
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
             implementation(libs.compose.nav3)
-        }
-        commonTest.dependencies {
+
             implementation(libs.koin.core)
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
@@ -75,6 +91,22 @@ kotlin {
         }
         getByName("androidDeviceTest") {
             dependencies {
+
+                implementation(projects.testCommon)
+                api(projects.features.notes.domain)
+                api(projects.features.notes.ui)
+                api(projects.features.notes.data)
+                api(projects.data.database)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.koin.core)
+                implementation(libs.koin.annotations)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.compose.material3.icons.extended)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.nav3)
+
                 implementation(libs.koin.test)
                 implementation(libs.koin.core.viewmodel)
                 implementation(libs.androidx.test.compose.manifest)

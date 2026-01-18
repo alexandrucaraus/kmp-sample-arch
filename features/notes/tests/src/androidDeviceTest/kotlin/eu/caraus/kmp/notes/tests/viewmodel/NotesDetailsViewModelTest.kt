@@ -1,6 +1,6 @@
 @file:OptIn(FlowPreview::class)
 
-package eu.caraus.kmp.notes.test.viewmodel
+package eu.caraus.kmp.notes.tests.viewmodel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.database.room.AppDatabase
@@ -8,7 +8,7 @@ import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.ObserveNotesList
 import eu.caraus.kmp.notes.domain.ObserveOneNote
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
-import eu.caraus.kmp.notes.test.NoteDeviceTestModule
+import eu.caraus.kmp.notes.tests.deviceTestModule
 import eu.caraus.kmp.notes.ui.details.NoteDetailsViewModel
 import eu.caraus.kmp.test.common.rules.KoinTestRule
 import kotlinx.coroutines.FlowPreview
@@ -22,7 +22,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.parameter.parametersOf
-import org.koin.ksp.generated.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertTrue
@@ -31,7 +30,7 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(AndroidJUnit4::class)
 class NotesDetailsViewModelTest : KoinTest {
     @get:Rule
-    val koinTestRule = KoinTestRule(modules = listOf(NoteDeviceTestModule().module))
+    val koinTestRule = KoinTestRule(modules = listOf(deviceTestModule()))
 
     @Before
     fun setup() {
