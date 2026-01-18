@@ -7,7 +7,7 @@ import eu.caraus.kmp.notes.ui.details.NoteState
 
 @Composable
 @Preview
-fun NoteDetailsScreenPreview() {
+internal fun NoteDetailsScreenPreview() {
     NoteDetailsScreen(
         note =
             NoteState(

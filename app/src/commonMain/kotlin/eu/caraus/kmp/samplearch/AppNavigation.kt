@@ -25,14 +25,14 @@ private val savedStateConfig =
     }
 
 @Composable
-internal fun AppNavigation() {
+internal fun AppNavigation(modifier: Modifier = Modifier) {
     val backStack =
         rememberNavBackStack(
             configuration = savedStateConfig,
             NoteListRoute,
         )
     NavDisplay(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->

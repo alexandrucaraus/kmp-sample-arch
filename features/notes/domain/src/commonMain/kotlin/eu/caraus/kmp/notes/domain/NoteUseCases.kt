@@ -22,7 +22,9 @@ class ObserveNotesList(
 class ObserveOneNote(
     private val repository: NoteRepository,
 ) {
-    operator fun invoke(noteId: NoteId): Flow<Note> = flowOf(noteId).map { repository.findById(noteId) ?: Note(id = noteId) }
+    operator fun invoke(noteId: NoteId): Flow<Note> =
+        flowOf(noteId)
+            .map { repository.findById(noteId) ?: Note(id = noteId) }
 }
 
 @Factory

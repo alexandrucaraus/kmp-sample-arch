@@ -25,7 +25,7 @@ fun NotesNavGraph(
     backStack: NavBackStack<NavKey>,
 ): NavEntry<NavKey>? =
     when (key) {
-        is NoteListRoute ->
+        is NoteListRoute -> {
             NavEntry(key) {
                 NoteListRoute(
                     openNote = { note ->
@@ -36,7 +36,9 @@ fun NotesNavGraph(
                     },
                 )
             }
-        is NoteDetailsRoute ->
+        }
+
+        is NoteDetailsRoute -> {
             NavEntry(key) { params ->
                 NoteDetailRoute(
                     params = params as NoteDetailsRoute,
@@ -45,5 +47,9 @@ fun NotesNavGraph(
                     },
                 )
             }
-        else -> null
+        }
+
+        else -> {
+            null
+        }
     }

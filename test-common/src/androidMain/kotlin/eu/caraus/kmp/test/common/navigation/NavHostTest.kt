@@ -16,6 +16,7 @@ fun NavHostTest(
     startDestination: NavKey,
     serializerModule: SerializersModule,
     guest: (NavKey, NavBackStack<NavKey>) -> NavEntry<NavKey>?,
+    modifier: Modifier = Modifier,
 ) {
     val savedStateConfig =
         SavedStateConfiguration {
@@ -30,7 +31,7 @@ fun NavHostTest(
             startDestination,
         )
     NavDisplay(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->

@@ -1,0 +1,14 @@
+disabled_rules:
+  - standard:function-naming
+  - function-naming
+
+experimental:
+  enabled: true
+
+# Compose rules configuration
+compose:
+  enabled: true
+  allow-composable-function-names: true
+  check-composable-annotation: true
+  check-modifier-reused: true
+  check-parameter-ordering: true

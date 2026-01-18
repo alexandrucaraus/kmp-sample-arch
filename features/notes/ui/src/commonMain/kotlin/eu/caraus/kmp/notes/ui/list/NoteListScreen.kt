@@ -45,10 +45,11 @@ data class NoteListState(
 @Composable
 fun NoteListScreen(
     state: NoteListState,
-    openNote: (Note) -> Unit,
-    createNote: () -> Unit,
+    modifier: Modifier = Modifier,
+    openNote: (Note) -> Unit = {},
+    createNote: () -> Unit = {},
 ) = Scaffold(
-    modifier = Modifier,
+    modifier = modifier,
     topBar = {
         TopAppBar(
             title = { Text("Notes") },
@@ -72,9 +73,9 @@ fun NoteListScreen(
 
 @Composable
 internal fun NoteList(
-    modifier: Modifier = Modifier,
     state: NoteListState,
     openNote: (Note) -> Unit,
+    modifier: Modifier = Modifier,
 ) = LazyColumn(
     modifier = modifier.padding(8.dp),
     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -92,11 +93,11 @@ internal fun NoteList(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun NoteListItem(
-    modifier: Modifier = Modifier,
     note: Note,
+    modifier: Modifier = Modifier,
+    openNote: (Note) -> Unit = {},
+    selectNote: (Note) -> Unit = {},
     isSelected: Boolean = false,
-    openNote: (Note) -> Unit,
-    selectNote: (Note) -> Unit,
 ) {
     val borderWidth = if (isSelected) 2.dp else (0.5).dp
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else DarkGray

@@ -7,7 +7,7 @@ import eu.caraus.kmp.notes.ui.list.NoteListState
 
 @Composable
 @Preview
-fun NoteListScreenPreview() {
+internal fun NoteListScreenPreview() {
     NoteListScreen(
         state = NoteListState(),
         openNote = {},

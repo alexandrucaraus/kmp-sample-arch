@@ -36,8 +36,9 @@ data class NoteState(
 fun NoteDetailsScreen(
     note: NoteState,
     close: () -> Unit,
+    modifier: Modifier = Modifier,
 ) = Scaffold(
-    modifier = Modifier,
+    modifier = modifier,
     topBar = {
         TopAppBar(
             title = { },
@@ -69,9 +70,12 @@ fun NoteDetailsScreen(
 )
 
 @Composable
-internal fun BackButton(onClick: () -> Unit) {
+internal fun BackButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
     IconButton(
-        modifier = Modifier.testTag("BackButton"),
+        modifier = modifier.testTag("BackButton"),
         onClick = onClick,
     ) {
         Icon(
@@ -82,9 +86,12 @@ internal fun BackButton(onClick: () -> Unit) {
 }
 
 @Composable
-internal fun DeleteButton(onClick: () -> Unit) {
+internal fun DeleteButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
     IconButton(
-        modifier = Modifier.testTag("DeleteButton"),
+        modifier = modifier.testTag("DeleteButton"),
         onClick = onClick,
     ) {
         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
