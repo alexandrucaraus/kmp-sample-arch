@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
     implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
+    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.4")
     implementation(gradleApi())
 }
 
@@ -28,10 +29,6 @@ tasks.withType<ProcessResources>().configureEach {
 
 gradlePlugin {
     plugins {
-        create("host") {
-            id = "kmp.compilation.host"
-            implementationClass = "eu.caraus.kmp.KMPCompilationHostOS"
-        }
         create("koinKsp") {
             id = "kmp.koin.ksp"
             implementationClass = "eu.caraus.kmp.KMPKoinKsp"

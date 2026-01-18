@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.modulegraph)
 }
 

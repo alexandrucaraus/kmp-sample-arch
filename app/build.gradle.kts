@@ -6,12 +6,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
 }
 
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
+kmpKoinKsp {
+    checkConfig = true
 }
 
 kotlin {
@@ -88,10 +87,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
 }

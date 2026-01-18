@@ -30,7 +30,9 @@ jacoco {
 
 buildscript {
     dependencies {
-        classpath("io.nlopez.compose.rules:ktlint:0.5.3")
+        classpath("io.nlopez.compose.rules:ktlint:0.5.3") {
+            exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+        }
     }
 }
 
@@ -39,15 +41,8 @@ subprojects {
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         version.set("1.8.0")
-        //android.set(true)
-        //verbose.set(true)
         outputToConsole.set(true)
         coloredOutput.set(true)
-
-//        reporters {
-//            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-//            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
-//        }
 
         if (!HostManager.hostIsMac) {
             tasks.configureEach {
@@ -58,8 +53,6 @@ subprojects {
         }
 
         filter {
-//            exclude("**/generated/**")
-//            exclude("**/build/**")
             exclude { it.file.path.contains("/generated/") }
 
             if (!HostManager.hostIsMac) {
@@ -70,17 +63,7 @@ subprojects {
                 exclude("**/iosSimulatorArm64Main/**")
             }
         }
-
-        //enableExperimentalRules.set(true)
-
-
-//        dependencies {
-//            ktlintRuleset("io.nlopez.compose.rules:ktlint:0.5.3")
-//        }
-
     }
-
-
 }
 
 dependencies {

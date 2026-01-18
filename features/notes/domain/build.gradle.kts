@@ -2,11 +2,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate()
     androidLibrary {
         namespace = "eu.caraus.kmp.notes.domain"
         compileSdk =
@@ -25,7 +25,6 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
-
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
@@ -39,10 +38,4 @@ kotlin {
             implementation(kotlin("test"))
         }
     }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
 }

@@ -6,15 +6,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
-    // id("kmp.jacoco")
 }
 
 kotlin {
-
     applyDefaultHierarchyTemplate()
-
     androidLibrary {
         namespace = "eu.caraus.kmp.notes.ui"
         compileSdk =
@@ -49,40 +45,31 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.features.notes.domain)
-
-            implementation(libs.compose.material3.icons.extended)
-            implementation(libs.compose.material3)
-
-            implementation(libs.compose.ui.tooling.preview)
-
-            implementation(libs.compose.nav3)
-
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.compose.material3.icons.extended)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.compose.nav3)
         }
         commonTest.dependencies {
-
             implementation(projects.testCommon)
-
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
-
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling)
         }
-        val androidDeviceTest by getting {
+        getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.koin.core.viewmodel)
@@ -97,14 +84,4 @@ kotlin {
 
 dependencies {
     add("androidHostTestImplementation", libs.paparazzi.classgraph)
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    // add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
-}
-
-ksp {
-    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }

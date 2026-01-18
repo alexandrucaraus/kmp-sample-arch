@@ -6,15 +6,15 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
     id("kmp.koin.ksp")
-    // id("kmp.jacoco")
+}
+
+kmpKoinKsp {
+    useKoinViewModel = true
 }
 
 kotlin {
-
     applyDefaultHierarchyTemplate()
-
     androidLibrary {
         namespace = "eu.caraus.kmp.notes.itest"
         compileSdk =
@@ -45,7 +45,6 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.testCommon)
@@ -80,14 +79,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    // add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
-}
-
-ksp {
-    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }

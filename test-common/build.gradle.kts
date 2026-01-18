@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
     // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
     // https://github.com/cashapp/paparazzi/pull/2115/files
     // when 2.0.0-alpha04 is out apply it
@@ -15,9 +14,7 @@ plugins {
 }
 
 kotlin {
-
     applyDefaultHierarchyTemplate()
-
     androidLibrary {
         namespace = "eu.caraus.kmp.test.common"
         compileSdk =
@@ -84,14 +81,4 @@ kotlin {
 
 dependencies {
     add("androidHostTestImplementation", libs.paparazzi.classgraph)
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.compiler)
-    // add("kspAndroid", libs.koin.compiler)
-    add("ksp", libs.koin.compiler)
-}
-
-ksp {
-    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
 }

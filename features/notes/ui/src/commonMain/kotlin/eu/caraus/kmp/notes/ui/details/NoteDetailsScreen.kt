@@ -43,10 +43,14 @@ fun NoteDetailsScreen(
         TopAppBar(
             title = { },
             navigationIcon = {
-                BackButton { note.leave(close) }
+                BackButton(
+                    onClick = { note.leave(close) },
+                )
             },
             actions = {
-                DeleteButton { note.delete(close) }
+                DeleteButton(
+                    onClick = { note.delete(close) },
+                )
             },
         )
     },
@@ -71,8 +75,8 @@ fun NoteDetailsScreen(
 
 @Composable
 internal fun BackButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
 ) {
     IconButton(
         modifier = modifier.testTag("BackButton"),
@@ -87,8 +91,8 @@ internal fun BackButton(
 
 @Composable
 internal fun DeleteButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
 ) {
     IconButton(
         modifier = modifier.testTag("DeleteButton"),
