@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.database.room.AppDatabase
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.SaveNoteUseCase
-import eu.caraus.kmp.notes.tests.deviceTestModule
+import eu.caraus.kmp.notes.tests.DeviceTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListViewModel
 import eu.caraus.kmp.test.common.rules.KoinTestRule
 import kotlinx.coroutines.FlowPreview
@@ -24,9 +24,9 @@ import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
-class NotesListViewModelTest : KoinTest {
+class NotesListViewModelIntTest : KoinTest {
     @get:Rule
-    val koinTestRule = KoinTestRule(modules = listOf(deviceTestModule()))
+    val koinTestRule = KoinTestRule(modules = listOf(DeviceTestModule.module))
 
     @Before
     fun setup() {

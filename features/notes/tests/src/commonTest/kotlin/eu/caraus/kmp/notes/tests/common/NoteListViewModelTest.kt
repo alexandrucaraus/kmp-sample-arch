@@ -1,17 +1,13 @@
-@file:OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-
-package eu.caraus.kmp.notes.ui.list
+package eu.caraus.kmp.notes.tests.common
 
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteRepository
 import eu.caraus.kmp.notes.domain.NoteRepositoryInMem
-import eu.caraus.kmp.notes.ui.commonTestModules
+import eu.caraus.kmp.notes.ui.list.NoteListViewModel
 import eu.caraus.kmp.test.common.koin.koinRunTest
 import eu.caraus.kmp.test.common.koin.startTestKoin
 import eu.caraus.kmp.test.common.koin.stopTestKoin
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.takeWhile

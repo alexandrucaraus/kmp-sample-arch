@@ -11,9 +11,14 @@ repositories {
 }
 
 dependencies {
+    // todo import from version catalog
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
     implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
     implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.4")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:14.0.1")
+    implementation("io.nlopez.compose.rules:ktlint:0.5.3") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    }
     implementation(gradleApi())
 }
 
@@ -40,6 +45,10 @@ gradlePlugin {
         create("jacoco") {
             id = "kmp.jacoco"
             implementationClass = "eu.caraus.kmp.KMPJacoco"
+        }
+        create("linter") {
+            id = "kmp.linter"
+            implementationClass = "eu.caraus.kmp.KMPKtLinter"
         }
     }
 }

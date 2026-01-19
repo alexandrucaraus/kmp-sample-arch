@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.database.room.AppDatabase
-import eu.caraus.kmp.notes.tests.deviceTestModule
+import eu.caraus.kmp.notes.tests.DeviceTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListRoute
 import eu.caraus.kmp.notes.ui.navigation.NotesNavGraph
 import eu.caraus.kmp.notes.ui.navigation.NotesSerializerModule
@@ -29,7 +29,7 @@ class NotesNavigationTest : KoinTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val koinTestRule = KoinTestRule(modules = listOf(deviceTestModule()))
+    val koinTestRule = KoinTestRule(modules = listOf(DeviceTestModule.module))
 
     @Before
     fun setup() {

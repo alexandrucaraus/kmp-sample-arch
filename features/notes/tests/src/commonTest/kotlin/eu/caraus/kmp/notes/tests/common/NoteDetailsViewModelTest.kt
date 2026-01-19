@@ -1,11 +1,11 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package eu.caraus.kmp.notes.ui.details
+package eu.caraus.kmp.notes.tests.common
 
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteRepository
 import eu.caraus.kmp.notes.domain.NoteRepositoryInMem
-import eu.caraus.kmp.notes.ui.commonTestModules
+import eu.caraus.kmp.notes.ui.details.NoteDetailsViewModel
 import eu.caraus.kmp.test.common.koin.koinRunTest
 import eu.caraus.kmp.test.common.koin.startTestKoin
 import eu.caraus.kmp.test.common.koin.stopTestKoin
@@ -18,7 +18,6 @@ import org.koin.core.parameter.parametersOf
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declare
-import kotlin.test.DefaultAsserter.assertEquals
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -64,22 +63,19 @@ class NoteDetailsViewModelTest : KoinTest {
             runCurrent()
 
             state.updateTitle("updateNote3Title")
-
-            runCurrent()
-
             state.updateContent("updatedNote3Content")
 
             runCurrent()
 
             assertEquals(
-                "Title did not change",
                 "updateNote3Title",
                 vm.state.value.title,
+                "Title did not change",
             )
             assertEquals(
-                "Content did not change",
                 "updatedNote3Content",
                 vm.state.value.content,
+                "Content did not change",
             )
         }
 
@@ -108,14 +104,14 @@ class NoteDetailsViewModelTest : KoinTest {
             runCurrent()
 
             assertEquals(
-                "Title did not change",
                 "updateNote3Title",
                 vm.state.value.title,
+                "Title did not change",
             )
             assertEquals(
-                "Content did not change",
                 "updatedNote3Content",
                 vm.state.value.content,
+                "Content did not change",
             )
 
             var action = "to_be_performed"
@@ -125,9 +121,9 @@ class NoteDetailsViewModelTest : KoinTest {
             runCurrent()
 
             assertEquals(
-                "Delete action not performed",
                 "performed",
                 action,
+                "Delete action not performed",
             )
         }
 

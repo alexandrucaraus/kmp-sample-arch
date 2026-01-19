@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.ui
+package eu.caraus.kmp.notes.tests.common
 
 import eu.caraus.kmp.notes.domain.NoteDiModule
 import eu.caraus.kmp.notes.ui.NoteUiDiModule

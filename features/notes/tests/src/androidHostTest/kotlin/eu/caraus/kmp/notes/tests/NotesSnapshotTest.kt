@@ -1,4 +1,4 @@
-package eu.caraus.kmp.notes.test.ui
+package eu.caraus.kmp.notes.tests
 
 import eu.caraus.kmp.test.common.previews.ComposePreviewsAggregator
 import kotlin.test.Test
