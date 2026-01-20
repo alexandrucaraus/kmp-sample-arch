@@ -5,7 +5,7 @@ import dev.iurysouza.modulegraph.Theme
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.ktlint)
+    //alias(libs.plugins.ktlint)
     alias(libs.plugins.modulegraph)
 }
 

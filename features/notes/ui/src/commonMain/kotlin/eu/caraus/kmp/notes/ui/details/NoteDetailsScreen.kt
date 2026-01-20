@@ -21,16 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import eu.caraus.kmp.notes.domain.Note.Companion.NO_ID
 
-data class NoteState(
-    val id: String = NO_ID,
-    val title: String = "",
-    val content: String = "",
-    val updateTitle: (String) -> Unit = {},
-    val updateContent: (String) -> Unit = {},
-    val leave: (() -> Unit) -> Unit = {},
-    val delete: (() -> Unit) -> Unit = {},
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteDetailsScreen(
@@ -71,6 +61,16 @@ fun NoteDetailsScreen(
             )
         }
     },
+)
+
+data class NoteState(
+    val id: String = NO_ID,
+    val title: String = "",
+    val content: String = "",
+    val updateTitle: (String) -> Unit = {},
+    val updateContent: (String) -> Unit = {},
+    val leave: (() -> Unit) -> Unit = {},
+    val delete: (() -> Unit) -> Unit = {},
 )
 
 @Composable

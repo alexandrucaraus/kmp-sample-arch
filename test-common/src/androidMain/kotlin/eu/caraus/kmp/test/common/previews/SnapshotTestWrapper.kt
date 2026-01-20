@@ -14,9 +14,9 @@ fun SnapshotTestWrapper(
 ) {
     Box(
         modifier =
-            modifier
-                .background(Color.Black)
-                .fillMaxSize(),
+        modifier
+            .background(Color.Black)
+            .fillMaxSize(),
     ) {
         toSnapshot()
     }

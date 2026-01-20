@@ -15,8 +15,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
     implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
     implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.4")
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:14.0.1")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:14.0.1") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    }
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    }
     implementation("io.nlopez.compose.rules:ktlint:0.5.3") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    }
+    implementation("io.nlopez.compose.rules:detekt:0.4.23") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
     }
     implementation(gradleApi())

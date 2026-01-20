@@ -33,13 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.caraus.kmp.notes.domain.Note
 
-data class NoteListState(
-    val notes: List<Note> = emptyList(),
-    val selectedNotes: List<Note> = emptyList(),
-    val toggleSelection: (Note) -> Unit = {},
-    val deleteSelected: () -> Unit = {},
-    val clearSelected: () -> Unit = {},
-)
+private val thinBorder = 0.5.dp
+private val thickBorder = 2.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,6 +66,14 @@ fun NoteListScreen(
     },
 )
 
+data class NoteListState(
+    val notes: List<Note> = emptyList(),
+    val selectedNotes: List<Note> = emptyList(),
+    val toggleSelection: (Note) -> Unit = {},
+    val deleteSelected: () -> Unit = {},
+    val clearSelected: () -> Unit = {},
+)
+
 @Composable
 internal fun NoteList(
     state: NoteListState,
@@ -99,28 +102,28 @@ internal fun NoteListItem(
     selectNote: (Note) -> Unit = {},
     isSelected: Boolean = false,
 ) {
-    val borderWidth = if (isSelected) 2.dp else (0.5).dp
+    val borderWidth = if (isSelected) thickBorder else thinBorder
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else DarkGray
     Card(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
-                .combinedClickable(
-                    enabled = true,
-                    onClick = {
-                        openNote(note)
-                    },
-                    onLongClick = {
-                        selectNote(note)
-                    },
-                ),
+        modifier
+            .fillMaxWidth()
+            .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
+            .combinedClickable(
+                enabled = true,
+                onClick = {
+                    openNote(note)
+                },
+                onLongClick = {
+                    selectNote(note)
+                },
+            ),
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge,

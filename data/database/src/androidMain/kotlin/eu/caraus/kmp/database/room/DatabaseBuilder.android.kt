@@ -10,17 +10,6 @@ import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
 
 @Single
-actual class PlatformContextWrapper(
-    val androidContext: Context,
-)
-
-@Single
-actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper = PlatformContextWrapper(scope.get())
-
-@Single
-actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
-
-@Single
 actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
     val appContext = ctx.androidContext.applicationContext
     val dbFile = appContext.getDatabasePath(AppDatabase.DATABASE_FILE_NAME)
@@ -31,3 +20,14 @@ actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder
         ).fallbackToDestructiveMigration(false)
         .setQueryCoroutineContext(Dispatchers.IO)
 }
+
+@Single
+actual class PlatformContextWrapper(
+    val androidContext: Context,
+)
+
+@Single
+actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper = PlatformContextWrapper(scope.get())
+
+@Single
+actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()

@@ -18,8 +18,7 @@ class NoteRepositoryRoom(
     override suspend fun delete(notes: List<Note>) =
         notes
             .map(Note::toDto)
-            .toTypedArray()
-            .let { noteDao.delete(*it) }
+            .let { noteDao.delete(it) }
 
     override suspend fun deleteById(noteId: NoteId) = noteDao.deleteById(noteId)
 

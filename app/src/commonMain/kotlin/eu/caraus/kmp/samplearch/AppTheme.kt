@@ -2,6 +2,7 @@ package eu.caraus.kmp.samplearch
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
@@ -20,28 +21,14 @@ fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colors =
-        if (darkTheme) {
-            darkColorScheme(
-                primary = Color(0xFFBB86FC),
-                secondary = Color(0xFF03DAC5),
-                tertiary = Color(0xFF3700B3),
-            )
-        } else {
-            lightColorScheme(
-                primary = Color(0xFF6200EE),
-                secondary = Color(0xFF03DAC5),
-                tertiary = Color(0xFF3700B3),
-            )
-        }
     val typography =
         Typography(
             bodyMedium =
-                TextStyle(
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                ),
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+            ),
         )
     val shapes =
         Shapes(
@@ -51,9 +38,50 @@ fun AppTheme(
         )
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = colorScheme(darkTheme),
         typography = typography,
         shapes = shapes,
         content = content,
     )
+}
+
+fun colorScheme(darkTheme: Boolean): ColorScheme {
+    val colors: Colors = if (darkTheme) {
+        DarkColors
+    } else {
+        LightColors
+    }
+    return if (darkTheme) {
+        darkColorScheme(
+            primary = colors.primary,
+            secondary = colors.secondary,
+            tertiary = colors.tertiary
+        )
+    } else {
+        lightColorScheme(
+            primary = colors.primary,
+            secondary = colors.secondary,
+            tertiary = colors.tertiary
+        )
+    }
+}
+
+interface Colors {
+    val primary: Color
+    val secondary: Color
+    val tertiary: Color
+}
+
+@Suppress("MagicNumber")
+object DarkColors : Colors {
+    override val primary: Color = Color(0xFFBB86FC)
+    override val secondary: Color = Color(0xFF03DAC5)
+    override val tertiary: Color = Color(0xFF3700B3)
+}
+
+@Suppress("MagicNumber")
+object LightColors : Colors {
+    override val primary = Color(0xFF6200EE)
+    override val secondary = Color(0xFF03DAC5)
+    override val tertiary = Color(0xFF3700B3)
 }

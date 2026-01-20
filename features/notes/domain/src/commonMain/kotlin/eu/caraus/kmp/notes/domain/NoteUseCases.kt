@@ -96,12 +96,12 @@ internal class UpdateNoteUseCase(
                     title = title,
                     content = content,
                     updatedAt =
-                        kotlin.time.Clock.System
-                            .now()
-                            .toEpochMilliseconds(),
+                    kotlin.time.Clock.System
+                        .now()
+                        .toEpochMilliseconds(),
                 ),
             )
-        } ?: throw IllegalStateException("Note not found")
+        } ?: error("Note not found id=$id")
     }
 }
 

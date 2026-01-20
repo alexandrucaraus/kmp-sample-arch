@@ -11,17 +11,9 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-actual class PlatformContextWrapper
-
-@Single
-actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper = PlatformContextWrapper()
-
-@Single
-actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
-
 @Single
 actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
-    val dbFilePath = documentDirectory() + "/notes_room.db"
+    val dbFilePath = documentDirectory() + "/${AppDatabase.DATABASE_FILE_NAME}"
     return Room
         .databaseBuilder<AppDatabase>(name = dbFilePath)
         .fallbackToDestructiveMigration(false)
@@ -30,6 +22,14 @@ actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder
                 .BundledSQLiteDriver(),
         ).setQueryCoroutineContext(Dispatchers.IO)
 }
+
+actual class PlatformContextWrapper
+
+@Single
+actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper = PlatformContextWrapper()
+
+@Single
+actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()
 
 @OptIn(ExperimentalForeignApi::class)
 private fun documentDirectory(): String {

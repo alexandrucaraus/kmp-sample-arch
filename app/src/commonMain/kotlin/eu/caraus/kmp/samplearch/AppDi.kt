@@ -12,7 +12,7 @@ import org.koin.core.annotation.Factory
 import org.koin.core.annotation.KoinApplication
 import org.koin.core.annotation.Module
 
-// TODO: The modules section can be removed when the following bug is fixed
+// TODO The modules section can be removed when the following bug is fixed
 // otherwise need to indicate all modules here
 // https://github.com/InsertKoinIO/koin-annotations/issues/317
 @KoinApplication(

@@ -22,8 +22,6 @@ fun koinRunTest(
     try {
         before()
         block()
-    } catch (e: Throwable) {
-        throw e
     } finally {
         after()
     }

@@ -8,18 +8,17 @@ Modular Kotlin Multiplatform Application Boilerplate
  - More tests in common to cover the great part of code
 
 2. Test Coverage
-  - Add kover for the common code report 
-  - Jacoco for android already done.
+  - Add kover for the common code report
 
 3. CI/CD
-   - Linters
+   - Linters (ktlint, detekt)
    - Coverage display android and common separate
    - Build documentation
    - Build artifacts
    - Publish
    - Manage testing on CI/CD
 
-### Modules Structure  
+### Modules Structure
 
 ```mermaid
 %%{

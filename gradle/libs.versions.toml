@@ -41,6 +41,9 @@ espressoCore = "3.7.0"
 jacoco = "0.8.12"
 ktlint-plugin="14.0.1"
 ktlint-compose-rules="0.5.3"
+kover = "0.9.4"
+detekt = "1.23.8"
+detekt-compose = "1.6.0"
 
 [libraries]
 
@@ -94,9 +97,13 @@ androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-co
 
 ktlint-compose-rules = { module = "io.nlopez.compose.rules:ktlint", version.ref = "ktlint-compose-rules" }
 
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-compose" }
+
 # Local plugin dev deps
 kotlin-gradle-plugin-dev = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 multiplatform-gradle-plugin-dev = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -118,4 +125,6 @@ modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
 
-kover= { id = "org.jetbrains.kotlinx.kover", version = "0.9.4" }
+kover= { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
