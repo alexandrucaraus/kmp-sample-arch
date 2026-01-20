@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -26,21 +24,6 @@ kotlin {
                 .get()
                 .toInt()
         withJava()
-        withHostTest {
-            enableCoverage = true
-            isIncludeAndroidResources = true
-        }
-        withDeviceTest {
-            enableCoverage = true
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            execution = "HOST"
-        }
-        androidResources {
-            enable = true
-        }
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
         testCoverage {}
     }
     iosArm64()
@@ -56,32 +39,11 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
-            implementation(libs.compose.ui.tooling.preview)
             implementation(libs.compose.nav3)
-        }
-        commonTest.dependencies {
-            implementation(projects.testCommon)
-            implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.koin.test)
-            implementation(libs.koin.core.viewmodel)
+            implementation(libs.compose.ui.tooling.preview)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling)
         }
-        getByName("androidDeviceTest") {
-            dependencies {
-                implementation(libs.koin.test)
-                implementation(libs.koin.core.viewmodel)
-                implementation(libs.androidx.test.compose.manifest)
-                implementation(libs.androidx.test.compose.junit)
-                implementation(libs.androidx.test.junit)
-                implementation(libs.androidx.test.espresso)
-            }
-        }
     }
-}
-
-dependencies {
-    add("androidHostTestImplementation", libs.paparazzi.classgraph)
 }

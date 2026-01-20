@@ -5,6 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.jetbrains.kotlin.konan.target.HostManager
+import kotlin.jvm.java
 
 open class KmpKoinKspExtension {
     var useKoinViewModel = true
@@ -38,8 +39,10 @@ class KMPKoinKsp : Plugin<Project> {
             add("kspCommonMainMetadata", koinCompiler)
             add("kspAndroid", koinCompiler)
             if (HostManager.hostIsMac) {
-                add("kspIosArm64", koinCompiler)
-                add("kspIosSimulatorArm64", koinCompiler)
+                add("ksp", koinCompiler)
+// bellow should work, but it doesnt for some reason
+//                add("kspIosArm64", koinCompiler)
+//                add("kspIosSimulatorArm64", koinCompiler)
             }
         }
         val kspExtension = project.extensions.getByType(KspExtension::class.java)

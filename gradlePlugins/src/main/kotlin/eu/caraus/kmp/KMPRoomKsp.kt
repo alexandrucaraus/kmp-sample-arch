@@ -17,8 +17,9 @@ class KMPRoomKsp : Plugin<Project> {
             add("kspCommonMainMetadata", koinCompiler)
             add("kspAndroid", koinCompiler)
             if (HostManager.hostIsMac) {
-                add("kspIosArm64", koinCompiler)
-                add("kspIosSimulatorArm64", koinCompiler)
+                add("ksp", koinCompiler)
+//                add("kspIosArm64", koinCompiler)
+//                add("kspIosSimulatorArm64", koinCompiler)
             }
         }
     }

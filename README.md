@@ -5,14 +5,14 @@ Modular Kotlin Multiplatform Application Boilerplate
 
 1. Test
  - Finish test setup for snapshot testing when paparazzi 2.0.0-alpha04 is ready
- - More tests in common to cover the great part of code
 
 2. Test Coverage
   - Add kover for the common code report
 
 3. CI/CD
-   - Linters (ktlint, detekt)
-   - Coverage display android and common separate
+   - Linters (ktlint, detekt) - done
+   - Coverage display android and common separate, auto start emulator - ip
+   - Pre-push hook
    - Build documentation
    - Build artifacts
    - Publish
@@ -23,21 +23,41 @@ Modular Kotlin Multiplatform Application Boilerplate
 ```mermaid
 %%{
   init: {
-    'theme': 'base',
-    'themeVariables': {"primaryTextColor":"#fff","primaryColor":"#5a4f7c","primaryBorderColor":"#5a4f7c","lineColor":"#f5a623","tertiaryColor":"#40375c","fontSize":"12px"}
+    'theme': 'neutrala'
   }
 }%%
 
 graph LR
-  :androidApp["androidApp"]
   :app["app"]
+  subgraph :features
+    subgraph :notes
+      :features:notes:data["data"]
+      :features:notes:domain["domain"]
+      :features:notes:domain["domain"]
+      :features:notes:data["data"]
+      :features:notes:ui["ui"]
+      :features:notes:ui["ui"]
+    end
+  end
+  subgraph :data
+    :data:database["database"]
+    :data:database["database"]
+  end
 
-  :androidApp --> :app
+  :features:notes:data --> :features:notes:domain
+  :app --> :features:notes:domain
+  :app --> :features:notes:data
+  :app --> :features:notes:ui
+  :app --> :data:database
+  :features:notes:ui --> :features:notes:domain
+  :data:database --> :features:notes:data
 
-classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
-classDef unknown fill:#676767,stroke:#fff,stroke-width:2px,color:#fff;
-class :androidApp android-application
-class :app unknown
+classDef kotlin-multiplatform fill:#C792EA,stroke:#fff,stroke-width:2px,color:#fff;
+class :features:notes:data kotlin-multiplatform
+class :features:notes:domain kotlin-multiplatform
+class :app kotlin-multiplatform
+class :features:notes:ui kotlin-multiplatform
+class :data:database kotlin-multiplatform
 
 ```
 # Features

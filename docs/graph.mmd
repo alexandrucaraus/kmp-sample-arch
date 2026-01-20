@@ -1,0 +1,49 @@
+%%%%{
+%%  init: {
+%%    'theme': 'base',
+%%    'themeVariables': {"primaryTextColor":"#fff","primaryColor":"#5a4f7c","primaryBorderColor":"#5a4f7c","lineColor":"#f5a623","tertiaryColor":"#40375c","fontSize":"12px"}
+%%  }
+%%}%%
+
+
+graph LR
+    :app["app(https://mermaid.live/edit)"]
+    :test-common["test-common"]
+    :test-common["test-common"]
+    :androidApp["androidApp"]
+    :app["app"]
+    subgraph :features
+        subgraph :notes
+            :features:notes:data["data"]
+            :features:notes:domain["domain"]
+            :features:notes:domain["domain"]
+            :features:notes:data["data"]
+            :features:notes:ui["ui"]
+            :features:notes:ui["ui"]
+        end
+    end
+    subgraph :data
+        :data:database["database"]
+        :data:database["database"]
+    end
+
+    :features:notes:data --> :features:notes:domain
+    :app --> :features:notes:domain
+    :app --> :features:notes:data
+    :app --> :features:notes:ui
+    :app --> :data:database
+    :app --> :test-common
+    :features:notes:ui --> :features:notes:domain
+    :features:notes:ui --> :test-common
+    :data:database --> :features:notes:data
+    :androidApp --> :app
+
+    classDef kotlin-multiplatform fill:#C792EA,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
+    class :features:notes:data kotlin-multiplatform
+    class :features:notes:domain kotlin-multiplatform
+    class :app kotlin-multiplatform
+    class :features:notes:ui kotlin-multiplatform
+    class :data:database kotlin-multiplatform
+    class :test-common kotlin-multiplatform
+    class :androidApp android-application

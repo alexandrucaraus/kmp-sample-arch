@@ -62,6 +62,7 @@ kotlin {
                 implementation(projects.features.notes.data)
                 implementation(projects.features.notes.ui)
                 implementation(projects.data.database)
+
                 implementation(libs.compose.material3)
                 implementation(libs.compose.nav3)
                 implementation(libs.koin.core)

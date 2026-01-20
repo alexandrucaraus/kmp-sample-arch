@@ -1,12 +1,6 @@
-@file:Suppress("All")
-
-import dev.iurysouza.modulegraph.Theme
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
-    //alias(libs.plugins.ktlint)
-    alias(libs.plugins.modulegraph)
 }
 
 kotlin {
@@ -48,9 +42,12 @@ android {
         debug {
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
         }
     }
     compileOptions {
@@ -74,29 +71,6 @@ dependencies {
     implementation(libs.compose.ui.tooling)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
-}
-
-moduleGraphConfig {
-    readmePath.set("./../README.md")
-    heading = "### Modules Structure"
-    showFullPath = true
-    setStyleByModuleType = true
-    rootModulesRegex.set(":androidApp")
-    includeIsolatedModules = true
-    nestingEnabled = true
-    theme.set(
-        Theme.BASE(
-            mapOf(
-                "primaryTextColor" to "#fff",
-                "primaryColor" to "#5a4f7c",
-                "primaryBorderColor" to "#5a4f7c",
-                "lineColor" to "#f5a623",
-                "tertiaryColor" to "#40375c",
-                "fontSize" to "12px",
-            ),
-            focusColor = "#FA8140",
-        ),
-    )
 }
 
 ktlint {}

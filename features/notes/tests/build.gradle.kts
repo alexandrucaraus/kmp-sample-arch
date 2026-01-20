@@ -101,3 +101,7 @@ kotlin {
         }
     }
 }
+
+dependencies {
+    add("androidHostTestImplementation", libs.paparazzi.classgraph)
+}
