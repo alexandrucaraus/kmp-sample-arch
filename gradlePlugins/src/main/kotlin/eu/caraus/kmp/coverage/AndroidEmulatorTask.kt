@@ -107,6 +107,8 @@ abstract class AndroidEmulatorTask : DefaultTask() {
     private fun checkEmulatorExists(): Boolean {
         logger.lifecycle("Checking if emulator exists: ${avdName.get()}")
 
+        logger.lifecycle("Avd manager path: ${findAvdManagerPath()}")
+
         val listCmd = listOf(
             findAvdManagerPath(),
             "list", "avd"

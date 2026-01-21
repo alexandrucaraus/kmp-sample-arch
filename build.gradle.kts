@@ -1,3 +1,5 @@
+import eu.caraus.kmp.coverage.AndroidEmulatorTask
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -25,7 +27,7 @@ moduleGraphConfig {
     setStyleByModuleType = true
 }
 
-tasks.register<AndroidEmulatorTask>("startTestEmulator") {
+tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
     avdName.set("my_test_emulator")
     systemImage.set("system-images;android-33;google_apis;x86_64")
     deviceType.set("pixel_5")
