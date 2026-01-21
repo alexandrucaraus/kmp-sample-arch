@@ -61,48 +61,42 @@ abstract class CreateFeatureTask : DefaultTask() {
             if (!it.exists()) it.mkdirs()
         }
 
-        createDomainModule(
-            featureDir = featureDir,
-            packageName = packageName
-        )
+        createDomainModule(featureDir = featureDir)
 
-//        when (layer) {
-//            "ui" -> {
-//                createUiModule(
-//                    featureDir = featureDir,
-//                    packageName = packageName
-//                )
-//            }
-//            "data" -> {
-//                createDataModule(
-//                    featureDir = featureDir,
-//                    packageName = packageName
-//                )
-//            }
-//            "all" -> {
-//                createUiModule(
-//                    featureDir = featureDir,
-//                    packageName = packageName
-//                )
-//                createDataModule(
-//                    featureDir = featureDir,
-//                    packageName = packageName
-//                )
-//            }
-    }
-}
+        when (layer) {
+            "ui" -> {
+                createUiModule(
+                    featureDir = featureDir,
+                )
+            }
 
-private fun createDomainModule(
-    featureDir: File,
-    packageName: String,
-    layer: String = "domain",
-) {
-    val domainModuleDir = File(featureDir, layer).also {
-        if (!it.exists()) it.mkdirs()
+            "data" -> {
+                createDataModule(
+                    featureDir = featureDir,
+                )
+            }
+
+            "all" -> {
+                createUiModule(
+                    featureDir = featureDir,
+                )
+                createDataModule(
+                    featureDir = featureDir,
+                )
+            }
+        }
     }
 
-    File(domainModuleDir, "build.gradle.kts").writeText(
-        """
+    private fun createDomainModule(
+        featureDir: File,
+        layer: String = "domain",
+    ) {
+        val domainModuleDir = File(featureDir, layer).also {
+            if (!it.exists()) it.mkdirs()
+        }
+
+        File(domainModuleDir, "build.gradle.kts").writeText(
+            """
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -143,44 +137,29 @@ kotlin {
 }
 
             """.trimIndent()
-    )
+        )
 
-    val packageNamePath = packageName.plus(".$layer").replace(".", "/")
+        val packageNamePath =
+            packageName.plus(".$layer").replace(".", "/")
 
-    File(domainModuleDir, "src").also {
-        println(it.absoluteFile)
-        println(it.absolutePath)
-    }.mkdir()
-    val common = File(domainModuleDir, "src/commonMain/").also { it.mkdir() }
-    val android = File(domainModuleDir, "src/androidMain/").also { it.mkdir() }
-
-    File(common.path + "/" + packageNamePath).also {
-        fun mkdirs(file: File) {
-            if (file.exists()) {
-                return
-            } else
-                if (file.parentFile.exists()) {
-                    file.mkdirs()
-                    mkdirs(file)
-                } else {
-                    mkdirs(file.parentFile)
-                }
+        listOf(
+            "src/commonMain/kotlin",
+            "src/androidMain/kotlin"
+        ).forEach { sourceSet ->
+            File(domainModuleDir, "$sourceSet/$packageNamePath").makedirs()
         }
-        mkdirs(it)
-    }
-}
-
-private fun createUiModule(
-    featureDir: File,
-    packageName: String,
-    layer: String = "ui",
-) {
-    val uiModuleDir = File(featureDir, layer).also {
-        if (!it.exists()) it.mkdirs()
     }
 
-    File(uiModuleDir, "build.gradle.kts").writeText(
-        """
+    private fun createUiModule(
+        featureDir: File,
+        layer: String = "ui",
+    ) {
+        val uiModuleDir = File(featureDir, layer).also {
+            if (!it.exists()) it.mkdirs()
+        }
+
+        File(uiModuleDir, "build.gradle.kts").writeText(
+            """
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -216,7 +195,7 @@ kotlin {
             // Common deps
 
             // Feature deps
-            implementation(projects.features.featureName.domain)
+            implementation(projects.features.$featureName.domain)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
@@ -235,29 +214,27 @@ kotlin {
     }
 }
             """.trimIndent()
-    )
+        )
 
-    val packageNamePath = packageName.plus(".$layer").replace(".", "/")
+        val packageNamePath = packageName.plus(".$layer").replace(".", "/")
 
-    listOf(
-        "src/commonMain/kotlin",
-        "src/androidMain/kotlin"
-    ).forEach { sourceSet ->
-        File(uiModuleDir, "$sourceSet/$packageNamePath").mkdirs()
-    }
-}
-
-private fun createDataModule(
-    featureDir: File,
-    packageName: String,
-    layer: String = "data",
-) {
-    val dataModuleDir = File(featureDir, layer).also {
-        if (!it.exists()) it.mkdirs()
+        listOf(
+            "src/commonMain/kotlin",
+            "src/androidMain/kotlin"
+        ).forEach { sourceSet ->
+            File(uiModuleDir, "$sourceSet/$packageNamePath").makedirs()
+        }
     }
 
-    File(dataModuleDir, "build.gradle.kts").writeText(
-        """
+    private fun createDataModule(
+        featureDir: File, layer: String = "data",
+    ) {
+        val dataModuleDir = File(featureDir, layer).also {
+            if (!it.exists()) it.mkdirs()
+        }
+
+        File(dataModuleDir, "build.gradle.kts").writeText(
+            """
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
@@ -302,7 +279,7 @@ kotlin {
             // Common deps
 
             // Feature deps
-            implementation(projects.features.featureName.domain)
+            implementation(projects.features.$featureName.domain)
 
             implementation(libs.room.runtime)
             implementation(libs.kotlinx.coroutines.core)
@@ -314,16 +291,36 @@ kotlin {
     }
 }
             """.trimIndent()
-    )
+        )
 
-    val packageNamePath = packageName.plus(".$layer").replace(".", "/")
+        val packageNamePath = packageName.plus(".$layer").replace(".", "/")
 
-    listOf(
-        "src/commonMain/kotlin",
-        "src/androidMain/kotlin"
-    ).forEach { sourceSet ->
-        File(dataModuleDir, "$sourceSet/$packageNamePath").mkdirs()
+        listOf(
+            "src/commonMain/kotlin",
+            "src/androidMain/kotlin"
+        ).forEach { sourceSet ->
+            File(dataModuleDir, "$sourceSet/$packageNamePath").makedirs()
+        }
+
     }
+
+    fun File.makedirs() {
+        fun mkdirs(
+            file: File,
+            orig: File,
+        ) {
+            if (orig.exists()) return
+
+            if (!file.parentFile.exists()) {
+                mkdirs(file.parentFile, orig)
+            } else {
+                file.mkdir()
+                mkdirs(orig, orig)
+            }
+        }
+        mkdirs(this, this)
+    }
+
 }
 
 
