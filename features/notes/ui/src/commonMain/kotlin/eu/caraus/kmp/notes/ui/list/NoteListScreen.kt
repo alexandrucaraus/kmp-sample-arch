@@ -52,7 +52,6 @@ fun NoteListScreen(
             navigationIcon = { ClearSelectionsButton(state) },
         )
     },
-    floatingActionButton = { CreateNoteButton(createNote) },
     content = { padding ->
         if (state.notes.isEmpty()) {
             EmptyNoteList()
@@ -64,6 +63,7 @@ fun NoteListScreen(
             )
         }
     },
+    floatingActionButton = { CreateNoteButton(createNote) },
 )
 
 data class NoteListState(
@@ -106,24 +106,24 @@ internal fun NoteListItem(
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else DarkGray
     Card(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
-            .combinedClickable(
-                enabled = true,
-                onClick = {
-                    openNote(note)
-                },
-                onLongClick = {
-                    selectNote(note)
-                },
-            ),
+            modifier
+                .fillMaxWidth()
+                .border(borderWidth, borderColor, shape = MaterialTheme.shapes.medium)
+                .combinedClickable(
+                    enabled = true,
+                    onClick = {
+                        openNote(note)
+                    },
+                    onLongClick = {
+                        selectNote(note)
+                    },
+                ),
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge,

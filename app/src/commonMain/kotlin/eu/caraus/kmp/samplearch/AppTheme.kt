@@ -24,11 +24,11 @@ fun AppTheme(
     val typography =
         Typography(
             bodyMedium =
-            TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-            ),
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                ),
         )
     val shapes =
         Shapes(
@@ -46,22 +46,23 @@ fun AppTheme(
 }
 
 fun colorScheme(darkTheme: Boolean): ColorScheme {
-    val colors: Colors = if (darkTheme) {
-        DarkColors
-    } else {
-        LightColors
-    }
+    val colors: Colors =
+        if (darkTheme) {
+            DarkColors
+        } else {
+            LightColors
+        }
     return if (darkTheme) {
         darkColorScheme(
             primary = colors.primary,
             secondary = colors.secondary,
-            tertiary = colors.tertiary
+            tertiary = colors.tertiary,
         )
     } else {
         lightColorScheme(
             primary = colors.primary,
             secondary = colors.secondary,
-            tertiary = colors.tertiary
+            tertiary = colors.tertiary,
         )
     }
 }

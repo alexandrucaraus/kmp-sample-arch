@@ -10,10 +10,10 @@ import eu.caraus.kmp.notes.ui.details.NoteState
 internal fun NoteDetailsScreenPreview() {
     NoteDetailsScreen(
         note =
-        NoteState(
-            title = "Preview title",
-            content = "Preview content",
-        ),
+            NoteState(
+                title = "Preview title",
+                content = "Preview content",
+            ),
         close = {},
     )
 }

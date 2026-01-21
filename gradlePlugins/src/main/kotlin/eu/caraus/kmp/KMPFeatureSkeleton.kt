@@ -58,31 +58,31 @@ abstract class CreateFeatureTask : DefaultTask() {
         }
 
         val featureDir = File("./", "features/$featureName").also {
-            if (!it.exists()) it.mkdirs()
+            it.makedirs()
         }
 
         createDomainModule(featureDir = featureDir)
 
         when (layer) {
+
+            "domain" -> {
+                updateProjectSettings(listOf("domain"))
+            }
+
             "ui" -> {
-                createUiModule(
-                    featureDir = featureDir,
-                )
+                createUiModule(featureDir = featureDir)
+                updateProjectSettings(listOf("domain", "ui"))
             }
 
             "data" -> {
-                createDataModule(
-                    featureDir = featureDir,
-                )
+                createDataModule(featureDir = featureDir,)
+                updateProjectSettings(listOf("domain",  "data"))
             }
 
             "all" -> {
-                createUiModule(
-                    featureDir = featureDir,
-                )
-                createDataModule(
-                    featureDir = featureDir,
-                )
+                createUiModule(featureDir = featureDir)
+                createDataModule(featureDir = featureDir)
+                updateProjectSettings(listOf("domain", "ui", "data"))
             }
         }
     }
@@ -107,7 +107,7 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
     androidLibrary {
-        namespace = $packageName.$layer
+        namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -172,7 +172,7 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
     androidLibrary {
-        namespace = $packageName.$layer
+        namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -257,7 +257,7 @@ room {
 kotlin {
     applyDefaultHierarchyTemplate()
     androidLibrary {
-        namespace = $packageName.$layer
+        namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -304,7 +304,35 @@ kotlin {
 
     }
 
-    fun File.makedirs() {
+    // todo: create
+    fun createTest() {
+
+    }
+
+    fun updateProjectSettings(
+        layers: List<String> = listOf("domain", "ui", "data", "test")
+    ) {
+        val settingsFile = File("./", "settings.gradle.kts")
+
+        val includes = layers.map { layer ->
+            ":features:$featureName:$layer"
+        }
+
+        val content = settingsFile.readText()
+
+        val newLines = includes
+            .filterNot { content.contains("include(\"$it\")") }
+            .joinToString("\n") { "include(\"$it\")" }
+
+        if (newLines.isNotBlank()) {
+            settingsFile.appendText("\n\n// Feature $featureName\n$newLines")
+            println("✔ settings.gradle.kts updated. Re-run Gradle.")
+        } else {
+            println("ℹ Feature already included in settings.gradle.kts")
+        }
+    }
+
+    private fun File.makedirs() {
         fun mkdirs(
             file: File,
             orig: File,
