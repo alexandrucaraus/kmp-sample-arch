@@ -21,6 +21,9 @@ dependencies {
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
     }
+    implementation("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8") {
+
+    }
     implementation("io.nlopez.compose.rules:ktlint:0.5.3") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
     }

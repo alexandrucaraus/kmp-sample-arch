@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+#
+# Creates a new feature module by FEATURE_NAME
+# By default with all the layers (domain, data, ui, test)
+#
+
 FEATURE_NAME=sample
 
 cd ..

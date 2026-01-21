@@ -3,7 +3,7 @@ build:
   excludeCorrectable: false
   weights:
     # complexity: 2
-    # LongParameterList: 1
+    # LongParameterList: 1Indentation
     # style: 1
     # comments: 1
 
@@ -358,6 +358,7 @@ naming:
       - 'jvm'
       - 'native'
       - 'iosArm64'
+      - 'iosSimulatorArm64'
       - 'iosX64'
       - 'macosX64'
       - 'mingwX64'
@@ -506,7 +507,16 @@ potential-bugs:
     active: true
   UnsafeCallOnNullableType:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes: [
+        '**/test/**',
+        '**/androidTest/**',
+        '**/commonTest/**',
+        '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
+        '**/jsTest/**',
+        '**/iosTest/**'
+    ]
   UnsafeCast:
     active: true
   UnusedUnaryOperator:
@@ -623,7 +633,17 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
+    excludes: [
+        '**/test/**',
+        '**/androidTest/**',
+        '**/commonTest/**',
+        '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
+        '**/jsTest/**',
+        '**/iosTest/**',
+        '**/*.kts'
+    ]
     ignoreNumbers:
       - '-1'
       - '0'
@@ -886,9 +906,11 @@ formatting:
     autoCorrect: true
     layout: '*,java.**,javax.**,kotlin.**,^'
   Indentation:
-    active: true
-    autoCorrect: true
+    active: false
+    autoCorrect: false
     indentSize: 4
+    continuationIntentSize: 4
+    ignoreTripleQuotedString: true
   KdocWrapping:
     active: true
     autoCorrect: true
@@ -1067,70 +1089,70 @@ formatting:
     indentSize: 4
     maxLineLength: 120
 
-#Compose:
-#    ComposableAnnotationNaming:
-#        active: true
-#    ComposableNaming:
-#        active: true
-#    ComposableParamOrder:
-#        active: true
-#    CompositionLocalAllowlist:
-#        active: true
-#    CompositionLocalNaming:
-#        active: true
-#    ContentEmitterReturningValues:
-#        active: true
-#    ContentTrailingLambda:
-#        active: true
-#    ContentSlotReused:
-#        active: true
-#    DefaultsVisibility:
-#        active: true
-#    LambdaParameterEventTrailing:
-#        active: true
-#    LambdaParameterInRestartableEffect:
-#        active: true
-#    Material2:
-#        active: false
-#    ModifierClickableOrder:
-#        active: true
-#    ModifierComposed:
-#        active: true
-#    ModifierMissing:
-#        active: true
-#    ModifierNaming:
-#        active: true
-#    ModifierNotUsedAtRoot:
-#        active: true
-#    ModifierReused:
-#        active: true
-#    ModifierWithoutDefault:
-#        active: true
-#    MultipleEmitters:
-#        active: true
-#    MutableParams:
-#        active: true
-#    MutableStateAutoboxing:
-#        active: true
-#    MutableStateParam:
-#        active: true
-#    ParameterNaming:
-#        active: true
-#    PreviewAnnotationNaming:
-#        active: true
-#    PreviewNaming:
-#        active: false
-#    PreviewPublic:
-#        active: true
-#    RememberContentMissing:
-#        active: true
-#    RememberMissing:
-#        active: true
-#    StateParam:
-#        active: true
-#    UnstableCollections:
-#        active: false
-#    ViewModelForwarding:
-#        active: true
-#    ViewModelInjection:
-#        active: true
+Compose:
+    ComposableAnnotationNaming:
+        active: true
+    ComposableNaming:
+        active: true
+    ComposableParamOrder:
+        active: true
+    CompositionLocalAllowlist:
+        active: true
+    CompositionLocalNaming:
+        active: true
+    ContentEmitterReturningValues:
+        active: true
+    ContentTrailingLambda:
+        active: true
+    ContentSlotReused:
+        active: true
+    DefaultsVisibility:
+        active: true
+    LambdaParameterEventTrailing:
+        active: true
+    LambdaParameterInRestartableEffect:
+        active: true
+    Material2:
+        active: false
+    ModifierClickableOrder:
+        active: true
+    ModifierComposed:
+        active: true
+    ModifierMissing:
+        active: true
+    ModifierNaming:
+        active: true
+    ModifierNotUsedAtRoot:
+        active: true
+    ModifierReused:
+        active: true
+    ModifierWithoutDefault:
+        active: true
+    MultipleEmitters:
+        active: true
+    MutableParams:
+        active: true
+    MutableStateAutoboxing:
+        active: true
+    MutableStateParam:
+        active: true
+    ParameterNaming:
+        active: true
+    PreviewAnnotationNaming:
+        active: true
+    PreviewNaming:
+        active: false
+    PreviewPublic:
+        active: true
+    RememberContentMissing:
+        active: true
+    RememberMissing:
+        active: true
+    StateParam:
+        active: true
+    UnstableCollections:
+        active: false
+    ViewModelForwarding:
+        active: true
+    ViewModelInjection:
+        active: true
