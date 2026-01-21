@@ -2,7 +2,8 @@
 
 echo "Running pre-push checks..."
 
-cd ..
+# Uncomment bellow line when running by IDE Button ^^
+# cd ..
 
 # Run linters
 
