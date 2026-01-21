@@ -27,7 +27,7 @@ jobs:
               uses: android-actions/setup-android@v3
 
             - name: Accept Android Sdk Licenses
-              run: yes | sdkmanager --licences
+              run: yes | sdkmanager --licenses
 
             - name: Make gradlew executable
               run: chmod +x ./gradlew
