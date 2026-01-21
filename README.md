@@ -1,6 +1,11 @@
 # kmp-sample-arch
 Modular Kotlin Multiplatform Application Boilerplate
 
+# Coverage
+[![Android Coverage](https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml/badge.svg)](
+https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml
+)
+
 ### TODOs
 
 1. Test
@@ -11,12 +16,10 @@ Modular Kotlin Multiplatform Application Boilerplate
 
 3. CI/CD
    - Linters (ktlint, detekt) - done
+   - Pre-push hook - done
    - Coverage display android and common separate, auto start emulator - ip
-   - Pre-push hook
-   - Build documentation
    - Build artifacts
    - Publish
-   - Manage testing on CI/CD
 
 ### Modules Structure
 
@@ -67,7 +70,4 @@ class :data:database kotlin-multiplatform
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | ![Android App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/android.gif)  | ![iOS App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/ios.gif) |
 
-# Coverage
-[![Android Coverage](https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml/badge.svg)](
-https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml
-)
+
