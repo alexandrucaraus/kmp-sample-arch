@@ -1,10 +1,11 @@
-
+package eu.caraus.kmp.coverage
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
@@ -107,7 +108,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         logger.lifecycle("Checking if emulator exists: ${avdName.get()}")
 
         val listCmd = listOf(
-            getAndroidSdkPath() + "/cmdline-tools/latest/bin/avdmanager",
+            findAvdManagerPath(),
             "list", "avd"
         )
 
@@ -120,6 +121,19 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             logger.warn("Error checking emulator existence: ${e.message}")
             false
         }
+    }
+
+    private fun findAvdManagerPath(): String {
+        val sdkRoot = getAndroidSdkPath()
+        val cmdlineToolsDir = File("$sdkRoot/cmdline-tools")
+
+        val direct = File(cmdlineToolsDir, "latest/bin/avdmanager")
+        if (direct.exists()) return direct.absolutePath
+
+        return cmdlineToolsDir
+                .walkTopDown()
+                .firstOrNull { it.name == "avdmanager" && it.parentFile.name == "bin" }
+                ?.absolutePath ?: throw RuntimeException("avdmanager not found")
     }
 
     private fun waitForBoot() {
