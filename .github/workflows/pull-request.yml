@@ -10,7 +10,7 @@ on:
 jobs:
     linter:
         runs-on: ubuntu-latest
-        timeout-minutes: 5
+        timeout-minutes: 15
 
         steps:
             - name: Checkout
@@ -43,7 +43,7 @@ jobs:
     coverage:
         runs-on: ubuntu-latest
         needs: [linter]
-        timeout-minutes: 5
+        timeout-minutes: 15
 
         steps:
             - name: Run Android Coverage Report
