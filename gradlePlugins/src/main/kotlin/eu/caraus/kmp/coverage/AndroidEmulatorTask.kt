@@ -146,6 +146,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         val timeoutMillis = bootTimeout.get() * 1000L
 
         // Wait for device to be detected
+        logger.lifecycle("Detecting emulators/devices")
         while (System.currentTimeMillis() - startTime < timeoutMillis) {
             try {
                 val devices = executeCommandWithOutput(listOf(adbPath, "devices"))
@@ -154,12 +155,13 @@ abstract class AndroidEmulatorTask : DefaultTask() {
                     break
                 }
             } catch (e: Exception) {
-                logger.debug("Waiting for device detection...")
+                logger.lifecycle("Waiting for device detection... ${e.message}")
             }
             Thread.sleep(2000)
         }
 
         // Wait for boot to complete
+        logger.lifecycle("Start wait on boot")
         while (System.currentTimeMillis() - startTime < timeoutMillis) {
             try {
                 val bootComplete = executeCommandWithOutput(
@@ -174,7 +176,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
                     return
                 }
             } catch (e: Exception) {
-                logger.debug("Boot not complete yet: ${e.message}")
+                logger.lifecycle("Boot not complete yet: ${e.message}")
             }
 
             logger.lifecycle("Still booting...")
