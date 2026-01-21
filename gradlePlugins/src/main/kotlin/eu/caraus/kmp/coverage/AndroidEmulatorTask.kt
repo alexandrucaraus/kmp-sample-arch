@@ -147,9 +147,12 @@ abstract class AndroidEmulatorTask : DefaultTask() {
 
         // Wait for device to be detected
         logger.lifecycle("Detecting emulators/devices")
+        var count = 0
         while (System.currentTimeMillis() - startTime < timeoutMillis) {
+            logger.lifecycle("Try ${count++}")
             try {
                 val devices = executeCommandWithOutput(listOf(adbPath, "devices"))
+                logger.lifecycle("Devices: $devices")
                 if (devices.contains("emulator") && devices.contains("device")) {
                     logger.lifecycle("Device detected, checking boot status...")
                     break
@@ -157,6 +160,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             } catch (e: Exception) {
                 logger.lifecycle("Waiting for device detection... ${e.message}")
             }
+            logger.lifecycle("Retry in 2s")
             Thread.sleep(2000)
         }
 
