@@ -157,6 +157,9 @@ abstract class AndroidEmulatorTask : DefaultTask() {
                     logger.lifecycle("Device detected, checking boot status...")
                     break
                 }
+                if (count == 5) {
+                    break;
+                }
             } catch (e: Exception) {
                 logger.lifecycle("Waiting for device detection... ${e.message}")
             }
