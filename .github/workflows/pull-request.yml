@@ -9,7 +9,7 @@ on:
 
 jobs:
     checks:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         timeout-minutes: 25
         steps:
             - name: Checkout
@@ -27,6 +27,11 @@ jobs:
 
             - name: Accept Android Sdk Licenses
               run: yes | sdkmanager --licenses
+
+            - name: Setup emulator system image
+              run: |
+                sdkmanager "system-images;android-33;google_apis;x86_64"
+                echo "$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
 
             - name: Make gradlew executable
               run: chmod +x ./gradlew
