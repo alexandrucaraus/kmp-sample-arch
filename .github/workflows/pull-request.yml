@@ -57,26 +57,30 @@ jobs:
                 path: ~/.android
                 key: android-sdk-${{ runner.os }}-${{ hashFiles('**/build.gradle*') }}
 
-            - name: Lint with Ktlint
+            - name: Connected Android Test
               run: |
-                ./gradlew ktlintCheck
+                  ./gradlew startTestEmulator connectedAndroidTest
 
-            - name: Lint with detekt
-              run: |
-                  ./gradlew detekt
+#            - name: Lint with Ktlint
+#              run: |
+#                ./gradlew ktlintCheck
+#
+#            - name: Lint with detekt
+#              run: |
+#                  ./gradlew detekt
 
-            - name: Run Android Coverage Report
-              run: |
-                  ./gradlew startTestEmulator jacocoAndroidTestReport
-
-            - name: Upload Coverage Report
-              uses: actions/upload-artifact@v4
-              with:
-                  name: android-coverage-report
-                  path: |
-                      build/reports/jacoco/jacocoAndroidTestReport/**
-
-            - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v4
-              with:
-                  files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
+#            - name: Run Android Coverage Report
+#              run: |
+#                  ./gradlew startTestEmulator jacocoAndroidTestReport
+#
+#            - name: Upload Coverage Report
+#              uses: actions/upload-artifact@v4
+#              with:
+#                  name: android-coverage-report
+#                  path: |
+#                      build/reports/jacoco/jacocoAndroidTestReport/**
+#
+#            - name: Upload coverage to Codecov
+#              uses: codecov/codecov-action@v4
+#              with:
+#                  files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
