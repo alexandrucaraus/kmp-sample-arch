@@ -9,7 +9,7 @@ on:
 
 jobs:
     checks:
-        runs-on: self-hosted
+        runs-on: ubuntu-latest #self-hosted
         timeout-minutes: 25
         steps:
             - name: Checkout
