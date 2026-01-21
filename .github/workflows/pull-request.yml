@@ -56,11 +56,11 @@ jobs:
                 restore-keys: |
                     maven-${{ runner.os }}-
 
-            - name: Cache Android SDK
-              uses: actions/cache@v3
-              with:
-                path: ~/.android
-                key: android-sdk-${{ runner.os }}-${{ hashFiles('**/build.gradle*') }}
+#            - name: Cache Android SDK
+#              uses: actions/cache@v3
+#              with:
+#                path: ~/.android
+#                key: android-sdk-${{ runner.os }}-${{ hashFiles('**/build.gradle*') }}
 
             - name: Connected Android Test
               run: |
