@@ -9,7 +9,7 @@ on:
 
 jobs:
     checks:
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         timeout-minutes: 25
         steps:
             - name: Checkout
@@ -64,7 +64,11 @@ jobs:
 
             - name: Connected Android Test
               run: |
-                  ./gradlew startTestEmulator connectedAndroidTest
+                  ./gradlew startTestEmulator
+
+            - name: Connected Android Test
+              run: |
+                  ./gradlew connectedAndroidTest
 
 #            - name: Lint with Ktlint
 #              run: |
