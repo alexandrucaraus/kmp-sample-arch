@@ -1,4 +1,4 @@
-package eu.caraus.kmp
+package eu.caraus.kmp.coverage
 
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -23,6 +23,15 @@ class KMPJacoco : Plugin<Project> {
                 project.tasks.register<JacocoReport>("jacocoAndroidTestReport") {
                     group = "Reporting"
                     description = "Generate aggregated Jacoco coverage report from all modules for Android unit and instrumented tests"
+
+                    // Depends on running emulator
+                    dependsOn("startTestEmulator")
+
+                    doLast {
+                        // todo kills all the emulators needs only to kill the one
+                        // started for coverage
+                        ProcessBuilder("adb", "emu", "kill").start().waitFor()
+                    }
 
                     // Depend on all module test tasks
                     dependsOn(subprojects.flatMap { subproject ->

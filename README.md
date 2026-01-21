@@ -66,3 +66,8 @@ class :data:database kotlin-multiplatform
 | Android                                                                                                                    | iOS                                                                                                               |
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | ![Android App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/android.gif)  | ![iOS App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/ios.gif) |
+
+# Coverage
+[![Android Coverage](https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml/badge.svg)](
+https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml
+)

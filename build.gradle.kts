@@ -1,5 +1,3 @@
-import dev.iurysouza.modulegraph.Theme
-
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -25,4 +23,11 @@ moduleGraphConfig {
     showFullPath = true
     includeIsolatedModules = true
     setStyleByModuleType = true
+}
+
+tasks.register<AndroidEmulatorTask>("startTestEmulator") {
+    avdName.set("my_test_emulator")
+    systemImage.set("system-images;android-33;google_apis;x86_64")
+    deviceType.set("pixel_5")
+    bootTimeout.set(3000)
 }

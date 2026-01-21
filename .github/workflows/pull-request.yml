@@ -1,0 +1,63 @@
+name: Pull Request Checks
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+            - ci_coverage
+
+jobs:
+    linter:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@V4
+
+            - name: Setup JDK
+              uses: actions/setup-java@v4
+              with:
+                  distribution: 'temurin'
+                  java-version: '17'
+                  cache: gradle
+
+            - name: Setup Android Sdk
+              uses: android-actions/setup-android@v3
+
+            - name: Accept Android Sdk Licenses
+              run: yes | sdkmanager --licences
+
+            - name: Make gradlew executable
+              run: chmod +x ./gradlew
+
+            - name: Lint with Ktlint
+              run: |
+                ./gradlew ktlintCheck
+
+            - name: Lint with detekt
+              run: |
+                  ./gradlew detekt
+
+    coverage:
+        runs-on: ubuntu-latest
+        needs: [linter]
+        timeout-minutes: 5
+
+        steps:
+            - name: Run Android Coverage Report
+              run: |
+                  ./gradlew startTestEmulator jacocoAndroidTestReport
+
+            - name: Upload Coverage Report
+              uses: actions/upload-artifact@v4
+              with:
+                name: android-coverage-report
+                path: |
+                    build/reports/jacoco/jacocoAndroidTestReport/**
+
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v4
+              with:
+                files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
