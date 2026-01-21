@@ -58,5 +58,9 @@ gradlePlugin {
             id = "kmp.linter"
             implementationClass = "eu.caraus.kmp.KMPKtLinter"
         }
+        create("featureSkeleton") {
+            id = "kmp.feature.skeleton"
+            implementationClass = "eu.caraus.kmp.KMPKtLinter"
+        }
     }
 }

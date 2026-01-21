@@ -47,8 +47,5 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
     }
 }

@@ -8,7 +8,7 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
     androidLibrary {
-        namespace = "eu.caraus.kmp.notes.domain"
+        namespace = eu.caraus.test.domain
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
