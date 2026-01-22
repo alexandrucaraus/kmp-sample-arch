@@ -96,9 +96,13 @@ jobs:
 #              run: |
 #                  ./gradlew detekt
 
-            - name: Run Android Coverage Report
+            - name: Run Emulator
               run: |
-                  ./gradlew startTestEmulator jacocoAndroidTestReport
+                  ./gradlew startTestEmulator
+
+            - name: Run Coverage
+              run: |
+                  ./gradlew jacocoAndroidTestReport
 
             - name: Debug CI file structure
               run: |
