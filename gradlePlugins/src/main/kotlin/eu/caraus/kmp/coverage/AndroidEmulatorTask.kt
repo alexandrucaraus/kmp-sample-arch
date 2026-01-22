@@ -80,6 +80,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         logger.lifecycle("Emulator created successfully")
     }
 
+
     private fun startEmulator() {
         logger.lifecycle("Starting emulator: ${avdName.get()}")
 
@@ -87,12 +88,14 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         val startCmd = listOf(
             emulatorPath,
             "-avd", avdName.get(),
-            "-no-snapshot-save",
+            "-no-snapshot",
             "-no-audio",
             "-no-window",
             "-gpu", "swiftshader_indirect",
             "-no-boot-anim",
-            "-accel off"
+            "-accel", "off",
+            "-memory", "2048",
+            "-cores", "2"
         )
 
         // Start emulator in background
