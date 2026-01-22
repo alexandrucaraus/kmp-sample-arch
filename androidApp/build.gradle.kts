@@ -58,7 +58,7 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
-        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        execution = "TEST"
     }
     bundle {
         // Disable bundle splits for androidTest
