@@ -95,7 +95,13 @@ jobs:
 #            - name: Run Android Coverage Report
 #              run: |
 #                  ./gradlew startTestEmulator jacocoAndroidTestReport
-#
+
+            - name: Debug CI file structure
+              run: |
+                    pwd
+                    ls -la
+                    find . -name "*.xml"
+
             - name: Upload Coverage Report
               uses: actions/upload-artifact@v4
               with:
