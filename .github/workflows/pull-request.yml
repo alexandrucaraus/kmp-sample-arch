@@ -14,7 +14,7 @@ concurrency:
 jobs:
     checks:
         runs-on: self-hosted #ubuntu-latest
-        timeout-minutes: 25
+        timeout-minutes: 45
         steps:
             - name: Checkout
               uses: actions/checkout@v4

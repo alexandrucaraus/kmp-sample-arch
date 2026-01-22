@@ -166,7 +166,7 @@ abstract class AndroidEmulatorTask : DefaultTask() {
                     logger.lifecycle("Online emulator detected")
                     break
                 } else
-                if (count == 20) {
+                if (count == 3) {
                     break
                 }
             } catch (e: Exception) {
