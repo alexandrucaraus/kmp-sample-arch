@@ -94,8 +94,8 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             "-gpu", "swiftshader_indirect",
             "-no-boot-anim",
             "-accel", "off",
-            "-memory", "2048",
-            "-cores", "2"
+            "-memory", "4096",
+            "-cores", "4"
         )
 
         // Start emulator in background
