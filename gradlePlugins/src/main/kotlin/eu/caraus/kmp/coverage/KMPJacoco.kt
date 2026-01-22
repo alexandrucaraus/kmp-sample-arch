@@ -95,7 +95,20 @@ class KMPJacoco : Plugin<Project> {
                     }
 
                     executionData.setFrom(project.files(allExecutionData))
+
+                    doLast {
+                        reports.xml.outputLocation.orNull?.asFile?.let {
+                            logger.lifecycle("📊 JaCoCo aggregated XML report: ${it.absolutePath}")
+                        }
+
+                        reports.html.outputLocation.orNull?.asFile?.let {
+                            logger.lifecycle("📊 JaCoCo aggregated HTML report: ${it.absolutePath}")
+                        }
+                    }
             }
+
         }
+
+
     }
 }
