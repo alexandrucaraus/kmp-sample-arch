@@ -91,7 +91,6 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             "-no-snapshot",
             "-no-audio",
             "-no-window",
-            "-no-console",
             "-gpu", "swiftshader_indirect",
             "-no-boot-anim",
             "-accel", "off",
