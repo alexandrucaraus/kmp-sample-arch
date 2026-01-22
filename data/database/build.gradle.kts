@@ -36,7 +36,7 @@ kotlin {
         withDeviceTest {
             enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            execution = "HOST"
+            execution = "ANDROIDX_TEST_ORCHESTRATOR"
             androidResources {
                 enable = true
             }
