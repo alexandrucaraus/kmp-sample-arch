@@ -103,8 +103,6 @@ jobs:
             - name: Debug CI file structure
               run: |
                     pwd
-                    ls -la build
-                    ls -la build/reports
                     ls -la build/reports/jacoco
 
             - name: Upload Coverage Report
