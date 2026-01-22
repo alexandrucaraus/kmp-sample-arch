@@ -71,18 +71,18 @@ jobs:
                 sudo udevadm control --reload-rules
                 sudo udevadm trigger --name-match=kvm
 
-            - name: Run connected tests
-              uses: reactivecircus/android-emulator-runner@v2
-              with:
-                api-level: 33
-                arch: x86_64
-                target: google_apis
-                profile: pixel_6
-                ram-size: 2048M
-                heap-size: 512M
-                disable-animations: true
-                emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-                script: ./gradlew jacocoAndroidTestReport
+#            - name: Run connected tests
+#              uses: reactivecircus/android-emulator-runner@v2
+#              with:
+#                api-level: 33
+#                arch: x86_64
+#                target: google_apis
+#                profile: pixel_6
+#                ram-size: 2048M
+#                heap-size: 512M
+#                disable-animations: true
+#                emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+#                script: ./gradlew jacocoAndroidTestReport
 
 #            - name: Connected Android Test
 #              run: |
@@ -96,9 +96,9 @@ jobs:
 #              run: |
 #                  ./gradlew detekt
 
-#            - name: Run Android Coverage Report
-#              run: |
-#                  ./gradlew startTestEmulator jacocoAndroidTestReport
+            - name: Run Android Coverage Report
+              run: |
+                  ./gradlew startTestEmulator jacocoAndroidTestReport
 
             - name: Debug CI file structure
               run: |
