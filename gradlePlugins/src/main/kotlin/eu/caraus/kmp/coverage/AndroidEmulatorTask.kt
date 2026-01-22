@@ -90,7 +90,9 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             "-no-snapshot-save",
             "-no-audio",
             "-no-window",
-            "-gpu", "swiftshader_indirect"
+            "-gpu", "swiftshader_indirect",
+            "-no-boot-anim",
+            "-accel off"
         )
 
         // Start emulator in background
