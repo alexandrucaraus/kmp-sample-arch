@@ -153,12 +153,16 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             try {
                 val devices = executeCommandWithOutput(listOf(adbPath, "devices"))
                 logger.lifecycle("Devices: $devices")
-                if (devices.contains("emulator") && devices.contains("device")) {
-                    logger.lifecycle("Device detected, checking boot status...")
-                    break
+                val hasOnlineEmulator = devices.lines().any {
+                    logger.lifecycle("Emulators $it")
+                    it.startsWith("emulator") && it.contains("\tdevice")
                 }
-                if (count == 5) {
-                    break;
+                if (hasOnlineEmulator) {
+                    logger.lifecycle("Online emulator detected")
+                    break
+                } else
+                if (count == 20) {
+                    break
                 }
             } catch (e: Exception) {
                 logger.lifecycle("Waiting for device detection... ${e.message}")
@@ -171,8 +175,16 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         logger.lifecycle("Start wait on boot")
         while (System.currentTimeMillis() - startTime < timeoutMillis) {
             try {
+
+                val serial = executeCommandWithOutput(listOf(adbPath, "devices"))
+                    .lines()
+                    .firstOrNull { it.startsWith("emulator-") && it.contains("\tdevice") }
+                    ?.split("\t")
+                    ?.first()
+                    ?: throw RuntimeException("No online emulator found")
+
                 val bootComplete = executeCommandWithOutput(
-                    listOf(adbPath, "shell", "getprop", "sys.boot_completed")
+                    listOf(adbPath,"-s", serial ,"shell", "getprop", "sys.boot_completed")
                 ).trim()
 
                 if (bootComplete == "1") {
