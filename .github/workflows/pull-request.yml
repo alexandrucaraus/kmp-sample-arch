@@ -78,7 +78,7 @@ jobs:
                 heap-size: 512M
                 disable-animations: true
                 emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-                script: ./gradlew connectedAndroidTest
+                script: ./gradlew jacocoAndroidTestReport
 
 #            - name: Connected Android Test
 #              run: |
@@ -96,14 +96,14 @@ jobs:
 #              run: |
 #                  ./gradlew startTestEmulator jacocoAndroidTestReport
 #
-#            - name: Upload Coverage Report
-#              uses: actions/upload-artifact@v4
-#              with:
-#                  name: android-coverage-report
-#                  path: |
-#                      build/reports/jacoco/jacocoAndroidTestReport/**
-#
-#            - name: Upload coverage to Codecov
-#              uses: codecov/codecov-action@v4
-#              with:
-#                  files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
+            - name: Upload Coverage Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: android-coverage-report
+                  path: |
+                      build/reports/jacoco/jacocoAndroidTestReport/**
+
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v4
+              with:
+                  files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
