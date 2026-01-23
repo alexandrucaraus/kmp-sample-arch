@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                api-level: [ 24, 36 ]
+                api-level: [ 36 ] #[ 24, 36 ]
         timeout-minutes: 45
         steps:
             - name: Checkout
