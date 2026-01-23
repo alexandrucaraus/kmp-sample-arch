@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                api-level: [ 36 ] #[ 24, 36 ]
+                api-level: [ 35 ] #[ 24, 36 ]
         timeout-minutes: 45
         steps:
             - name: Checkout
@@ -86,17 +86,27 @@ jobs:
                     ~/.android/adb*
                 key: avd-${{ matrix.api-level }}
 
+            - name: create AVD and generate snapshot for caching
+              if: steps.avd-cache.outputs.cache-hit != 'true'
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                api-level: ${{ matrix.api-level }}
+                force-avd-creation: false
+                emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                disable-animations: false
+                script: echo "Generated AVD snapshot for caching."
+
             - name: Run tests and generate coverage report
               if: steps.avd-cache.outputs.cache-hit != 'true'
               uses: reactivecircus/android-emulator-runner@v2
               with:
                 api-level: ${{ matrix.api-level }}
                 force-avd-creation: false
-                arch: x86_64
-                target: google_apis
-                profile: pixel_6
-                ram-size: 2048M
-                heap-size: 512M
+#                arch: x86_64
+#                target: google_apis
+#                profile: pixel_6
+#                ram-size: 2048M
+#                heap-size: 512M
                 disable-animations: true
                 emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
                 script: ./gradlew jacocoAndroidTestReport
