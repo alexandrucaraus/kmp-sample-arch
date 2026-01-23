@@ -19,7 +19,7 @@ class KMPJacoco : Plugin<Project> {
 
         project.plugins.apply("jacoco")
 
-        project.afterEvaluate {
+        with(project) {
                 project.tasks.register<JacocoReport>("jacocoAndroidTestReport") {
                     group = "Reporting"
                     description = "Generate aggregated Jacoco coverage report from all modules for Android unit and instrumented tests"
@@ -36,6 +36,8 @@ class KMPJacoco : Plugin<Project> {
                     // Depend on all module test tasks
                     dependsOn(subprojects.flatMap { subproject ->
                         listOfNotNull(
+                            subproject.tasks.findByName("testDebugUnitTest"),
+                            subproject.tasks.findByName("connectedDebugAndroidTest"),
                             subproject.tasks.findByName("testAndroidHostTest"),
                             subproject.tasks.findByName("connectedAndroidDeviceTest")
                         )
