@@ -149,6 +149,7 @@ jobs:
               run: |
                     pwd
                     ls -la build/reports/jacoco
+              continue-on-error: true
 
             - name: Upload Coverage Report
               uses: actions/upload-artifact@v4
@@ -156,8 +157,14 @@ jobs:
                   name: android-coverage-report
                   path: |
                       build/reports/jacoco/jacocoAndroidTestReport/**
+              continue-on-error: true
+
+            - name: Upload coverage to Codecov no param
+              uses: codecov/codecov-action@v4
+              continue-on-error: true
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v4
               with:
                   files: build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml
+              continue-on-error: true

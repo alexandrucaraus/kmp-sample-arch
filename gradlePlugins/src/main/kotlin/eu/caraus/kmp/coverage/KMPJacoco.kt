@@ -3,6 +3,7 @@ package eu.caraus.kmp.coverage
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.internal.impldep.org.bouncycastle.oer.its.ieee1609dot2.EndEntityType.app
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
@@ -115,6 +116,9 @@ class KMPJacoco : Plugin<Project> {
 
         }
 
-
+        project
+            .tasks
+            .findByName("jacocoAndroidTestReport")
+            ?.dependsOn(":app:createAndroidDeviceTestCoverageReport")
     }
 }
