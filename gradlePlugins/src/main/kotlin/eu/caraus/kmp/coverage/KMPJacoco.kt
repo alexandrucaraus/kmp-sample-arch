@@ -34,9 +34,9 @@ class KMPJacoco : Plugin<Project> {
 //                        ProcessBuilder("adb", "emu", "kill").start().waitFor()
 //                    }
 
-                    dependsOn(
-                        project.tasks.findByName("createAndroidDeviceTestCoverageReport")
-                    )
+//                    dependsOn(
+//                        project.tasks.findByName("createAndroidDeviceTestCoverageReport")
+//                    )
 
                     // Depend on all module test tasks
                     dependsOn(subprojects.flatMap { subproject ->
