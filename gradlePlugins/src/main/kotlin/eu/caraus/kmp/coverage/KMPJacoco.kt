@@ -33,6 +33,10 @@ class KMPJacoco : Plugin<Project> {
 //                        ProcessBuilder("adb", "emu", "kill").start().waitFor()
 //                    }
 
+                    tasks.named("jacocoAndroidTestReport") {
+                        dependsOn("createAndroidDeviceTestCoverageReport")
+                    }
+
                     // Depend on all module test tasks
                     dependsOn(subprojects.flatMap { subproject ->
                         listOfNotNull(
