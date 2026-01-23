@@ -71,18 +71,40 @@ jobs:
                 sudo udevadm control --reload-rules
                 sudo udevadm trigger --name-match=kvm
 
-#            - name: Run connected tests
-#              uses: reactivecircus/android-emulator-runner@v2
-#              with:
-#                api-level: 33
-#                arch: x86_64
-#                target: google_apis
-#                profile: pixel_6
-#                ram-size: 2048M
-#                heap-size: 512M
-#                disable-animations: true
-#                emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-#                script: ./gradlew jacocoAndroidTestReport
+            - name: Gradle cache
+              uses: gradle/actions/setup-gradle@v3
+
+            - name: AVD cache
+              uses: actions/cache@v4
+              id: avd-cache
+              with:
+                path: |
+                    ~/.android/avd/*
+                    ~/.android/adb*
+                    key: avd-${{ matrix.api-level }}
+
+            - name: create AVD and generate snapshot for caching
+              if: steps.avd-cache.outputs.cache-hit != 'true'
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                api-level: ${{ matrix.api-level }}
+                force-avd-creation: false
+                emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                disable-animations: false
+                script: echo "Generated AVD snapshot for caching."
+
+            - name: Run connected tests
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                api-level: 33
+                arch: x86_64
+                target: google_apis
+                profile: pixel_6
+                ram-size: 2048M
+                heap-size: 512M
+                disable-animations: true
+                emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                script: ./gradlew jacocoAndroidTestReport
 
 #            - name: Connected Android Test
 #              run: |
@@ -96,13 +118,13 @@ jobs:
 #              run: |
 #                  ./gradlew detekt
 
-            - name: Run Emulator
-              run: |
-                  ./gradlew startTestEmulator
+#            - name: Run Emulator
+#              run: |
+#                  ./gradlew startTestEmulator
 
-            - name: Run Coverage
-              run: |
-                  ./gradlew jacocoAndroidTestReport
+#            - name: Run Coverage
+#              run: |
+#                  ./gradlew jacocoAndroidTestReport
 
             - name: Debug CI file structure
               run: |

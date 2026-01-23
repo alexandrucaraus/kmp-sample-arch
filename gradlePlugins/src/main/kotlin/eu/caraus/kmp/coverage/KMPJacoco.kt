@@ -25,13 +25,13 @@ class KMPJacoco : Plugin<Project> {
                     description = "Generate aggregated Jacoco coverage report from all modules for Android unit and instrumented tests"
 
                     // Depends on running emulator
-                    dependsOn("startTestEmulator")
+                    //dependsOn("startTestEmulator")
 
-                    doLast {
-                        // todo kills all the emulators needs only to kill the one
-                        // started for coverage
-                        ProcessBuilder("adb", "emu", "kill").start().waitFor()
-                    }
+//                    doLast {
+//                        // todo kills all the emulators needs only to kill the one
+//                        // started for coverage
+//                        ProcessBuilder("adb", "emu", "kill").start().waitFor()
+//                    }
 
                     // Depend on all module test tasks
                     dependsOn(subprojects.flatMap { subproject ->
