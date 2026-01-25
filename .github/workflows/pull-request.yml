@@ -112,6 +112,17 @@ jobs:
                 emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
                 script: ./gradlew androidTestCoverage
 
+            - name: Run tests and generate coverage report
+                    #if: steps.avd-cache.outputs.cache-hit != 'false'
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                api-level: ${{ matrix.api-level }}
+                force-avd-creation: false
+                arch: x86_64
+                disable-animations: true
+                emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                script: ./gradlew androidTestCoverage
+
 #            - name: Run connected tests
 #              uses: reactivecircus/android-emulator-runner@v2
 #              with:
