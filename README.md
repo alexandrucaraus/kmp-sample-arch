@@ -5,7 +5,7 @@ Modular Kotlin Multiplatform Application Boilerplate
 [![Android Coverage](https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml/badge.svg)](
 https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml
 )
-[![Coverage](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch/branch/main/graph/badge.svg)](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch)
+[![Coverage](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch/branch/ci_coverage/graph/badge.svg?token=196d224b-3be4-475e-94f3-f34b1e81a8eb)](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch)
 
 ### TODOs
 
