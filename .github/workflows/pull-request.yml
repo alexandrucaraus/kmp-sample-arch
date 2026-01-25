@@ -43,17 +43,17 @@ jobs:
             - name: Make gradlew executable
               run: chmod +x ./gradlew
 
-#            - name: Cache Gradle
-#              uses: actions/cache@v3
-#              with:
-#                # Directories to cache
-#                path: |
-#                    ~/.gradle/caches
-#                    ~/.gradle/wrapper
-#                # Key must change when Gradle files change
-#                key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle*', '**/gradle-wrapper.properties') }}
-#                restore-keys: |
-#                    gradle-${{ runner.os }}-
+            - name: Cache Gradle
+              uses: actions/cache@v3
+              with:
+                # Directories to cache
+                path: |
+                    ~/.gradle/caches
+                    ~/.gradle/wrapper
+                # Key must change when Gradle files change
+                key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle*', '**/gradle-wrapper.properties') }}
+                restore-keys: |
+                    gradle-${{ runner.os }}-
 
 #            - name: Cache Maven
 #              uses: actions/cache@v3
@@ -110,7 +110,7 @@ jobs:
 #                heap-size: 512M
                 disable-animations: true
                 emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-                script: ./gradlew androidTestCoverage --rerun-tasks
+                script: ./gradlew androidTestCoverage --info
 
 #            - name: Run connected tests
 #              uses: reactivecircus/android-emulator-runner@v2

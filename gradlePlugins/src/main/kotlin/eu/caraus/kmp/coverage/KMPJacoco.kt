@@ -35,7 +35,6 @@ class KMPJacoco : Plugin<Project> {
 //            }
 
 
-
             subproject.pluginManager.withPlugin("com.android.application") {
                 enableAndroidCoverage(subproject)
             }
@@ -81,17 +80,15 @@ class KMPJacoco : Plugin<Project> {
                 html.required.set(true)
             }
 
-            executionData.setFrom(
-                project.files(
-                    project.subprojects.flatMap { sub ->
-                        sub.fileTree(sub.layout.buildDirectory) {
-                            include(
-                                "**/unit_test_code_coverage/**/*.exec",
-                                "**/code_coverage/**/*.ec"
-                            )
-                        }
+            executionData.from(
+                project.subprojects.map { sub ->
+                    sub.fileTree(sub.layout.buildDirectory) {
+                        include(
+                            "**/unit_test_code_coverage/**/*.exec",
+                            "**/code_coverage/**/*.ec"
+                        )
                     }
-                )
+                }
             )
 
             sourceDirectories.setFrom(
