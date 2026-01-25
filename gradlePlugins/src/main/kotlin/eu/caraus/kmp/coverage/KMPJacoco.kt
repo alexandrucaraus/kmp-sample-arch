@@ -3,7 +3,6 @@ package eu.caraus.kmp.coverage
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
-import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 class KMPJacoco : Plugin<Project> {
@@ -12,50 +11,13 @@ class KMPJacoco : Plugin<Project> {
         require(project == project.rootProject) {
             "KMPJacoco must be applied to the root project only"
         }
-
-        // Apply JaCoCo to root
         project.plugins.apply("jacoco")
-
-        // Apply JaCoCo to all subprojects
-
         project.subprojects.forEach { subproject ->
             subproject.plugins.apply("jacoco")
-
-            // JVM / Android unit tests
-//            tasks.withType<Test>().configureEach {
-//                extensions.configure(JacocoTaskExtension::class.java) {
-//                    isIncludeNoLocationClasses = true
-//                    excludes = listOf("jdk.internal.*")
-//                }
-//            }
-
-            // Android & KMP Android plugins
-//            pluginManager.withPlugin("com.android.library") {
-//                enableAndroidCoverage(this)
-//            }
-
-
-            subproject.pluginManager.withPlugin("com.android.application") {
-                enableAndroidCoverage(subproject)
-            }
-
-            subproject.pluginManager.withPlugin("com.android.kotlin.multiplatform.library") {
-                enableAndroidCoverage(subproject)
-            }
         }
-
         registerAggregationTask(project)
     }
 
-    private fun enableAndroidCoverage(project: Project) {
-        project.tasks.matching {
-            it.name.contains("AndroidTest", ignoreCase = true)
-        }.configureEach {
-//            extensions.configure(JacocoTaskExtension::class.java) {
-//                isIncludeNoLocationClasses = true
-//            }
-        }
-    }
 
     private fun registerAggregationTask(project: Project) {
         project.tasks.register<JacocoReport>("androidTestCoverage") {
@@ -84,8 +46,8 @@ class KMPJacoco : Plugin<Project> {
                 project.subprojects.map { sub ->
                     sub.fileTree(sub.layout.buildDirectory) {
                         include(
-                            "**/unit_test_code_coverage/**/*.exec",
-                            "**/code_coverage/**/*.ec"
+                            "unit_test_code_coverage/**/*.exec",
+                            "code_coverage/**/*.ec"
                         )
                     }
                 }

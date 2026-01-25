@@ -154,14 +154,12 @@ jobs:
             - name: Upload Coverage Report
               uses: actions/upload-artifact@v4
               with:
-                  name: android-coverage-report-${{ matrix.os }}
+                  name: android-coverage-report
                   path: |
                       build/reports/jacoco/androidTestCoverage/
-              continue-on-error: true
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v4
               with:
                   token: 196d224b-3be4-475e-94f3-f34b1e81a8eb
                   files: build/reports/jacoco/androidTestCoverage/androidTestCoverage.xml
-              continue-on-error: true
