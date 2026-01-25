@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.internal.types.checker.TypeRefinementSupport.
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
+
 }
 
 kotlin {
