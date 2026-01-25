@@ -148,7 +148,7 @@ jobs:
             - name: Debug CI file structure
               run: |
                     pwd
-                    ls -la build/reports/jacoco
+                    ls -la build/reports/jacoco/androidTestCoverage
               continue-on-error: true
 
             - name: Upload Coverage Report
@@ -156,7 +156,7 @@ jobs:
               with:
                   name: android-coverage-report
                   path: |
-                      '**/build/reports/jacoco/androidTestCoverage/**'
+                      'build/reports/jacoco/androidTestCoverage/**'
               continue-on-error: true
 
             - name: Upload coverage to Codecov no param
