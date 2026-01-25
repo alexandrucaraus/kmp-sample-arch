@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.internal.types.checker.TypeRefinementSupport.Disabled.isEnabled
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -53,6 +55,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    testCoverage {
     }
     testOptions {
         unitTests.all {

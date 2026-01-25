@@ -156,7 +156,7 @@ jobs:
               with:
                   name: android-coverage-report
                   path: |
-                      build/reports/jacoco/jacocoAndroidTestReport/**
+                      '**/build/reports/jacoco/jacocoAndroidTestReport/**'
               continue-on-error: true
 
             - name: Upload coverage to Codecov no param
