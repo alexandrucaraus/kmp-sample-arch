@@ -156,7 +156,7 @@ jobs:
               with:
                   name: android-coverage-report-${{ matrix.os }}
                   path: |
-                      build/reports/jacoco/androidTestCoverage/**
+                      build/reports/jacoco/androidTestCoverage/
               continue-on-error: true
 
             - name: Upload coverage to Codecov no param
