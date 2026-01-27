@@ -5,7 +5,6 @@ import kotlin.test.Ignore
 import kotlin.test.Test
 
 class NotesSnapshotTest {
-
 //    @get:Rule
 //    val paparazzi = Paparazzi(
 //        deviceConfig = PIXEL_5,
@@ -14,7 +13,7 @@ class NotesSnapshotTest {
 //    )
 
     @Test
-    @Ignore
+    @Ignore("Wait for paparazzi 2.0.0-alpha05 to make this work")
     fun test() {
         val composePreviews =
             ComposePreviewsAggregator().scan(this::class.java.packageName)
