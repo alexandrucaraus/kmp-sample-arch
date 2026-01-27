@@ -40,6 +40,10 @@ jobs:
                     restore-keys: |
                         ${{ runner.os }}-gradle-
 
+            -   name: Run Linters
+                run: |
+                    ./gradlew ktlintCheck detekt --parallel
+
             -   name: Cache Android SDK
                 uses: actions/cache@v4
                 with:

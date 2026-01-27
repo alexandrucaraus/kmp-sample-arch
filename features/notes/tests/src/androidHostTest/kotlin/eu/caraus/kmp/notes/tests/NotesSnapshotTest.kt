@@ -4,14 +4,12 @@ import eu.caraus.kmp.test.common.previews.ComposePreviewsAggregator
 import kotlin.test.Test
 
 class NotesSnapshotTest {
-
 //    @get:Rule
 //    val paparazzi = Paparazzi(
 //        deviceConfig = PIXEL_5,
 //        theme = "android:Theme.Material.Light.NoActionBar"
 //        // ...see docs for more options
 //    )
-
 
     @Test
     fun test() {
@@ -20,9 +18,9 @@ class NotesSnapshotTest {
 
         composePreviews.forEach { previewFunction ->
 //            paparazzi.snapshot("${previewFunction.name}") {
-////                CompositionLocalProvider(LocalInspectionMode provides true) {
-////                    PreviewContextConfigurationEffect()
-////                }
+//                CompositionLocalProvider(LocalInspectionMode provides true) {
+//                    PreviewContextConfigurationEffect()
+//                }
 //                SnapshotTestWrapper {
 //                    previewFunction.invoke(null, currentComposer)
 //                }

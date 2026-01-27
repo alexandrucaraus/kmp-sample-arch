@@ -181,13 +181,6 @@ abstract class AndroidEmulatorTask : DefaultTask() {
         while (System.currentTimeMillis() - startTime < timeoutMillis) {
             try {
 
-//                val serial = executeCommandWithOutput(listOf(adbPath, "devices"))
-//                    .lines()
-//                    .firstOrNull { it.startsWith("emulator-") && it.contains("\tdevice") }
-//                    ?.split("\t")
-//                    ?.first()
-//                    ?: throw RuntimeException("No online emulator found")
-
                 val bootComplete = executeCommandWithOutput(
                     listOf(
                         adbPath,

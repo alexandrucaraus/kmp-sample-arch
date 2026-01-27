@@ -37,7 +37,6 @@ kotlin {
         withDeviceTest {
             enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            //execution = "TEST"
         }
         androidResources {
             enable = true
@@ -51,7 +50,6 @@ kotlin {
     iosSimulatorArm64()
     sourceSets {
         commonTest.dependencies {
-
             implementation(projects.testCommon)
             implementation(projects.features.notes.domain)
             implementation(projects.features.notes.ui)
@@ -66,7 +64,6 @@ kotlin {
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
             implementation(libs.compose.nav3)
-
             implementation(libs.koin.core)
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)

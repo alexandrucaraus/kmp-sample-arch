@@ -2,7 +2,6 @@ package eu.caraus.kmp.coverage
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.internal.provider.ValueSupplier.ValueProducer.task
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
@@ -37,36 +36,6 @@ class KMPJacoco : Plugin<Project> {
                     }
                 }
             )
-
-
-
-//            project.subprojects.forEach { subproject ->
-//
-//                subproject.tasks.findByName("jacoco")?.doFirst {
-//                    logger.lifecycle("📂 Debug Jacoco executionData paths:")
-//                    executionData.files.forEach { file ->
-//                        logger.lifecycle(" - ${file.absolutePath} (exists: ${file.exists()})")
-//                    }
-//                }
-//
-//                subproject.tasks.findByName("jacoco")?.doLast {
-//                    logger.lifecycle("📂 Debug Jacoco executionData paths:")
-//                    executionData.files.forEach { file ->
-//                        logger.lifecycle(" - ${file.absolutePath} (exists: ${file.exists()})")
-//                    }
-//                }
-//            }
-
-//            executionData.from(
-//                project.subprojects.map { sub ->
-//                    sub.fileTree(sub.layout.buildDirectory) {
-//                        include(
-//                            "**/unit_test_code_coverage/**/*.exec",
-//                            "**/code_coverage/**/*.ec"
-//                        )
-//                    }
-//                },
-//            )
 
             sourceDirectories.setFrom(
                 project.files(
