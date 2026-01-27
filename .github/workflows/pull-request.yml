@@ -1,0 +1,132 @@
+name: Pull Request Checks
+
+on:
+    #pull_request:
+    push:
+        branches:
+            - main
+            - ci_coverage
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    checks:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                api-level: [ 35 ] #[ 24, 36 ]
+        timeout-minutes: 45
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup JDK
+                uses: actions/setup-java@v4
+                with:
+                    distribution: 'temurin'
+                    java-version: '17'
+                    cache: gradle
+
+            -   name: Cache Gradle dependencies
+                uses: actions/cache@v4
+                with:
+                    path: |
+                        ~/.gradle/caches
+                        ~/.gradle/wrapper
+                        ~/.gradle/build-cache
+                    key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/libs.versions.toml') }}
+                    restore-keys: |
+                        ${{ runner.os }}-gradle-
+
+            -   name: Run Linters
+                run: |
+                    ./gradlew ktlintCheck detekt --parallel
+
+            -   name: Cache Android SDK
+                uses: actions/cache@v4
+                with:
+                    path: |
+                        ~/.android/sdk
+                        ~/.android/avd
+                    key: ${{ runner.os }}-android-sdk-${{ matrix.api-level }}
+                    restore-keys: |
+                        ${{ runner.os }}-android-sdk-
+
+            -   name: Enable KVM
+                run: |
+                    echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+                    sudo udevadm control --reload-rules
+                    sudo udevadm trigger --name-match=kvm
+
+            -   name: AVD cache
+                uses: actions/cache@v4
+                id: avd-cache
+                with:
+                    path: |
+                        ~/.android/avd/*
+                        ~/.android/adb*
+                    key: avd-${{ matrix.api-level }}-${{ runner.os }}-v1
+                    restore-keys: |
+                        avd-${{ matrix.api-level }}-
+
+            -   name: create AVD and generate snapshot for caching
+                if: steps.avd-cache.outputs.cache-hit != 'true'
+                uses: reactivecircus/android-emulator-runner@v2
+                with:
+                    api-level: ${{ matrix.api-level }}
+                    force-avd-creation: false
+                    arch: x86_64
+                    emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                    disable-animations: false
+                    script: echo "Generated AVD snapshot for caching."
+
+            -   name: Run tests and generate coverage report
+                #if: steps.avd-cache.outputs.cache-hit != 'false'
+                uses: reactivecircus/android-emulator-runner@v2
+                with:
+                    api-level: ${{ matrix.api-level }}
+                    force-avd-creation: false
+                    arch: x86_64
+                    #                target: google_apis
+                    #                profile: pixel_6
+                    #                ram-size: 2048M
+                    #                heap-size: 512M
+                    disable-animations: true
+                    emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                    script: ./gradlew clean androidTestCoverage
+
+            -   name: Run tests and generate coverage report
+                #if: steps.avd-cache.outputs.cache-hit != 'false'
+                uses: reactivecircus/android-emulator-runner@v2
+                with:
+                    api-level: ${{ matrix.api-level }}
+                    force-avd-creation: false
+                    arch: x86_64
+                    disable-animations: true
+                    emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+                    script: ./gradlew androidTestCoverage
+
+            -   name: Cache build outputs
+                uses: actions/cache@v4
+                with:
+                    path: |
+                        app/build
+                        build
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+                    restore-keys: |
+                        ${{ runner.os }}-build-
+
+            -   name: Upload Coverage Report
+                uses: actions/upload-artifact@v4
+                with:
+                    name: android-coverage-report
+                    path: |
+                        build/reports/jacoco/androidTestCoverage/
+
+            -   name: Upload coverage to Codecov
+                uses: codecov/codecov-action@v4
+                with:
+                    token: 196d224b-3be4-475e-94f3-f34b1e81a8eb
+                    files: build/reports/jacoco/androidTestCoverage/androidTestCoverage.xml

@@ -54,10 +54,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    testCoverage {
+    }
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
         }
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+    bundle {
+        // Disable bundle splits for androidTest
+        language { enableSplit = false }
+        density { enableSplit = false }
+        abi { enableSplit = false }
     }
 }
 
@@ -71,6 +80,7 @@ dependencies {
     implementation(libs.compose.ui.tooling)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
+    androidTestUtil("androidx.test:orchestrator:1.6.1")
 }
 
 ktlint {}

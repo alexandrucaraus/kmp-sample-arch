@@ -1,4 +1,4 @@
-import dev.iurysouza.modulegraph.Theme
+import eu.caraus.kmp.coverage.AndroidEmulatorTask
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -25,4 +25,25 @@ moduleGraphConfig {
     showFullPath = true
     includeIsolatedModules = true
     setStyleByModuleType = true
+}
+
+tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
+    avdName.set("my_test_emulator")
+    systemImage.set("system-images;android-33;google_apis;x86_64")
+    deviceType.set("pixel_5")
+    bootTimeout.set(3000)
+}
+
+tasks.register<Delete>("clean") {
+    group = "build"
+    description = "Deletes the build directory and all submodule build directories"
+
+    // Delete root build directory
+    delete(rootProject.layout.buildDirectory)
+
+    // Delete all subproject build directories
+    rootProject.subprojects {
+        delete(layout.buildDirectory)
+        delete(layout.projectDirectory.file(".gradle"))
+    }
 }

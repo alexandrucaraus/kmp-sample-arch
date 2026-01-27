@@ -1,6 +1,12 @@
 # kmp-sample-arch
 Modular Kotlin Multiplatform Application Boilerplate
 
+# Coverage
+[![Android Coverage](https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml/badge.svg)](
+https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-request.yml
+)
+[![Coverage](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch/branch/ci_coverage/graph/badge.svg?token=196d224b-3be4-475e-94f3-f34b1e81a8eb)](https://codecov.io/gh/alexandrucaraus/kmp-sample-arch)
+
 ### TODOs
 
 1. Test
@@ -10,13 +16,9 @@ Modular Kotlin Multiplatform Application Boilerplate
   - Add kover for the common code report
 
 3. CI/CD
-   - Linters (ktlint, detekt) - done
    - Coverage display android and common separate, auto start emulator - ip
-   - Pre-push hook
-   - Build documentation
    - Build artifacts
    - Publish
-   - Manage testing on CI/CD
 
 ### Modules Structure
 
@@ -66,3 +68,5 @@ class :data:database kotlin-multiplatform
 | Android                                                                                                                    | iOS                                                                                                               |
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | ![Android App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/android.gif)  | ![iOS App](https://raw.githubusercontent.com/alexandrucaraus/kmp-sample-arch/refs/heads/main/docs/images/ios.gif) |
+
+
