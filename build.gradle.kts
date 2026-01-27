@@ -33,3 +33,17 @@ tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
     deviceType.set("pixel_5")
     bootTimeout.set(3000)
 }
+
+tasks.register<Delete>("clean") {
+    group = "build"
+    description = "Deletes the build directory and all submodule build directories"
+
+    // Delete root build directory
+    delete(rootProject.layout.buildDirectory)
+
+    // Delete all subproject build directories
+    rootProject.subprojects {
+        delete(layout.buildDirectory)
+        delete(layout.projectDirectory.file(".gradle"))
+    }
+}
