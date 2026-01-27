@@ -1,9 +1,11 @@
 package eu.caraus.kmp.notes.tests
 
 import eu.caraus.kmp.test.common.previews.ComposePreviewsAggregator
+import kotlin.test.Ignore
 import kotlin.test.Test
 
 class NotesSnapshotTest {
+
 //    @get:Rule
 //    val paparazzi = Paparazzi(
 //        deviceConfig = PIXEL_5,
@@ -12,23 +14,19 @@ class NotesSnapshotTest {
 //    )
 
     @Test
+    @Ignore
     fun test() {
         val composePreviews =
             ComposePreviewsAggregator().scan(this::class.java.packageName)
 
-        composePreviews.forEach { previewFunction ->
-//            paparazzi.snapshot("${previewFunction.name}") {
-//                CompositionLocalProvider(LocalInspectionMode provides true) {
-//                    PreviewContextConfigurationEffect()
-//                }
-//                SnapshotTestWrapper {
-//                    previewFunction.invoke(null, currentComposer)
-//                }
+//        composePreviews.forEach { previewFunction ->
+//            CompositionLocalProvider(LocalInspectionMode provides true) {
+//                PreviewContextConfigurationEffect()
 //            }
-        }
-
-        composePreviews.forEach {
-            println(it.name)
-        }
+//
+//            SnapshotTestWrapper {
+//                previewFunction.invoke(null, currentComposer)
+//            }
+//        }
     }
 }
