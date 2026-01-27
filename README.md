@@ -16,8 +16,6 @@ https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-reques
   - Add kover for the common code report
 
 3. CI/CD
-   - Linters (ktlint, detekt) - done
-   - Pre-push hook - done
    - Coverage display android and common separate, auto start emulator - ip
    - Build artifacts
    - Publish
