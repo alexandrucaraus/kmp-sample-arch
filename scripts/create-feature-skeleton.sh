@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 #
 # Creates a new feature module by FEATURE_NAME
