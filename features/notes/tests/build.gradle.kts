@@ -75,7 +75,6 @@ kotlin {
         }
         getByName("androidDeviceTest") {
             dependencies {
-
                 implementation(projects.testCommon)
                 api(projects.features.notes.domain)
                 api(projects.features.notes.ui)

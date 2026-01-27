@@ -20,18 +20,18 @@ androidx-activityCompose = "1.12.2"
 androidx-uiTest = "1.10.1"
 
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization = "1.9.0"
+kotlinx-serialization = "1.10.0"
 kotlinx-datetime = "0.7.1"
 
-koin = "4.2.0-beta2"
+koin = "4.2.0-beta4"
 koin-ksp ="2.3.2-Beta1"
 
 room = "2.8.4"
 sqlite = "2.6.2"
 
-modulegraph="0.13.0" # https://github.com/vanniktech/gradle-dependency-graph-generator-plugin/issues/194
+modulegraph="0.13.0"
 
-paparazzi = "2.0.0-alpha02"
+paparazzi = "2.0.0-alpha04"
 paparazzi-classgraph="4.8.184"
 
 junit = "4.13.2"
@@ -40,7 +40,7 @@ espressoCore = "3.7.0"
 
 jacoco = "0.8.12"
 ktlint-plugin="14.0.1"
-ktlint-compose-rules="0.5.3"
+ktlint-compose-rules="0.5.5"
 kover = "0.9.4"
 detekt = "1.23.8"
 detekt-compose = "1.6.0"
