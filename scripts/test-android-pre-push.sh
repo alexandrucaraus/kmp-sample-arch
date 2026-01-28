@@ -25,7 +25,7 @@ echo "Running tests"
 
 ./scripts/emulator-manager.sh start
 
-./gradlew testDebugUnitTest connectedAndroidTest
+./gradlew testAndroid connectedAndroidTest
 TEST_STATUS=$?
 
 ./scripts/emulator-manager.sh stop
