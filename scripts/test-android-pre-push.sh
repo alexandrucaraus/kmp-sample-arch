@@ -30,8 +30,6 @@ TEST_STATUS=$?
 
 ./scripts/emulator-manager.sh stop
 
-./gradlew stopLocalTestEmulator
-
 if [ $TEST_STATUS -ne 0 ]; then
   echo "Tests failed! Push aborted."
   exit 1
