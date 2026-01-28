@@ -23,8 +23,12 @@ echo "Linters OK"
 
 echo "Running tests"
 
-./gradlew startTestEmulator testDebugUnitTest connectedAndroidTest
+./gradlew startLocalTestEmulator
+
+./gradlew testDebugUnitTest connectedAndroidTest
 TEST_STATUS=$?
+
+./gradlew stopLocalTestEmulator
 
 if [ $TEST_STATUS -ne 0 ]; then
   echo "Tests failed! Push aborted."

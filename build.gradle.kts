@@ -15,7 +15,6 @@ plugins {
 // Design system
 // https://atomicdesign.bradfrost.com/chapter-2/
 
-
 moduleGraphConfig {
     readmePath.set("./README.md")
     heading = "### Modules Structure"
@@ -28,10 +27,15 @@ moduleGraphConfig {
 }
 
 tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
-    avdName.set("my_test_emulator")
+    avdName.set("instrumented_test_emulator")
     systemImage.set("system-images;android-33;google_apis;x86_64")
     deviceType.set("pixel_5")
     bootTimeout.set(3000)
+    emulatorAction.set("start")
+}
+
+tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
+    emulatorAction.set("stop")
 }
 
 tasks.register<Delete>("clean") {

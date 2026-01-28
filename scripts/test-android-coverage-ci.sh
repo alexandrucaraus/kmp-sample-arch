@@ -1,8 +1,7 @@
 #!/bin/sh
 
 #
-# Runs start emulator, unit and instrumented tests on android, coverage report for android
+# Runs coverage on ci
 #
 
-cd ..
 ./gradlew clean && ./gradlew testAndroid && ./gradlew connectedAndroidTest && ./gradlew androidCoverageReport
