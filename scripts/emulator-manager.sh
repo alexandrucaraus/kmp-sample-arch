@@ -157,29 +157,17 @@ get_system_image() {
     fi
 }
 
-# Check emulator status
-check_emulator_status() {
-    if "$ANDROID_HOME"/platform-tools/adb devices | grep -q "emulator-"; then
-        echo "An emulator is already running."
-        return 0  # success
-    else
-        echo "No emulator is currently running."
-        return 1
-    fi
-}
-
 # Stop emulator
 stop_emulator() {
     echo -e "${YELLOW}Stopping emulator...${NC}"
 
-    if check_emulator_status; then
-        adb emu kill 2>/dev/null || true
-        sleep 2
-    fi
+    EMULATOR_PID=$(pgrep -f local_instrumentation_emulator)
+
+    fg "$EMULATOR_PID"
 
     # Kill process if PID is available
     if [ ! -z "$EMULATOR_PID" ]; then
-        kill "$EMULATOR_PID" 2>/dev/null || true
+        kill "$EMULATOR_PID" 2>/dev/null 1>/dev/null
     fi
 
     echo -e "${GREEN}Emulator stopped${NC}"
@@ -299,9 +287,6 @@ case "$COMMAND" in
         ;;
     stop)
         stop_emulator
-        ;;
-    status)
-        check_emulator_status
         ;;
     setup)
         setup_avd
