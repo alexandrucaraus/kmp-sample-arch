@@ -1,11 +1,10 @@
 name: Pull Request Checks
 
 on:
-    #pull_request:
+    pull_request:
     push:
         branches:
             - main
-            - ci_coverage
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -83,22 +82,7 @@ jobs:
                     script: echo "Generated AVD snapshot for caching."
 
             -   name: Run tests and generate coverage report
-                #if: steps.avd-cache.outputs.cache-hit != 'false'
-                uses: reactivecircus/android-emulator-runner@v2
-                with:
-                    api-level: ${{ matrix.api-level }}
-                    force-avd-creation: false
-                    arch: x86_64
-                    #                target: google_apis
-                    #                profile: pixel_6
-                    #                ram-size: 2048M
-                    #                heap-size: 512M
-                    disable-animations: true
-                    emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-                    script: ./gradlew clean androidTestCoverage
-
-            -   name: Run tests and generate coverage report
-                #if: steps.avd-cache.outputs.cache-hit != 'false'
+                if: steps.avd-cache.outputs.cache-hit != 'false'
                 uses: reactivecircus/android-emulator-runner@v2
                 with:
                     api-level: ${{ matrix.api-level }}
@@ -106,7 +90,7 @@ jobs:
                     arch: x86_64
                     disable-animations: true
                     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-                    script: ./gradlew androidTestCoverage
+                    script: ./scripts/test-android-coverage-ci.sh
 
             -   name: Cache build outputs
                 uses: actions/cache@v4

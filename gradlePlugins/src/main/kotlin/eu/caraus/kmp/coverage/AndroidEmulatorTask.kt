@@ -26,6 +26,11 @@ abstract class AndroidEmulatorTask : DefaultTask() {
     @get:Optional
     abstract val bootTimeout: Property<Int>
 
+    @get:Input
+    @get:Optional
+    abstract val emulatorAction: Property<String> // start stop
+
+
     init {
         group = "android"
         description = "Manages Android emulator creation and execution"
@@ -48,8 +53,15 @@ abstract class AndroidEmulatorTask : DefaultTask() {
             logger.lifecycle("Emulator already exists")
         }
 
-        startEmulator()
-        waitForBoot()
+        when (emulatorAction.get()) {
+            "start" -> {
+                startEmulator()
+                waitForBoot()
+            }
+            "stop" -> {
+                stopEmulator()
+            }
+        }
 
         logger.lifecycle("Emulator is ready for use")
     }

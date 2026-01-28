@@ -9,12 +9,11 @@ plugins {
     id("kmp.jacoco") apply true
     id("kmp.linter") apply true
     alias(libs.plugins.modulegraph) apply true
-    id("kmp.feature.skeleton") apply true
+    id("kmp.feature.skeleton") apply false
 }
 
 // Design system
 // https://atomicdesign.bradfrost.com/chapter-2/
-
 
 moduleGraphConfig {
     readmePath.set("./README.md")
@@ -27,11 +26,16 @@ moduleGraphConfig {
     setStyleByModuleType = true
 }
 
-tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
-    avdName.set("my_test_emulator")
+tasks.register("starLocaltTestEmulator", AndroidEmulatorTask::class) {
+    avdName.set("instrumented_test_emulator")
     systemImage.set("system-images;android-33;google_apis;x86_64")
     deviceType.set("pixel_5")
     bootTimeout.set(3000)
+    emulatorAction.set("start")
+}
+
+tasks.register("startLocalTestEmulator", AndroidEmulatorTask::class) {
+    emulatorAction.set("stop")
 }
 
 tasks.register<Delete>("clean") {

@@ -6,6 +6,7 @@ plugins {
 // https://github.com/PaulWoitaschek/Voice/blob/main/plugins/build.gradle.kts
 
 repositories {
+    google()
     mavenCentral()
     gradlePluginPortal()
 }
@@ -13,6 +14,7 @@ repositories {
 dependencies {
     // todo import from version catalog
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
+    implementation("com.android.tools.build:gradle-api:9.0.0")
     implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
     implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.4")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:14.0.1") {
