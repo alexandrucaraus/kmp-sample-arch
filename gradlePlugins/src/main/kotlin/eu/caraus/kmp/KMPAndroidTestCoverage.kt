@@ -1,11 +1,11 @@
-package eu.caraus.kmp.coverage
+package eu.caraus.kmp
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
-class KMPJacoco : Plugin<Project> {
+class KMPAndroidTestCoverage : Plugin<Project> {
     private val rootCoverageTaskName = "androidCoverageReport"
 
     override fun apply(project: Project) {
@@ -59,6 +59,12 @@ class KMPJacoco : Plugin<Project> {
                                         "**/classes/kotlin/**"
                                     )
                                     exclude(
+                                        // common code specific
+                                        "**/*Preview*.*",
+                                        "org/koin/ksp/generated/**/*.*",
+                                        "eu/caraus/kmp/test/common/**/*.*",
+
+                                        // Android specific
                                         "**/R.class",
                                         "**/R$*.class",
                                         "**/BuildConfig.*",
@@ -77,18 +83,12 @@ class KMPJacoco : Plugin<Project> {
                         .flatMap { subproject ->
                             subproject.fileTree(subproject.layout.buildDirectory) {
                                 include(
-                                    "**/unit_test_code_coverage/**/*.exec",
-                                    "**/code_coverage/**/*.ec",
+                                    // KMP Android unit tests
                                     "**/outputs/unit_test_code_coverage/**/*.exec",
+                                    // KMP Android instrumented tests
                                     "**/outputs/code_coverage/**/*.ec",
-                                    "**/jacoco/testDebugUnitTest.exec",
-                                    "**/coverage.ec"
                                 )
-                            }.files.also {
-                                it.forEach { file ->
-                                    logger.lifecycle("${file.absolutePath}")
-                                }
-                            }
+                            }.files
                         }
                 }
             )
