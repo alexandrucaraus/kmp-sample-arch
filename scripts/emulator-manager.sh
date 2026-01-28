@@ -163,8 +163,6 @@ stop_emulator() {
 
     EMULATOR_PID=$(pgrep -f local_instrumentation_emulator)
 
-    fg "$EMULATOR_PID"
-
     # Kill process if PID is available
     if [ ! -z "$EMULATOR_PID" ]; then
         kill "$EMULATOR_PID" 2>/dev/null 1>/dev/null
