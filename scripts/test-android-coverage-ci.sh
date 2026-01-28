@@ -5,4 +5,4 @@
 #
 
 cd ..
-./gradlew startTestEmulator jacocoAndroidTestReport
+./gradlew clean && ./gradlew testAndroid && ./gradlew connectedAndroidTest && ./gradlew androidCoverageReport

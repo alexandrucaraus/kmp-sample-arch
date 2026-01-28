@@ -9,7 +9,7 @@ plugins {
     id("kmp.jacoco") apply true
     id("kmp.linter") apply true
     alias(libs.plugins.modulegraph) apply true
-    id("kmp.feature.skeleton") apply true
+    id("kmp.feature.skeleton") apply false
 }
 
 // Design system
