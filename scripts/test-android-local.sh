@@ -5,4 +5,4 @@
 #
 
 cd ..
-./gradlew startTestEmulator testAndroid connectedAndroidTest
+./gradlew testAndroid connectedAndroidTest
