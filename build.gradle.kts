@@ -1,12 +1,10 @@
-import eu.caraus.kmp.coverage.AndroidEmulatorTask
-
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.multiplatform.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
-    id("kmp.jacoco") apply true
+    id("app-android-test-coverage") apply true
     id("kmp.linter") apply true
     alias(libs.plugins.modulegraph) apply true
     id("kmp.feature.skeleton") apply false
@@ -24,18 +22,6 @@ moduleGraphConfig {
     showFullPath = true
     includeIsolatedModules = true
     setStyleByModuleType = true
-}
-
-tasks.register("starLocaltTestEmulator", AndroidEmulatorTask::class) {
-    avdName.set("instrumented_test_emulator")
-    systemImage.set("system-images;android-33;google_apis;x86_64")
-    deviceType.set("pixel_5")
-    bootTimeout.set(3000)
-    emulatorAction.set("start")
-}
-
-tasks.register("startLocalTestEmulator", AndroidEmulatorTask::class) {
-    emulatorAction.set("stop")
 }
 
 tasks.register<Delete>("clean") {

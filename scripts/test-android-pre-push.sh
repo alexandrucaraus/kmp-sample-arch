@@ -23,10 +23,12 @@ echo "Linters OK"
 
 echo "Running tests"
 
-./gradlew startLocalTestEmulator
+./scripts/emulator-manager.sh start
 
 ./gradlew testDebugUnitTest connectedAndroidTest
 TEST_STATUS=$?
+
+./scripts/emulator-manager.sh stop
 
 ./gradlew stopLocalTestEmulator
 
