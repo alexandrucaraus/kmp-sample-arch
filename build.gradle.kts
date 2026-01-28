@@ -26,7 +26,7 @@ moduleGraphConfig {
     setStyleByModuleType = true
 }
 
-tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
+tasks.register("starLocaltTestEmulator", AndroidEmulatorTask::class) {
     avdName.set("instrumented_test_emulator")
     systemImage.set("system-images;android-33;google_apis;x86_64")
     deviceType.set("pixel_5")
@@ -34,7 +34,7 @@ tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
     emulatorAction.set("start")
 }
 
-tasks.register("startTestEmulator", AndroidEmulatorTask::class) {
+tasks.register("startLocalTestEmulator", AndroidEmulatorTask::class) {
     emulatorAction.set("stop")
 }
 
