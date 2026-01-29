@@ -91,6 +91,7 @@ internal class UpdateNoteUseCase(
         content: String,
     ) {
         repository.findById(noteId = id)?.let { note ->
+            if (note.title == title && note.content == content) return@let
             repository.save(
                 note.copy(
                     title = title,

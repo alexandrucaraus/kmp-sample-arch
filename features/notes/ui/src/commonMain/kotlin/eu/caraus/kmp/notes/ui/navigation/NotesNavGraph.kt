@@ -43,7 +43,7 @@ fun NotesNavGraph(
                 NoteDetailRoute(
                     params = params as NoteDetailsRoute,
                     close = {
-                        backStack.remove(params)
+                        backStack.removeLastOrNull()
                     },
                 )
             }
