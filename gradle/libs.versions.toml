@@ -14,10 +14,10 @@ ksp = "2.3.4"
 compose = "1.10.0"
 compose-material3 = "1.10.0-alpha05"
 compose-icons = "1.7.3"
-compose-nav3 = "1.0.0-alpha06"
+compose-nav3 = "1.1.0-alpha02"
 
-androidx-activityCompose = "1.12.2"
-androidx-uiTest = "1.10.1"
+androidx-activityCompose = "1.12.3"
+androidx-uiTest = "1.10.2"
 
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.10.0"
@@ -56,13 +56,13 @@ compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.r
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 compose-nav3 = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "compose-nav3" }
-#compose-navigation-common = { module = "org.jetbrains.androidx.navigation:navigation-common", version.ref = "compose-nav3" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-core-viewmodel = { module = "io.insert-koin:koin-core-viewmodel", version.ref = "koin" }
 
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-compose-nav3 = { module = "io.insert-koin:koin-compose-navigation3", version.ref = "koin" }
 
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-ksp" }
 koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ksp" }

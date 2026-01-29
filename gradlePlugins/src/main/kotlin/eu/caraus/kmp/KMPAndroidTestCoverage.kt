@@ -28,6 +28,7 @@ class KMPAndroidTestCoverage : Plugin<Project> {
 
             val excludedProjects = setOf(
                 "test-common",
+                "tests"
             )
 
             sourceDirectories.setFrom(
@@ -61,7 +62,7 @@ class KMPAndroidTestCoverage : Plugin<Project> {
                                     exclude(
                                         // common code specific
                                         "**/*Preview*.*",
-                                        "org/koin/ksp/generated/**/*.*",
+                                        "**/ksp/generated/**",
                                         "eu/caraus/kmp/test/common/**/*.*",
 
                                         // Android specific

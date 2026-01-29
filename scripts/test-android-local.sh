@@ -5,4 +5,13 @@
 #
 
 cd ..
+
+./scripts/emulator-manager.sh start
+
+./gradlew clean
+
 ./gradlew testAndroid connectedAndroidTest
+
+./gradlew androidCoverageReport
+
+./scripts/emulator-manager.sh stop

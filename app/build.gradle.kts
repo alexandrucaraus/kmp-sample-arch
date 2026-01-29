@@ -66,6 +66,7 @@ kotlin {
                 implementation(libs.compose.nav3)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
+                implementation(libs.koin.compose.nav3)
                 implementation(libs.koin.annotations)
             }
         }
