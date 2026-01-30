@@ -9,9 +9,6 @@ https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-reques
 
 ### TODOs
 
-0. Todo fix navigation
-  [] Fix navigation3 setup with koin view model not clearing
-
 1. Test
   [] Finish test setup for snapshot testing when paparazzi 2.0.0-alpha05 is ready
 
