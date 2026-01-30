@@ -44,25 +44,20 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
-
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.compose.material3.icons.extended)
-            implementation(libs.compose.material3)
-
-            implementation(libs.compose.nav3)
-
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-
+            implementation(libs.compose.material3.icons.extended)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.nav3)
+            implementation(libs.compose.nav3.viewmodel)
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
-
-            implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutines.test)
-
             implementation(libs.koin.test)
             implementation(libs.koin.core.viewmodel)
         }

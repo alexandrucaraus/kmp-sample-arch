@@ -3,10 +3,12 @@ package eu.caraus.kmp.test.common.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.modules.SerializersModule
@@ -34,6 +36,11 @@ fun NavDisplayTest(
         modifier = modifier.fillMaxSize(),
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
+        entryDecorators =
+            listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(removeViewModelStoreOnPop = { true }),
+            ),
         entryProvider = { key ->
             guest(key, backStack) ?: error("Destination nav key found $key")
         },

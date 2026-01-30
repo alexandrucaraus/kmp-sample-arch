@@ -37,10 +37,10 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.compose.nav3)
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
             implementation(libs.compose.nav3)
+            implementation(libs.compose.nav3.viewmodel)
             implementation(libs.compose.ui.tooling.preview)
         }
         androidMain.dependencies {

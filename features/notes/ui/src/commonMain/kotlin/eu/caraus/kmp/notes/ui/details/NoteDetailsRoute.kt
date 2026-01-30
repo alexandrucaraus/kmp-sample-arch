@@ -18,7 +18,7 @@ fun NoteDetailRoute(
     params: NoteDetailsRoute,
     close: () -> Unit,
 ) {
-    val state by koinViewModel<NoteDetailsViewModel>(key = params.noteId) {
+    val state by koinViewModel<NoteDetailsViewModel> {
         parametersOf(params.noteId)
     }.state
         .collectAsStateWithLifecycle()

@@ -64,9 +64,9 @@ kotlin {
 
                 implementation(libs.compose.material3)
                 implementation(libs.compose.nav3)
+                implementation(libs.compose.nav3.viewmodel)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
-                implementation(libs.koin.compose.nav3)
                 implementation(libs.koin.annotations)
             }
         }
