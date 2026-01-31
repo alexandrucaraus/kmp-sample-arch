@@ -30,7 +30,7 @@ jobs:
             -   name: Create Pull Request
                 uses: peter-evans/create-pull-request@v5
                 with:
-                    token: ${{ secrets.GITHUB_TOKEN }}
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                     assignees: ${{ github.actor }}
                     title: ${{ github.ref_name }}
                     body: |
