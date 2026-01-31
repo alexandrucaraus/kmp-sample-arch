@@ -19,7 +19,7 @@ jobs:
                 id: get_commits
                 run: |
                     # Get commits since last PR or base branch
-                    COMMITS="$(git log origin/main..HEAD --pretty=format:"- %s (%h)" --reverse)"
+                    COMMITS="$(git log origin/main..HEAD -- --pretty=format:"- %s (%h)" --reverse)"
                     echo "commits<<EOF" >> $GITHUB_OUTPUT
                     echo "$COMMITS" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
