@@ -24,6 +24,7 @@ jobs:
                     echo "$COMMITS" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
 
+
             # Create Pull Request
             -   name: Create Pull Request
                 uses: peter-evans/create-pull-request@v5
