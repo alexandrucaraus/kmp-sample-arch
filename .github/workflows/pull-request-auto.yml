@@ -18,6 +18,7 @@ jobs:
             -   name: Get commit messages
                 id: get_commits
                 run: |
+                    git fetch --all
                     # Get commits since last PR or base branch
                     COMMITS="$(git log origin/main..HEAD -- --pretty=format:"- %s (%h)" --reverse)"
                     echo "commits<<EOF" >> $GITHUB_OUTPUT
