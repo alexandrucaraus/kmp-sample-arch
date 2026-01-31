@@ -3,12 +3,12 @@
 set -e
 
 # Default configuration
+COMMAND=""
 DEFAULT_EMULATOR_NAME="local_instrumentation_emulator"
 DEFAULT_TIMEOUT=120
 DEFAULT_API_LEVEL=33
 
 # Parse command line arguments
-COMMAND=""
 EMULATOR_NAME="$DEFAULT_EMULATOR_NAME"
 TIMEOUT="$DEFAULT_TIMEOUT"
 API_LEVEL="$DEFAULT_API_LEVEL"
@@ -87,7 +87,7 @@ usage() {
 start() {
 
     if is_emulator_running; then
-        exit 0
+        stop_emulator
     fi
 
     init_sdk_info
@@ -225,6 +225,9 @@ setup_emulator() {
 
 start_emulator() {
     log_info "Starting $EMULATOR_NAME"
+
+    existing_emulators=$(adb devices | grep "emulator-" | awk '{print $1}')
+
     # Start emulator in background
     "$EMULATOR_CMD" -avd "$EMULATOR_NAME" \
         -no-audio \
@@ -235,24 +238,56 @@ start_emulator() {
         -gpu swiftshader_indirect \
         -memory 4048 \
         -cores 4 > /dev/null 2>&1 &
+    EMULATOR_PID=$!
 
-    log_info "Waiting emulator to boot timeout=<$TIMEOUT>:"
-    # Wait for emulator to be ready
+    # Wait for a new emulator to appear
     timeout=0
+    NEW_EMULATOR_SERIAL=""
     while [ $timeout -lt "$TIMEOUT" ]; do
-        if adb shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
-            log_success "Emulator is ready!"
-            sleep 3
-            adb devices
-            return 0
-        fi
+        # Get current list of emulators
+        current_emulators=$(adb devices | grep "emulator-" | awk '{print $1}')
+
+        # Find the new emulator (not in the original list)
+        for emu in $current_emulators; do
+            if ! echo "$existing_emulators" | grep -q "^$emu$"; then
+                export NEW_EMULATOR_SERIAL="$emu"
+                echo "$NEW_EMULATOR_SERIAL" > /tmp/EMULATOR_SERIAL
+                break 2  # Break both loops
+            fi
+        done
+
         sleep 3
         timeout=$((timeout + 3))
-        log_info "Booting ... (${timeout}s/${TIMEOUT}s)"
-    done
+        log_info "Waiting for emulator to appear... (${timeout}s/${TIMEOUT}s)"
+        done
 
-    log_error "Emulator failed to start within ${TIMEOUT} seconds"
-    exit 1
+        if [ -z "$NEW_EMULATOR_SERIAL" ]; then
+            log_error "No new emulator detected within ${TIMEOUT} seconds"
+            kill $EMULATOR_PID 2>/dev/null
+            exit 1
+        fi
+
+        log_info "Found new emulator: $NEW_EMULATOR_SERIAL"
+        log_info "Waiting for boot completion..."
+
+        # Now wait for THIS specific emulator to boot
+        timeout=0
+        while [ $timeout -lt "$TIMEOUT" ]; do
+            if adb -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
+                log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
+                sleep 3
+                adb devices
+                export EMULATOR_SERIAL="$NEW_EMULATOR_SERIAL"  # Export for later use
+                return 0
+            fi
+            sleep 3
+            timeout=$((timeout + 3))
+            log_info "Booting $NEW_EMULATOR_SERIAL... (${timeout}s/${TIMEOUT}s)"
+        done
+
+        log_error "Emulator $NEW_EMULATOR_SERIAL failed to boot within ${TIMEOUT} seconds"
+        kill $EMULATOR_PID 2>/dev/null
+        exit 1
 }
 
 stop_emulator() {
@@ -261,6 +296,7 @@ stop_emulator() {
     if [ -n "$EMULATOR_PID" ]; then
         log_info "Emulator $EMULATOR_NAME pid $EMULATOR_PID found"
         kill "$EMULATOR_PID">/dev/null 2>&1
+        rm -f /tmp/EMULATOR_SERIAL
     else
         log_warning "Emulator $EMULATOR_NAME is not running"
     fi

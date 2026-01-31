@@ -20,11 +20,14 @@ fi
 echo "Linters OK"
 
 # Run tests
+./scripts/emulator-manager.sh start
+EMULATOR_SERIAL=$(cat /tmp/EMULATOR_SERIAL)
+
+echo "Test emulator serial: $EMULATOR_SERIAL"
 
 echo "Running tests"
 
-./scripts/emulator-manager.sh start
-
+export ANDROID_SERIAL="$EMULATOR_SERIAL"
 ./gradlew testAndroid connectedAndroidTest
 TEST_STATUS=$?
 
