@@ -32,7 +32,7 @@ jobs:
                 with:
                     base: main
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    author: ${{ github.actor }}
+                    author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
                     assignees: ${{ github.actor }}
                     commit-message: Update report
                     title: ${{ github.ref_name }}
