@@ -31,6 +31,8 @@ jobs:
                         exit 0
                     fi
 
+                    git fetch origin main
+
                     # Get commit messages from this branch (not in main)
                     COMMITS=$(git log \
                         origin/main..HEAD \
