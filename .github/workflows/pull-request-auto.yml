@@ -30,11 +30,14 @@ jobs:
                     # Update main branch
                     git fetch origin main
 
-                    COMMIT_MESSAGE=$(git log --pretty=format:"* %s" origin/main..HEAD 2>/dev/null)
+                    COMMIT_MESSAGES=$(git log --pretty=format:"* %s" origin/main..HEAD 2>/dev/null)
 
-                    echo "=========="
-                    echo "$COMMIT_MESSAGE"
-                    echo "======="
+                    PR_BODY=$(cat <<EOF
+                    ## 🤖 Auto-generated Pull Request
+                    ### 📝 Changes:
+                    ${COMMIT_MESSAGES}
+                    EOF
+                    )
 
                     # Check if PR already exists
                     if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
