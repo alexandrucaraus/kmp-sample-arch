@@ -29,10 +29,24 @@ jobs:
                         exit 0
                     fi
 
+                    # Get commit messages from this branch (not in main)
+                    COMMITS=$(git log main..${{ github.ref_name }} --pretty=format:"- %s (%h)" --reverse)
+
+                    # Create PR body with commits
+                    PR_BODY=$(cat <<EOF
+                    ## 🤖 Auto-generated Pull Request
+
+                    **Branch:** \`${{ github.ref_name }}\`
+
+                    ### 📝 Commits:
+                    ${COMMITS}
+                    EOF
+                    )
+
                     gh pr create \
                         --base main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
-                        --body "Auto PR" \
+                        --body "$PR_BODY" \
                         --assignee "${{ github.actor }}"
 
