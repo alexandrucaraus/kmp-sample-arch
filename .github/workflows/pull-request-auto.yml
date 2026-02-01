@@ -32,6 +32,7 @@ jobs:
                     gh pr create \
                         --base main \
                         --head "${{ github.ref_name }}" \
-                        --title "${{ github.ref_name }}" \
-                        --body "Auto-generated PR for branch ${{ github.ref_name }}" \
+                        --title "[${{ github.ref_name }}]" \
+                        --fill-verbose \
                         --assignee "${{ github.actor }}"
+
