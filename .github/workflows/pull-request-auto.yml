@@ -23,7 +23,7 @@ jobs:
 
             -   name: Open pull request
                 env:
-                    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                 run: |
                     # Check if PR already exists
                     if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
