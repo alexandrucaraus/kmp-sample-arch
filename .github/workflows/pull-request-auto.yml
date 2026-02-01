@@ -35,7 +35,7 @@ jobs:
 
                     # Get commit messages from this branch (not in main)
                     COMMITS=$(git log \
-                        origin/main..HEAD \
+                        origin/main..${{ github.ref_name }} \
                         -- --pretty=format:"- %s (%h)" --reverse)
 
                     # Create PR body with commits
