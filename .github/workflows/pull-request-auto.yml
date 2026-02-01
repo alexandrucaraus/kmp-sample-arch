@@ -27,11 +27,14 @@ jobs:
 
             # Create Pull Request
             -   name: Create Pull Request
+                id: cpr
                 uses: peter-evans/create-pull-request@v8
                 with:
                     base: main
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    author: ${{ github.actor }}
                     assignees: ${{ github.actor }}
+                    commit-message: Update report
                     title: ${{ github.ref_name }}
                     body: "Test PR"
                     branch: ${{ github.ref_name }}
