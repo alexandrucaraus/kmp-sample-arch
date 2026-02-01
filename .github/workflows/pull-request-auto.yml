@@ -25,40 +25,15 @@ jobs:
                 env:
                     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    # Debug: Show current state
-                    echo "=== Debug Info ==="
-                    echo "Current branch: $(git branch --show-current)"
-                    echo "Current HEAD: $(git rev-parse HEAD)"
-                    echo "origin/main: $(git rev-parse origin/main..HEAD --)"
-
                     # Check if PR already exists
                     if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
                         echo "PR already exists for this branch"
                         exit 0
                     fi
 
-                    git fetch origin main
-
-                    # Get commit messages from this branch (not in main)
-                    COMMITS=$(git log \
-                        origin/main..${{ github.ref_name }} \
-                        -- --pretty=format:"- %s (%h)" --reverse)
-
-                    # Create PR body with commits
-                    PR_BODY=$(cat <<EOF
-                    ## 🤖 Auto-generated Pull Request
-
-                    **Branch:** \`${{ github.ref_name }}\`
-
-                    ### 📝 Commits:
-                    ${COMMITS}
-                    EOF
-                    )
-
                     gh pr create \
                         --base main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
-                        --body "$PR_BODY" \
+                        --body "Auto PR" \
                         --assignee "${{ github.actor }}"
-
