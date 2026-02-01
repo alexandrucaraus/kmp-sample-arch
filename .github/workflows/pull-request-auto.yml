@@ -8,12 +8,12 @@ on:
 jobs:
     create-auto-pull-request:
         # skips for branches starting with no auto pr
-        if: "!startsWith(github.ref_name, 'no_auto_pr_')"
+        #if: "!startsWith(github.ref_name, 'no_auto_pr_')"
         runs-on: ubuntu-latest
         steps:
             # Checkout the repo
             -   name: Checkout repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
 
 #            -   name: Get commit messages
 #                id: get_commits
@@ -29,10 +29,10 @@ jobs:
             -   name: Create Pull Request
                 uses: peter-evans/create-pull-request@v8
                 with:
+                    base: main
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                     assignees: ${{ github.actor }}
                     title: ${{ github.ref_name }}
                     body: "Test PR"
                     branch: ${{ github.ref_name }}
-                    base: main
                     draft: false
