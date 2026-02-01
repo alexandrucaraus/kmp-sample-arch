@@ -34,7 +34,7 @@ jobs:
                     # Get commit messages from this branch (not in main)
                     COMMITS=$(git log \
                         origin/main..HEAD \
-                        --pretty=format:"- %s (%h)" --reverse)
+                        -- --pretty=format:"- %s (%h)" --reverse)
 
                     # Create PR body with commits
                     PR_BODY=$(cat <<EOF
