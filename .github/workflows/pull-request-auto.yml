@@ -40,11 +40,13 @@ jobs:
                     if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
                         echo "PR already exists for this branch"
                         exit 0
+                    else
+                        echo "NO PR exists for this branch, creating one ..."
                     fi
 
                     gh pr create \
                         --base main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
-                        --body "Auto PR" \
+                        --body "$COMMIT_MESSAGE" \
                         --assignee "${{ github.actor }}"
