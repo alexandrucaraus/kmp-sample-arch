@@ -1,44 +1,37 @@
 name: Auto Pull Request
 
 on:
-    push:
-        branches:
-            - 'auto_pr'
     create:
         branches:
             - '*' # triggers for any new branch
 
+permissions:
+    contents: read
+    pull-requests: write
+
 jobs:
     create-auto-pull-request:
         # skips for branches starting with no auto pr
-        #if: "!startsWith(github.ref_name, 'no_auto_pr_')"
+        if: "!startsWith(github.ref_name, 'no_auto_pr_')"
         runs-on: ubuntu-latest
         steps:
             # Checkout the repo
             -   name: Checkout repository
                 uses: actions/checkout@v6
 
-#            -   name: Get commit messages
-#                id: get_commits
-#                run: |
-#                    git fetch --all
-#                    # Get commits since last PR or base branch
-#                    COMMITS="$(git log origin/main..HEAD -- --pretty=format:"- %s (%h)" --reverse)"
-#                    echo "commits<<EOF" >> $GITHUB_OUTPUT
-#                    echo "$COMMITS" >> $GITHUB_OUTPUT
-#                    echo "EOF" >> $GITHUB_OUTPUT
+            -   name: Open pull request
+                env:
+                    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    # Check if PR already exists
+                    if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
+                        echo "PR already exists for this branch"
+                        exit 0
+                    fi
 
-            # Create Pull Request
-            -   name: Create Pull Request
-                id: cpr
-                uses: peter-evans/create-pull-request@v8
-                with:
-                    base: main
-                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-                    assignees: ${{ github.actor }}
-                    commit-message: Update report
-                    title: ${{ github.ref_name }}
-                    body: "Test PR"
-                    branch: ${{ github.ref_name }}
-                    draft: false
+                    gh pr create \
+                        --base main \
+                        --head "${{ github.ref_name }}" \
+                        --title "${{ github.ref_name }}" \
+                        --body "Auto-generated PR for branch ${{ github.ref_name }}"
+                        --assignee "${{ github.actor }}"
