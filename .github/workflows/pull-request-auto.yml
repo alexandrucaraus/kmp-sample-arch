@@ -33,7 +33,7 @@ jobs:
 
                     # Get commit messages from this branch (not in main)
                     COMMITS=$(git log \
-                        ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} \
+                        origin/main..HEAD \
                         --pretty=format:"- %s (%h)" --reverse)
 
                     # Create PR body with commits
