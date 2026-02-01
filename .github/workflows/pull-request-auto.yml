@@ -29,7 +29,7 @@ jobs:
                     echo "=== Debug Info ==="
                     echo "Current branch: $(git branch --show-current)"
                     echo "Current HEAD: $(git rev-parse HEAD)"
-                    echo "origin/main: $(git rev-parse origin/main..HEAD)"
+                    echo "origin/main: $(git rev-parse origin/main..HEAD --)"
 
                     # Check if PR already exists
                     if gh pr list --head "${{ github.ref_name }}" --base main --json number --jq '.[0].number' | grep -q .; then
