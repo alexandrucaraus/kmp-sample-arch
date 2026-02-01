@@ -1,6 +1,9 @@
 name: Auto Pull Request
 
 on:
+    push:
+        branches:
+            - 'auto_pr'
     create:
         branches:
             - '*' # triggers for any new branch
