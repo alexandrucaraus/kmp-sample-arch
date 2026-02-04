@@ -4,9 +4,10 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
-    id("app-android-test-coverage") apply true
-    id("kmp.linter") apply true
     alias(libs.plugins.modulegraph) apply true
+    id("app-total-android-test-coverage") apply true
+    id("app-feature-android-test-coverage") apply true
+    id("kmp.linter") apply true
     id("kmp.feature.skeleton") apply false
 }
 

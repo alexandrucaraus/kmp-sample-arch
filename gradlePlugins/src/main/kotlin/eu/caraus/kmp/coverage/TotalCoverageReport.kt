@@ -1,19 +1,27 @@
-package eu.caraus.kmp
+package eu.caraus.kmp.coverage
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
-class KMPAndroidTestCoverage : Plugin<Project> {
-    private val rootCoverageTaskName = "androidCoverageReport"
+/**
+ * Generates total project android test coverage
+ * depends on connectedAndroidTests running on emulator
+ * and android unit tests
+ */
+class TotalCoverageReport : Plugin<Project> {
+    private val rootCoverageTaskName = "totalCoverageReport"
+
+    val excludedProjects = setOf(
+        "test-common",
+        "tests"
+    )
 
     override fun apply(project: Project) {
-
         require(project == project.rootProject) {
             "Must apply to root project"
         }
-
         project.afterEvaluate {
             registerRootCoverageTask(project)
         }
@@ -24,25 +32,20 @@ class KMPAndroidTestCoverage : Plugin<Project> {
         project.tasks.register<JacocoReport>(rootCoverageTaskName) {
 
             group = "Reporting"
-            description = "Root Android unit and instrumented coverage report"
-
-            val excludedProjects = setOf(
-                "test-common",
-                "tests"
-            )
+            description = "Total coverage report android unit and instrumented coverage report"
 
             sourceDirectories.setFrom(
                 project.provider {
                     project.files(
                         project.subprojects
                             .exclude(excludedProjects)
-                            .flatMap { sub ->
-                                listOf(
-                                    sub.file("src/commonMain/kotlin"),
-                                    sub.file("src/androidMain/kotlin"),
-                                    sub.file("src/main/kotlin"),
-                                    sub.file("src/main/java")
-                                ).filter { it.exists() }
+                            .map { subproject ->
+                                subproject.files(
+                                    coverageSources
+                                        .map { path -> subproject.file(path) }
+                                        .filter { it.exists() }
+                                        .map { it.path }
+                                )
                             }
                     )
                 }
@@ -55,22 +58,8 @@ class KMPAndroidTestCoverage : Plugin<Project> {
                             .exclude(excludedProjects)
                             .flatMap { sub ->
                                 sub.fileTree(sub.layout.buildDirectory) {
-                                    include(
-                                        "**/kotlin-classes/**",
-                                        "**/classes/kotlin/**"
-                                    )
-                                    exclude(
-                                        // common code specific
-                                        "**/*Preview*.*",
-                                        "**/ksp/generated/**",
-                                        "eu/caraus/kmp/test/common/**/*.*",
-
-                                        // Android specific
-                                        "**/R.class",
-                                        "**/R$*.class",
-                                        "**/BuildConfig.*",
-                                        "**/*Test*.*"
-                                    )
+                                    include(*coverageClasses)
+                                    exclude(*coverageExcludedClasses)
                                 }
                             }
                     )
@@ -83,12 +72,7 @@ class KMPAndroidTestCoverage : Plugin<Project> {
                         .exclude(excludedProjects)
                         .flatMap { subproject ->
                             subproject.fileTree(subproject.layout.buildDirectory) {
-                                include(
-                                    // KMP Android unit tests
-                                    "**/outputs/unit_test_code_coverage/**/*.exec",
-                                    // KMP Android instrumented tests
-                                    "**/outputs/code_coverage/**/*.ec",
-                                )
+                                include(*coverageOutput)
                             }.files
                         }
                 }
@@ -103,4 +87,28 @@ class KMPAndroidTestCoverage : Plugin<Project> {
 
     private fun Set<Project>.exclude(modules: Set<String>) =
         filterNot { it.name in modules }
+
+
+    val coverageSources = arrayOf(
+        "src/commonMain/kotlin",
+        "src/androidMain/kotlin",
+        "src/main/kotlin",
+        "src/main/java",
+    )
+
+    val coverageClasses = arrayOf(
+        "**/classes/kotlin/**"
+    )
+
+    val coverageExcludedClasses = arrayOf(
+        "**/*Preview*.*",
+        "**/ksp/generated/**",
+        "**/test/common/**/*.*",
+        "**/tests/**/*.*"
+    )
+
+    val coverageOutput = arrayOf(
+        "**/outputs/unit_test_code_coverage/**/*.exec",
+        "**/outputs/code_coverage/**/*.ec",
+    )
 }

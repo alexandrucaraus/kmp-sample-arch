@@ -19,6 +19,8 @@ concurrency:
 jobs:
     checks:
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
         strategy:
             matrix:
                 api-level: [ 35 ] #[ 24, 36 ]
@@ -108,15 +110,36 @@ jobs:
                     restore-keys: |
                         ${{ runner.os }}-build-
 
+            -   name: Add coverage to PR
+                id: androidCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        ${{ github.workspace }}/**/build/reports/jacoco/**/**.xml,
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '# :lobster: `Android Coverage Report`'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Get the Coverage info
+                run: |
+                    echo "Total coverage ${{ steps.androidCoverage.outputs.coverage-overall }}"
+
             -   name: Upload Coverage Report
                 uses: actions/upload-artifact@v4
                 with:
                     name: android-coverage-report
                     path: |
-                        build/reports/jacoco/androidCoverageReport/
+                        build/reports/jacoco/totalCoverageReport/
 
             -   name: Upload coverage to Codecov
                 uses: codecov/codecov-action@v4
                 with:
                     token: 196d224b-3be4-475e-94f3-f34b1e81a8eb
-                    files: build/reports/jacoco/androidCoverageReport/androidCoverageReport.xml
+                    files: build/reports/jacoco/totalCoverageReport/totalCoverageReport.xml
