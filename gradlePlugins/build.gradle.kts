@@ -55,9 +55,13 @@ gradlePlugin {
             id = "kmp.room.ksp"
             implementationClass = "eu.caraus.kmp.KMPRoomKsp"
         }
-        create("androidTestCoverage") {
-            id = "app-android-test-coverage"
-            implementationClass = "eu.caraus.kmp.KMPAndroidTestCoverage"
+        create("totalTestCoverage") {
+            id = "app-total-android-test-coverage"
+            implementationClass = "eu.caraus.kmp.coverage.TotalCoverageReport"
+        }
+        create("featureTestCoverage") {
+            id = "app-feature-android-test-coverage"
+            implementationClass = "eu.caraus.kmp.coverage.FeatureCoverageReport"
         }
         create("linter") {
             id = "kmp.linter"

@@ -13,9 +13,6 @@ EMULATOR_NAME="$DEFAULT_EMULATOR_NAME"
 TIMEOUT="$DEFAULT_TIMEOUT"
 API_LEVEL="$DEFAULT_API_LEVEL"
 
-# Local debug speed up flag, does not start/stop emulator
-DEBUG=0
-
 main () {
 
 # Parse command line arguments
@@ -90,11 +87,7 @@ usage() {
 start() {
 
     if is_emulator_running; then
-        if [ "$DEBUG" -eq 1 ]; then
-            echo "Emulator $EMULATOR_NAME is already running"
-        else
-            stop_emulator
-        fi
+        stop_emulator
     fi
 
     init_sdk_info
@@ -235,7 +228,7 @@ setup_emulator() {
 start_emulator() {
     log_info "Starting $EMULATOR_NAME"
 
-    existing_emulators=$(adb devices | grep "emulator-" | awk '{print $1}')
+    existing_emulators=$(adb devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
 
     # Start emulator in background
     "$EMULATOR_CMD" -avd "$EMULATOR_NAME" \
