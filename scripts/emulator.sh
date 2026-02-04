@@ -227,8 +227,9 @@ setup_emulator() {
 
 start_emulator() {
     log_info "Starting $EMULATOR_NAME"
+    ADB_COMMAND="$ANDROID_HOME/platform-tools/adb"
 
-    existing_emulators=$(adb devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
+    existing_emulators=$("$ADB_COMMAND" devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
 
     # Start emulator in background
     "$EMULATOR_CMD" -avd "$EMULATOR_NAME" \
@@ -247,7 +248,7 @@ start_emulator() {
     NEW_EMULATOR_SERIAL=""
     while [ $timeout -lt "$TIMEOUT" ]; do
         # Get current list of emulators
-        current_emulators=$(adb devices | grep "emulator-" | awk '{print $1}')
+        current_emulators=$("$ADB_COMMAND" devices | grep "emulator-" | awk '{print $1}')
 
         # Find the new emulator (not in the original list)
         for emu in $current_emulators; do
@@ -275,7 +276,7 @@ start_emulator() {
         # Now wait for THIS specific emulator to boot
         timeout=0
         while [ $timeout -lt "$TIMEOUT" ]; do
-            if adb -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
+            if "$ADB_COMMAND" -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
                 log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
                 sleep 3
                 adb devices
