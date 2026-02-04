@@ -13,6 +13,9 @@ EMULATOR_NAME="$DEFAULT_EMULATOR_NAME"
 TIMEOUT="$DEFAULT_TIMEOUT"
 API_LEVEL="$DEFAULT_API_LEVEL"
 
+# Local debug speed up flag, does not start/stop emulator
+DEBUG=0
+
 main () {
 
 # Parse command line arguments
@@ -87,7 +90,11 @@ usage() {
 start() {
 
     if is_emulator_running; then
-        stop_emulator
+        if [ "$DEBUG" -eq 1 ]; then
+            echo "Emulator $EMULATOR_NAME is already running"
+        else
+            stop_emulator
+        fi
     fi
 
     init_sdk_info
@@ -96,7 +103,9 @@ start() {
         setup_emulator
     fi
 
-    start_emulator
+    if ! is_emulator_running; then
+        start_emulator
+    fi
 
     exit 0
 }

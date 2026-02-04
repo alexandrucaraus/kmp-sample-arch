@@ -20,7 +20,7 @@ fi
 echo "Linters OK"
 
 # Run tests
-./scripts/emulator-manager.sh start
+./scripts/emulator.sh start
 EMULATOR_SERIAL=$(cat /tmp/EMULATOR_SERIAL)
 
 echo "Test emulator serial: $EMULATOR_SERIAL"
@@ -31,7 +31,7 @@ export ANDROID_SERIAL="$EMULATOR_SERIAL"
 ./gradlew testAndroid connectedAndroidTest
 TEST_STATUS=$?
 
-./scripts/emulator-manager.sh stop
+./scripts/emulator.sh stop
 
 if [ $TEST_STATUS -ne 0 ]; then
   echo "Tests failed! Push aborted."
