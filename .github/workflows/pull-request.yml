@@ -136,10 +136,10 @@ jobs:
                 with:
                     name: android-coverage-report
                     path: |
-                        build/reports/jacoco/androidCoverageReport/
+                        build/reports/jacoco/totalCoverageReport/
 
             -   name: Upload coverage to Codecov
                 uses: codecov/codecov-action@v4
                 with:
                     token: 196d224b-3be4-475e-94f3-f34b1e81a8eb
-                    files: build/reports/jacoco/androidCoverageReport/androidCoverageReport.xml
+                    files: build/reports/jacoco/totalCoverageReport/totalCoverageReport.xml

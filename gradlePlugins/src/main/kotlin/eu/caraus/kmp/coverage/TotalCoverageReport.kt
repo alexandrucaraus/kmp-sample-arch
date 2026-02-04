@@ -11,7 +11,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * and android unit tests
  */
 class TotalCoverageReport : Plugin<Project> {
-    private val rootCoverageTaskName = "androidCoverageReport"
+    private val rootCoverageTaskName = "totalCoverageReport"
 
     val excludedProjects = setOf(
         "test-common",
