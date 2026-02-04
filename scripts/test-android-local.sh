@@ -6,7 +6,7 @@
 
 cd ..
 
-./scripts/emulator-manager.sh start
+./scripts/emulator.sh start
 
 ./gradlew clean
 
@@ -14,4 +14,4 @@ cd ..
 
 ./gradlew featuresCoverageReport totalCoverageReport
 
-./scripts/emulator-manager.sh stop
+./scripts/emulator.sh stop

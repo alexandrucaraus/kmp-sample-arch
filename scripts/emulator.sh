@@ -229,7 +229,7 @@ start_emulator() {
     log_info "Starting $EMULATOR_NAME"
     ADB_COMMAND="$ANDROID_HOME/platform-tools/adb"
 
-    existing_emulators=$("$ADB_COMMAND" devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
+    existing_emulators=$($ADB_COMMAND devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
 
     # Start emulator in background
     "$EMULATOR_CMD" -avd "$EMULATOR_NAME" \
