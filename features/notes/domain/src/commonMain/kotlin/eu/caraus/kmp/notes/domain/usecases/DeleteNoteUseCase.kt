@@ -17,4 +17,3 @@ class DeleteNoteUseCase(
         repository.delete(notes = notes)
     }
 }
-
