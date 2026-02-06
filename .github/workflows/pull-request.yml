@@ -131,6 +131,7 @@ jobs:
             -   name: Get the Coverage info
                 run: |
                     echo "Total coverage ${{ steps.androidCoverage.outputs.coverage-overall }}"
+                    echo "Changed Files coverage ${{ steps.androidCoverage.outputs.coverage-changed-files }}"
 
             -   name: Upload Coverage Report
                 uses: actions/upload-artifact@v4

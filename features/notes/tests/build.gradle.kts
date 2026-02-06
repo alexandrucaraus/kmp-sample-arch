@@ -44,7 +44,8 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
-        testCoverage {}
+        testCoverage {
+        }
     }
     iosArm64()
     iosSimulatorArm64()
