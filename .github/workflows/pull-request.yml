@@ -1,7 +1,7 @@
 name: Pull Request Checks
 
 on:
-    pull_request:
+    pull_request_target:
         branches:
             - main
         types:
@@ -21,6 +21,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
+            contents: read
         strategy:
             matrix:
                 api-level: [ 35 ] #[ 24, 36 ]
@@ -28,6 +29,8 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.event.pull_request.head.sha }}
 
             -   name: Setup JDK
                 uses: actions/setup-java@v4
@@ -79,7 +82,7 @@ jobs:
                         avd-${{ matrix.api-level }}-
 
             -   name: create AVD and generate snapshot for caching
-                if: steps.avd-cache.outputs.cache-hit != 'true'
+                if: always()
                 uses: reactivecircus/android-emulator-runner@v2
                 with:
                     api-level: ${{ matrix.api-level }}
@@ -90,7 +93,7 @@ jobs:
                     script: echo "Generated AVD snapshot for caching."
 
             -   name: Run tests and generate coverage report
-                if: steps.avd-cache.outputs.cache-hit != 'false'
+                if: always()
                 uses: reactivecircus/android-emulator-runner@v2
                 with:
                     api-level: ${{ matrix.api-level }}
@@ -115,7 +118,7 @@ jobs:
                 uses: madrapps/jacoco-report@v1.7.2
                 with:
                     paths: |
-                        ${{ github.workspace }}/**/build/reports/jacoco/**/**.xml,
+                        **/build/reports/jacoco/**/**.xml
                     token: ${{ secrets.GITHUB_TOKEN }}
                     min-coverage-overall: 80
                     min-coverage-changed-files: 80

@@ -45,16 +45,15 @@ class FeatureCoverageReport : Plugin<Project> {
         project: Project,
         features: Map<String, List<String>>
     ) {
-        features.forEach { (featureName, featureModules) ->
+        features.forEach { (_, featureModules) ->
             registerFeatureModulesCoverageTask(
-                project, featureName, featureModules
+                project, featureModules
             )
         }
     }
 
     private fun registerFeatureModulesCoverageTask(
         project: Project,
-        featureName: String,
         featureModules: List<String>
     ) {
         val testModule = featureModules.find { it.contains("tests") }
