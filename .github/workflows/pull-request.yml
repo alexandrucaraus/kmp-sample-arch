@@ -117,7 +117,7 @@ jobs:
                 with:
                     paths: |
                         **/build/reports/jacoco/**/**.xml
-                    token: ${{ secrets.GITHUB_TOKEN }}
+                    GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                     min-coverage-overall: 80
                     min-coverage-changed-files: 80
                     title: '# :lobster: `Android Coverage Report`'

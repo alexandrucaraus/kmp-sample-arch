@@ -2,9 +2,9 @@ package eu.caraus.kmp.notes.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
-import eu.caraus.kmp.notes.domain.ObserveOneNote
-import eu.caraus.kmp.notes.domain.SaveNoteUseCase
+import eu.caraus.kmp.notes.domain.usecases.DeleteNoteUseCase
+import eu.caraus.kmp.notes.domain.usecases.ObserveOneNote
+import eu.caraus.kmp.notes.domain.usecases.SaveNoteUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

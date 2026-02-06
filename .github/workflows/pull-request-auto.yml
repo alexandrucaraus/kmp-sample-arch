@@ -24,7 +24,6 @@ jobs:
             -   name: Open pull request
                 env:
                     GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    #GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
 
                     # Update main branch
