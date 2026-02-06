@@ -2,16 +2,13 @@ name: Pull Request Checks
 
 on:
     pull_request_target:
-        branches:
-            - main
-#        types:
-#            - opened
-#            - synchronize  # New commits pushed
-#            - reopened
+        branches: [main]
+        types:
+            - opened
+            - synchronize  # New commits pushed
+            - reopened
     push:
-        branches:
-            - main
-    workflow_dispatch:
+        branches: [main]
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
