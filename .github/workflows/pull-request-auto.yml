@@ -23,8 +23,7 @@ jobs:
 
             -   name: Open pull request
                 env:
-                    #GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                 run: |
 
                     # Update main branch
@@ -48,7 +47,7 @@ jobs:
                     fi
 
                     gh pr create \
-                        --base main \
+                        --base origin/main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
                         --body "$COMMIT_MESSAGE" \

@@ -1,31 +1,12 @@
-package eu.caraus.kmp.notes.domain
+package eu.caraus.kmp.notes.domain.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import eu.caraus.kmp.notes.domain.Note
+import eu.caraus.kmp.notes.domain.NoteId
+import eu.caraus.kmp.notes.domain.NoteRepository
 import org.koin.core.annotation.Factory
 import kotlin.time.ExperimentalTime
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
-
-@Factory
-class ObserveNotesList(
-    private val repository: NoteRepository,
-) {
-    operator fun invoke(): Flow<List<Note>> =
-        repository
-            .allAsFlow()
-            .map { list -> list.sortedByDescending { it.updatedAt } }
-}
-
-@Factory
-class ObserveOneNote(
-    private val repository: NoteRepository,
-) {
-    operator fun invoke(noteId: NoteId): Flow<Note> =
-        flowOf(noteId)
-            .map { repository.findById(noteId) ?: Note(id = noteId) }
-}
 
 @Factory
 class SaveNoteUseCase(
@@ -103,18 +84,5 @@ internal class UpdateNoteUseCase(
                 ),
             )
         } ?: error("Note not found id=$id")
-    }
-}
-
-@Factory
-class DeleteNoteUseCase(
-    private val repository: NoteRepository,
-) {
-    suspend operator fun invoke(noteId: NoteId) {
-        repository.deleteById(noteId = noteId)
-    }
-
-    suspend operator fun invoke(notes: List<Note>) {
-        repository.delete(notes = notes)
     }
 }

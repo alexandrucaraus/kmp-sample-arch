@@ -5,7 +5,7 @@ package eu.caraus.kmp.notes.tests.viewmodel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.caraus.kmp.database.room.AppDatabase
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.domain.SaveNoteUseCase
+import eu.caraus.kmp.notes.domain.usecases.SaveNoteUseCase
 import eu.caraus.kmp.notes.tests.DeviceTestModule
 import eu.caraus.kmp.notes.ui.list.NoteListViewModel
 import eu.caraus.kmp.test.common.rules.KoinTestRule

@@ -279,7 +279,7 @@ start_emulator() {
             if "$ADB_COMMAND" -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
                 log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
                 sleep 3
-                adb devices
+                "$ADB_COMMAND" devices
                 export EMULATOR_SERIAL="$NEW_EMULATOR_SERIAL"  # Export for later use
                 return 0
             fi
@@ -322,21 +322,21 @@ log_success() {
     GREEN='\033[0;32m'
     NC='\033[0m'
     MSG="$1"
-    echo "${GREEN}${MSG}${NC}"
+    printf "%b\n" "${GREEN}${MSG}${NC}"
 }
 
 log_warning() {
     YELLOW='\033[1;33m'
     NC='\033[0m'
     MSG="$1"
-    echo "${YELLOW}${MSG}${NC}"
+    printf "%b\n" "${YELLOW}${MSG}${NC}"
 }
 
 log_error() {
     RED='\033[0;31m'
     NC='\033[0m'
     MSG="$1"
-    echo "${RED}${MSG}${NC}"
+    printf "%b\n" "${RED}${MSG}${NC}"
 }
 
 main "$@"

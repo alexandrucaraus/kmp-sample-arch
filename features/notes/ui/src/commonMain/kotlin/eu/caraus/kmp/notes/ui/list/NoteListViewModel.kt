@@ -2,9 +2,9 @@ package eu.caraus.kmp.notes.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.caraus.kmp.notes.domain.DeleteNoteUseCase
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.domain.ObserveNotesList
+import eu.caraus.kmp.notes.domain.usecases.DeleteNoteUseCase
+import eu.caraus.kmp.notes.domain.usecases.ObserveNotesList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
