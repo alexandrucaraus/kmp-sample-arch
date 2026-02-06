@@ -1,12 +1,12 @@
 name: Pull Request Checks
 
 on:
-    pull_request_target:
+    pull_request:
         branches: [main]
-        types:
-            - opened
-            - synchronize  # New commits pushed
-            - reopened
+#        types:
+#            - opened
+#            - synchronize  # New commits pushed
+#            - reopened
     push:
         branches: [main]
 
