@@ -279,7 +279,7 @@ start_emulator() {
             if "$ADB_COMMAND" -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
                 log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
                 sleep 3
-                adb devices
+                "$ADB_COMMAND" devices
                 export EMULATOR_SERIAL="$NEW_EMULATOR_SERIAL"  # Export for later use
                 return 0
             fi
