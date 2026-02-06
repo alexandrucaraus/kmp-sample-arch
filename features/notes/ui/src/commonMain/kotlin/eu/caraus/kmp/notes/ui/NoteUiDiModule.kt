@@ -7,8 +7,8 @@ import org.koin.core.annotation.Module
 
 @Module(
     includes = [
-        NoteDiModule::class
-    ]
+        NoteDiModule::class,
+    ],
 )
 @ComponentScan("eu.caraus.kmp.notes.ui")
 @Configuration
