@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.google.ksp.plugin.dev)
     implementation(libs.ktlint.gradle.plugin.dev)
     implementation(libs.detekt.gradle.plugin.dev)
+    implementation(libs.kover.gradle.plugin.dev)
     // todo check why warning on compiler version in the classpath
 //  implementation(libs.ktlint.rules.compose)
 //  implementation(libs.detekt.rules.formatting)
@@ -44,13 +45,17 @@ gradlePlugin {
             id = "kmp.room.ksp"
             implementationClass = "eu.caraus.kmp.KMPRoomKsp"
         }
+        create("androidFeatureCoverageReport") {
+            id = "app-feature-android-test-coverage"
+            implementationClass = "eu.caraus.kmp.coverage.AndroidFeatureCoverageReport"
+        }
         create("androidTotalCoverageReport") {
             id = "app-total-android-test-coverage"
             implementationClass = "eu.caraus.kmp.coverage.AndroidTotalCoverageReport"
         }
-        create("androidFeatureCoverageReport") {
-            id = "app-feature-android-test-coverage"
-            implementationClass = "eu.caraus.kmp.coverage.AndroidFeatureCoverageReport"
+        create("kmpTotalCoverageReport") {
+            id = "app-total-kmp-test-coverage"
+            implementationClass = "eu.caraus.kmp.coverage.KmpTotalCoverageReport"
         }
         create("linter") {
             id = "kmp.linter"

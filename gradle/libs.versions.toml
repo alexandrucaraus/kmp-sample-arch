@@ -99,6 +99,7 @@ multiplatform-gradle-plugin-dev = { module = "org.jetbrains.kotlin.multiplatform
 google-ksp-plugin-dev = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 ktlint-gradle-plugin-dev = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
 detekt-gradle-plugin-dev = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+kover-gradle-plugin-dev = { module = "org.jetbrains.kotlinx.kover:org.jetbrains.kotlinx.kover.gradle.plugin", version.ref = "kover" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
