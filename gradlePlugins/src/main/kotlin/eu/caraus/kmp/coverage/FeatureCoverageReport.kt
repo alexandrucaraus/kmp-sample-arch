@@ -17,18 +17,20 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 class FeatureCoverageReport : Plugin<Project> {
     private val featuresCoverageReport = "featuresCoverageReport"
     private val featureModulesCoverageReport = "featureModulesCoverageReport"
+    private val nonFeatureModuleCoverageReport = "nonFeatureModuleCoverageReport"
+
+    val excluded = setOf(
+        "test-common"
+    )
 
     override fun apply(project: Project) {
         require(project == project.rootProject) {
             "Must apply to root project"
         }
         project.afterEvaluate {
-            registerFeaturesModulesCoverageTask(
-                project, features(project)
-            )
-            registerFeaturesCoverageTask(
-                project
-            )
+            registerFeaturesModulesCoverageTask(project, features(project))
+            registerNonFeatureModuleCoverageTask(project)
+            registerFeaturesCoverageTask(project)
         }
     }
 
@@ -36,7 +38,11 @@ class FeatureCoverageReport : Plugin<Project> {
         project.plugins.apply("jacoco")
         project.tasks.register(featuresCoverageReport) {
             dependsOn(
-                project.subprojects.mapNotNull { sub -> sub.tasks.findByName(featureModulesCoverageReport) }
+                project.subprojects
+                    .mapNotNull { sub ->
+                        sub.tasks.findByName(featureModulesCoverageReport) ?:
+                            sub.tasks.findByName(nonFeatureModuleCoverageReport)
+                    },
             )
         }
     }
@@ -99,6 +105,47 @@ class FeatureCoverageReport : Plugin<Project> {
             reports {
                 xml.required.set(true)
                 html.required.set(true)
+            }
+        }
+    }
+
+    private fun registerNonFeatureModuleCoverageTask(project: Project) {
+        val nonFeatureModules = project.subprojects
+            .exclude(excluded)
+            .filterNot {
+                it.path.startsWith(":features")
+            }
+        nonFeatureModules.forEach { module ->
+            module.plugins.apply("jacoco")
+            module.tasks.register<JacocoReport>(nonFeatureModuleCoverageReport) {
+                group = "Reporting"
+                description = "Non feature module Android unit and instrumented coverage report"
+                sourceDirectories.setFrom(
+                    module.files(
+                        coverageSources
+                            .map { path -> module.file(path) }
+                            .filter { it.exists() }
+                            .map { it.path }
+                    )
+                )
+
+                classDirectories.setFrom(
+                    module.fileTree(module.layout.buildDirectory) {
+                        include(*coverageClasses)
+                        exclude(*coverageExcludedClasses)
+                    }
+                )
+
+                executionData.setFrom(
+                    module.fileTree(module.layout.buildDirectory) {
+                        include(*coverageOutput)
+                    }.files
+                )
+
+                reports {
+                    xml.required.set(true)
+                    html.required.set(true)
+                }
             }
         }
     }
