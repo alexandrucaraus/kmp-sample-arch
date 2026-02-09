@@ -2,9 +2,6 @@ plugins {
     `kotlin-dsl`
 }
 
-//try this
-// https://github.com/PaulWoitaschek/Voice/blob/main/plugins/build.gradle.kts
-
 repositories {
     google()
     mavenCentral()
@@ -12,27 +9,19 @@ repositories {
 }
 
 dependencies {
-    // todo import from version catalog
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
-    implementation("com.android.tools.build:gradle-api:9.0.0")
-    implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.3.0")
-    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.4")
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:14.0.1") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
-    }
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
-    }
-    implementation("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8") {
-
-    }
-    implementation("io.nlopez.compose.rules:ktlint:0.5.3") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
-    }
-    implementation("io.nlopez.compose.rules:detekt:0.4.23") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
-    }
     implementation(gradleApi())
+    implementation(libs.kotlin.gradle.plugin.dev)
+    implementation(libs.agp.gradle.plugin.dev)
+    implementation(libs.multiplatform.gradle.plugin.dev)
+    implementation(libs.google.ksp.plugin.dev)
+    implementation(libs.ktlint.gradle.plugin.dev)
+    implementation(libs.detekt.gradle.plugin.dev)
+    // todo check why warning on compiler version in the classpath
+//  implementation(libs.ktlint.rules.compose)
+//  implementation(libs.detekt.rules.formatting)
+//  implementation(libs.detekt.rules.compose) {
+//      exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+//   }
 }
 
 kotlin {
@@ -55,13 +44,13 @@ gradlePlugin {
             id = "kmp.room.ksp"
             implementationClass = "eu.caraus.kmp.KMPRoomKsp"
         }
-        create("totalTestCoverage") {
+        create("androidTotalCoverageReport") {
             id = "app-total-android-test-coverage"
-            implementationClass = "eu.caraus.kmp.coverage.TotalCoverageReport"
+            implementationClass = "eu.caraus.kmp.coverage.AndroidTotalCoverageReport"
         }
-        create("featureTestCoverage") {
+        create("androidFeatureCoverageReport") {
             id = "app-feature-android-test-coverage"
-            implementationClass = "eu.caraus.kmp.coverage.FeatureCoverageReport"
+            implementationClass = "eu.caraus.kmp.coverage.AndroidFeatureCoverageReport"
         }
         create("linter") {
             id = "kmp.linter"

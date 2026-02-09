@@ -10,8 +10,8 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * depends on connectedAndroidTests running on emulator
  * and android unit tests
  */
-class TotalCoverageReport : Plugin<Project> {
-    private val rootCoverageTaskName = "totalCoverageReport"
+class AndroidTotalCoverageReport : Plugin<Project> {
+    private val rootCoverageTaskName = "androidTotalCoverageReport"
 
     val excludedProjects = setOf(
         "test-common",
