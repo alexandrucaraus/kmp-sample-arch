@@ -14,10 +14,10 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * all test are defined in :features:<YOUR_FEATURE_NAME:tests module
  * this plugin generates reports based on tests module which usually depends on other modules from the feature
  */
-class FeatureCoverageReport : Plugin<Project> {
-    private val featuresCoverageReport = "featuresCoverageReport"
-    private val featureModulesCoverageReport = "featureModulesCoverageReport"
-    private val nonFeatureModuleCoverageReport = "nonFeatureModuleCoverageReport"
+class AndroidFeatureCoverageReport : Plugin<Project> {
+    private val featuresCoverageReport = "androidFeaturesCoverageReport"
+    private val featureModulesCoverageReport = "androidFeatureModulesCoverageReport"
+    private val nonFeatureModuleCoverageReport = "androidNonFeatureModuleCoverageReport"
 
     val excluded = setOf(
         "test-common"

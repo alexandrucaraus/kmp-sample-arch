@@ -80,7 +80,4 @@ dependencies {
     implementation(libs.compose.ui.tooling)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
-    androidTestUtil("androidx.test:orchestrator:1.6.1")
 }
-
-ktlint {}

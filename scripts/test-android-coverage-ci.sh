@@ -7,5 +7,5 @@
 ./gradlew clean && \
 ./gradlew testAndroid && \
 ./gradlew connectedAndroidTest && \
-./gradlew featuresCoverageReport && \
-./gradlew totalCoverageReport
+./gradlew androidFeatureCoverageReport && \
+./gradlew androidTotalCoverageReport

@@ -12,6 +12,6 @@ cd ..
 
 ./gradlew testAndroid connectedAndroidTest
 
-./gradlew featuresCoverageReport totalCoverageReport
+./gradlew androidFeatureCoverageReport androidTotalCoverageReport
 
 ./scripts/emulator.sh stop
