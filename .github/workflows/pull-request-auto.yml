@@ -14,6 +14,7 @@ jobs:
         # skips for branches starting with no auto pr
         if: "!startsWith(github.ref_name, 'no_auto_pr_')"
         runs-on: ubuntu-latest
+        name: Create Auto PR for ${{ github.ref_name }}
         steps:
             # Checkout the repo
             -   name: Checkout repository
@@ -25,6 +26,9 @@ jobs:
                 env:
                     GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                 run: |
+
+                    # Make sure git is authenticated
+                    gh auth setup-git
 
                     # Update main branch
                     git fetch origin main
@@ -47,8 +51,8 @@ jobs:
                     fi
 
                     gh pr create \
-                        --base origin/main \
+                        --base main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
-                        --body "$COMMIT_MESSAGE" \
+                        --body "$PR_BODY" \
                         --assignee "${{ github.actor }}"
