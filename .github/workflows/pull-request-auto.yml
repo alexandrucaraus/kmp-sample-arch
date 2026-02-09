@@ -26,10 +26,13 @@ jobs:
                     GH_TOKEN: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                 run: |
 
+                    # Make sure git is authenticated
+                    gh auth setup-git
+
                     # Update main branch
                     git fetch origin main
 
-                    COMMIT_MESSAGES=$(git log --pretty=format:"* %s" main..HEAD 2>/dev/null)
+                    COMMIT_MESSAGES=$(git log --pretty=format:"* %s" origin/main..HEAD 2>/dev/null)
 
                     PR_BODY=$(cat <<EOF
                     ## 🤖 Auto-generated Pull Request
@@ -50,5 +53,5 @@ jobs:
                         --base main \
                         --head "${{ github.ref_name }}" \
                         --title "[${{ github.ref_name }}]" \
-                        --body "$COMMIT_MESSAGE" \
+                        --body "PR_BODY" \
                         --assignee "${{ github.actor }}"
