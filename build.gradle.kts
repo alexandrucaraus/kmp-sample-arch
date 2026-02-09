@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.modulegraph) apply true
     id("app-total-android-test-coverage") apply true
     id("app-feature-android-test-coverage") apply true
+    id("app-total-kmp-test-coverage") apply true
     id("kmp.linter") apply true
     id("kmp.feature.skeleton") apply false
 }
