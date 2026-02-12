@@ -1,3 +1,6 @@
+import com.android.build.gradle.tasks.factory.AndroidUnitTest
+
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -6,8 +9,9 @@ plugins {
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.modulegraph) apply true
     id("app-total-android-test-coverage") apply true
+    alias(libs.plugins.kover)
     id("app-feature-android-test-coverage") apply true
-    id("app-total-kmp-test-coverage") apply true
+    id("app-total-kmp-test-coverage") apply false
     id("kmp.linter") apply true
     id("kmp.feature.skeleton") apply false
 }
@@ -40,4 +44,49 @@ tasks.register<Delete>("clean") {
     }
 }
 
+dependencies {
+    rootProject.subprojects.toList()
+        .filter {
+            it.buildFile.exists()
+        }
+        .forEach {
+            kover(project(it.path))
+        }
+}
 
+subprojects {
+    pluginManager.withPlugin("com.android.application") {
+        apply(plugin = "org.jetbrains.kotlinx.kover")
+        configure<kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension> {
+            currentProject {
+                createVariant("custom") {
+                    add("debug")
+                }
+            }
+        }
+    }
+    pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+        pluginManager.withPlugin("com.android.kotlin.multiplatform.library") {
+            apply(plugin = "org.jetbrains.kotlinx.kover")
+            configure<kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension> {
+                currentProject {
+                    createVariant("custom") {
+                        add("android")
+                    }
+                }
+            }
+        }
+    }
+}
+
+kover {
+    currentProject {
+        createVariant("custom") {}
+    }
+}
+
+subprojects {
+    tasks.withType<Test>().configureEach {
+        (this as? AndroidUnitTest)?.variantName = "android"
+    }
+}

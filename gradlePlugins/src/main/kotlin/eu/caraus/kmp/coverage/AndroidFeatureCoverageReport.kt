@@ -166,7 +166,6 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
             }.map { sub ->
                 sub.path
             }
-            print(featureModules)
             featureModules
         }
 
