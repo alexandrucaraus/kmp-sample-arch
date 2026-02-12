@@ -3,6 +3,10 @@ package eu.caraus.kmp.coverage
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
 
 class KmpTotalCoverageReport : Plugin<Project> {
 
@@ -17,56 +21,60 @@ class KmpTotalCoverageReport : Plugin<Project> {
         require(project == project.rootProject) {
             "Must apply to root project"
         }
-
         project.plugins.apply("org.jetbrains.kotlinx.kover")
-        project.extensions.configure<KoverProjectExtension>("kover") {
-            reports {
-                total {
-                    xml.onCheck.set(true)
-                    html.onCheck.set(true)
+        project.dependencies {
+            project.subprojects.toList()
+                .filter {
+                    it.buildFile.exists()
                 }
+                .forEach {
+                    "kover"(project(it.path))
+                }
+        }
+        project.extensions.configure<KoverProjectExtension>("kover") {
+            currentProject {
+                createVariant("custom") {}
             }
         }
+        applySubProjectsPlugin(project)
+        configureRootTask(project)
+    }
 
-        configureModulesTask(project)
-
-        project.afterEvaluate {
-            configureTask(project)
+    private fun configureRootTask(project: Project) {
+        project.tasks.register(rootCoverageTaskName) {
+            group = "Reporting"
+            description = "Kover total coverage report"
+            dependsOn("koverHtmlReport", "koverXmlReport")
         }
     }
 
-    private fun configureModulesTask(project: Project) {
-//        project.tasks.register(rootCoverageTaskName) {
-//
-//            group = "Coverage"
-//            description = "Kover total coverage report"
-
-            project.subprojects.forEach { module ->
-                //if (module.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-                    module.plugins.apply("org.jetbrains.kotlinx.kover")
-                    module.extensions.configure<KoverProjectExtension>("kover") {
-                        reports {
-                            total {
-                                xml.onCheck.set(true)
-                                html.onCheck.set(true)
+    private fun applySubProjectsPlugin(project: Project) {
+        if (!project.buildFile.exists()) return
+        project.subprojects.filterNot { it.path in excludedProjects }.forEach { sub ->
+            with(sub) {
+                pluginManager.withPlugin("com.android.application") {
+                    apply(plugin = "org.jetbrains.kotlinx.kover")
+                    configure<KoverProjectExtension> {
+                        currentProject {
+                            createVariant("custom") {
+                                add("debug")
                             }
                         }
                     }
-               // }
+                }
+                pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+                    pluginManager.withPlugin("com.android.kotlin.multiplatform.library") {
+                        apply(plugin = "org.jetbrains.kotlinx.kover")
+                        configure<KoverProjectExtension> {
+                            currentProject {
+                                createVariant("custom") {
+                                    add("android")
+                                }
+                            }
+                        }
+                    }
+                }
             }
-       // }
-    }
-
-    private fun configureTask(project: Project) {
-        project.tasks.register(rootCoverageTaskName) {
-
-            group = "Coverage"
-            description = "Kover total coverage report"
-
-            dependsOn(
-                project.tasks.filter { it.name in listOf("koverHtmlReport", "koverXmlReport") },
-                project.tasks.filter { it.name in listOf("koverHtmlReport", "koverXmlReport") }
-            )
         }
     }
 }
