@@ -8,4 +8,5 @@
 ./gradlew testAndroid && \
 ./gradlew connectedAndroidTest && \
 ./gradlew androidFeatureCoverageReport && \
-./gradlew androidTotalCoverageReport
+./gradlew androidTotalCoverageReport && \
+./gradlew kmpTotalCoverageReport

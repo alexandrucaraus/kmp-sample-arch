@@ -25,7 +25,7 @@ class KmpTotalCoverageReport : Plugin<Project> {
         project.dependencies {
             project.subprojects.toList()
                 .filter {
-                    it.buildFile.exists()
+                    it.buildFile.exists() && it.name !in excludedProjects
                 }
                 .forEach {
                     "kover"(project(it.path))
@@ -49,8 +49,7 @@ class KmpTotalCoverageReport : Plugin<Project> {
     }
 
     private fun applySubProjectsPlugin(project: Project) {
-        if (!project.buildFile.exists()) return
-        project.subprojects.filterNot { it.path in excludedProjects }.forEach { sub ->
+        project.subprojects.filterNot { it.name in excludedProjects }.forEach { sub ->
             with(sub) {
                 pluginManager.withPlugin("com.android.application") {
                     apply(plugin = "org.jetbrains.kotlinx.kover")

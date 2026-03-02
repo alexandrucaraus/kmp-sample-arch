@@ -134,11 +134,15 @@ jobs:
                 uses: actions/upload-artifact@v4
                 with:
                     name: android-coverage-report
-                    path: build/reports/jacoco/
+                    path: |
+                        build/reports/jacoco/
+                        build/reports/kover/
                     retention-days: 14
 
             -   name: Upload coverage to Codecov
                 uses: codecov/codecov-action@v4
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
-                    files: build/reports/jacoco/**/*.xml
+                    files: |
+                        build/reports/jacoco/**/*.xml
+                        build/reports/kover/**/*.xml
