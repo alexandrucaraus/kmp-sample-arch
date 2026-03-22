@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.room.schema)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
     id("kmp.room.ksp")
 }
 
@@ -17,8 +17,13 @@ ksp {
     arg("room.schmaLocation", "$projectDir/schema")
 }
 
+koinCompiler {
+    compileSafety = false       // Enabled by default
+    skipDefaultValues = true   // Enabled by default
+}
+
 kotlin {
-    androidLibrary {
+    android {
         namespace = "eu.caraus.kmp.database"
         compileSdk =
             libs.versions.android.compileSdk

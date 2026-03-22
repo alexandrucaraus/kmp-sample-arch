@@ -2,12 +2,13 @@
 
 package eu.caraus.kmp.database.room
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.annotation.Single
-import org.koin.core.scope.Scope
+import org.koin.mp.KoinPlatform.getKoin
 
 @Single
 actual fun appDatabaseBuilder(ctx: PlatformContextWrapper): RoomDatabase.Builder<AppDatabase> {
@@ -27,7 +28,12 @@ actual class PlatformContextWrapper(
 )
 
 @Single
-actual fun platformContextWrapper(scope: Scope): PlatformContextWrapper = PlatformContextWrapper(scope.get())
+actual fun platformContextWrapper(
+ //   scope: Scope
+): PlatformContextWrapper {
+    val context: Application = getKoin().get()
+    return PlatformContextWrapper(context)
+}
 
 @Single
 actual fun appDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder.build()

@@ -6,16 +6,16 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
 }
 
-kmpKoinKsp {
-    useKoinViewModel = true
-}
+//kmpKoinKsp {
+//    useKoinViewModel = true
+//}
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "eu.caraus.kmp.notes.tests"
         compileSdk =
             libs.versions.android.compileSdk

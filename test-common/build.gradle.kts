@@ -15,7 +15,7 @@ plugins {
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "eu.caraus.kmp.test.common"
         compileSdk =
             libs.versions.android.compileSdk

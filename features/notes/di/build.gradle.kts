@@ -2,30 +2,13 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.room.schema)
-    id("kmp.room.ksp")
     alias(libs.plugins.koin.compiler)
-}
-
-koinCompiler {
-    compileSafety = false       // Enabled by default
-    skipDefaultValues = true   // Enabled by default
-}
-
-ksp {
-    arg("room.schemaLocation", "$rootDir/data/database/schema")
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-}
-
-room {
-    schemaDirectory("$rootDir/data/database/schema")
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
     android {
-        namespace = "eu.caraus.kmp.notes.data"
+        namespace = "eu.caraus.kmp.notes.di"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -45,7 +28,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.features.notes.domain)
-            implementation(libs.room.runtime)
+            implementation(projects.features.notes.data)
+            implementation(projects.features.notes.ui)
+
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
