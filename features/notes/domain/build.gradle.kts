@@ -2,12 +2,17 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
+}
+
+koinCompiler {
+    compileSafety = false       // Enabled by default
+    skipDefaultValues = true   // Enabled by default
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "eu.caraus.kmp.notes.domain"
         compileSdk =
             libs.versions.android.compileSdk

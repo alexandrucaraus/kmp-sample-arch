@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
@@ -35,3 +38,4 @@ include(":features:notes:domain")
 include(":features:notes:data")
 include(":features:notes:ui")
 include(":features:notes:tests")
+//include(":features:notes:di")
