@@ -30,18 +30,10 @@ fun NoteDetailsScreen(
 ) = Scaffold(
     modifier = modifier,
     topBar = {
-        TopAppBar(
-            title = { },
-            navigationIcon = {
-                BackButton(
-                    onClick = { note.leave(close) },
-                )
-            },
-            actions = {
-                DeleteButton(
-                    onClick = { note.delete(close) },
-                )
-            },
+        TopActionBar(
+            title= "",
+            backAction = { note.leave(close) },
+            deleteAction = { note.delete(close) }
         )
     },
     content = { padding ->
@@ -71,6 +63,22 @@ data class NoteState(
     val updateContent: (String) -> Unit = {},
     val leave: (() -> Unit) -> Unit = {},
     val delete: (() -> Unit) -> Unit = {},
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun TopActionBar(
+    title: String,
+    backAction: () -> Unit,
+    deleteAction: () -> Unit,
+) = TopAppBar(
+    title = { Text(title) },
+    navigationIcon = {
+        BackButton(onClick = backAction)
+    },
+    actions = {
+        DeleteButton(onClick = deleteAction)
+    },
 )
 
 @Composable

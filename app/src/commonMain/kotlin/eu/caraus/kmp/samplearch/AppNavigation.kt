@@ -36,7 +36,9 @@ internal fun AppNavigation(modifier: Modifier = Modifier) {
     NavDisplay(
         modifier = modifier.fillMaxSize(),
         backStack = backStack,
-        onBack = { backStack.removeLastOrNull() },
+        onBack = {
+            backStack.removeLastOrNull()
+        },
         entryDecorators =
             listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
