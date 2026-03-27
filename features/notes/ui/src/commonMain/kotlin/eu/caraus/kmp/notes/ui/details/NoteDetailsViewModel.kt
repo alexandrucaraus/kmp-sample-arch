@@ -39,6 +39,7 @@ class NoteDetailsViewModel(
     init {
         observeOneNote(noteId = noteId)
             .onEach { note ->
+                println("NoteTAG NoteDetailsViewModel: notes updated: ${note}")
                 noteState.update {
                     it.copy(
                         id = note.id,
@@ -62,6 +63,7 @@ class NoteDetailsViewModel(
             with(state.value) {
                 saveNote(noteId = noteId, title = title, content = content)
             }
+            println("NoteTAG Back")
             action()
         }
 

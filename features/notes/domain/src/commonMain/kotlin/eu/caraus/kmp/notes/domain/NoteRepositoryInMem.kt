@@ -26,7 +26,10 @@ open class NoteRepositoryInMem(
         list = list.filter { it.id != noteId }
     }
 
-    override suspend fun findById(noteId: NoteId): Note? = list.find { it.id == noteId }
+    override suspend fun findById(noteId: NoteId): Note? =
+        list.find {
+            it.id == noteId
+        }
 
     override fun allAsFlow(): Flow<List<Note>> = listFlow
 

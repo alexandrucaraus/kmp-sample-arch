@@ -2,19 +2,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.room.schema)
+    alias(libs.plugins.room)
     alias(libs.plugins.koin.compiler)
-    id("kmp.room.ksp")
-}
-
-room {
-    schemaDirectory("$projectDir/schema")
-}
-
-ksp {
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-    arg("room.schmaLocation", "$projectDir/schema")
+    //id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
+    //id("kmp.room.ksp")
 }
 
 koinCompiler {
@@ -78,4 +70,21 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schema")
+}
+
+ksp {
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
+dependencies {
+    ksp(libs.room.compiler)
+    add("kspCommonMainMetadata", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }

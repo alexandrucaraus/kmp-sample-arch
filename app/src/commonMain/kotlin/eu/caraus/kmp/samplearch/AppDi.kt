@@ -13,7 +13,7 @@ object AppDi
 
 @Module
 @Configuration
-class AppDiModule {
+object AppDiModule {
     @Factory
     fun createViewModelCoroutineScope() = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 }

@@ -1,7 +1,7 @@
 package eu.caraus.kmp.samplearch
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -10,11 +10,11 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import eu.caraus.kmp.test.common.rules.KoinTestRule
+import eu.caraus.kmp.test.common.rules.KoinAndroidTestRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.ksp.generated.*
+import org.koin.plugin.module.dsl.startKoin
 import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
@@ -23,7 +23,7 @@ class AppTest : KoinTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val koinTestRule = KoinTestRule(modules = AppDi.configurationModules)
+    val koinAndroidTestRule = KoinAndroidTestRule { startKoin<AppDi>() }
 
     @Test
     fun sanityCheck() {

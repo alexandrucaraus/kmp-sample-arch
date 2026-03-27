@@ -2,24 +2,17 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.room.schema)
-    id("kmp.room.ksp")
     alias(libs.plugins.koin.compiler)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
+
+//    id("com.google.devtools.ksp")
+    //id("kmp.room.ksp") apply true
 }
 
 koinCompiler {
     compileSafety = false       // Enabled by default
     skipDefaultValues = true   // Enabled by default
-}
-
-ksp {
-    arg("room.schemaLocation", "$rootDir/data/database/schema")
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-}
-
-room {
-    schemaDirectory("$rootDir/data/database/schema")
 }
 
 kotlin {
@@ -53,4 +46,21 @@ kotlin {
             implementation(libs.koin.annotations)
         }
     }
+}
+
+room {
+    schemaDirectory("$rootProject/data/database/schema")
+}
+
+ksp {
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
+dependencies {
+    ksp(libs.room.compiler)
+    add("kspCommonMainMetadata", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }

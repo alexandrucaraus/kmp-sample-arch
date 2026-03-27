@@ -6,11 +6,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.koin.compiler)
     // todo should work with 2.0.0-alpha04, now it's 2.0.0-alpha02
     // https://github.com/cashapp/paparazzi/pull/2115/files
     // when 2.0.0-alpha04 is out apply it
     // alias(libs.plugins.paparazzi) apply true
-    id("kmp.koin.ksp")
+    //id("kmp.koin.ksp")
 }
 
 kotlin {

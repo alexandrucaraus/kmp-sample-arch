@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.ktlint.gradle.plugin.dev)
     implementation(libs.detekt.gradle.plugin.dev)
     implementation(libs.kover.gradle.plugin.dev)
+    implementation(libs.androidx.room.gradle.plugin)
     // todo check why warning on compiler version in the classpath
 //  implementation(libs.ktlint.rules.compose)
 //  implementation(libs.detekt.rules.formatting)
@@ -41,10 +42,10 @@ gradlePlugin {
 //            id = "kmp.koin.ksp"
 //            implementationClass = "eu.caraus.kmp.KMPKoinKsp"
 //        }
-        create("roomKsp") {
-            id = "kmp.room.ksp"
-            implementationClass = "eu.caraus.kmp.KMPRoomKsp"
-        }
+//        create("roomKsp") {
+//            id = "kmp.room.ksp"
+//            implementationClass = "eu.caraus.kmp.KMPRoomKsp"
+//        }
         create("androidFeatureCoverageReport") {
             id = "app-feature-android-test-coverage"
             implementationClass = "eu.caraus.kmp.coverage.AndroidFeatureCoverageReport"

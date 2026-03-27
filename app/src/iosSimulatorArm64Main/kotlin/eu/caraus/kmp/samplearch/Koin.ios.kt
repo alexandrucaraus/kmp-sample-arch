@@ -2,6 +2,7 @@
 
 package eu.caraus.kmp.samplearch
 
-import org.koin.ksp.generated.*
+import org.koin.plugin.module.dsl.startKoin
 
-fun startKoin() = AppDi.startKoin()
+
+fun startKoin() = startKoin<AppDi>()

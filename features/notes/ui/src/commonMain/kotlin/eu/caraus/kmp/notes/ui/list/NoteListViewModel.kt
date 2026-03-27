@@ -37,6 +37,7 @@ class NoteListViewModel(
         notesList()
             .distinctUntilChanged()
             .onEach { notes ->
+                println("NoteTAG NoteListViewModel: notes updated: ${notes.size}")
                 notesState.update { it.copy(notes = notes) }
             }.launchIn(viewModelScope)
     }

@@ -2,27 +2,21 @@ package eu.caraus.kmp.test.common.koin
 
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.koin.core.module.Module
-import org.koin.test.KoinTest
 
-fun KoinTest.startTestKoin(modules: List<Module> = emptyList()) =
-    startKoin {
-        modules(modules)
-    }
-
-fun KoinTest.stopTestKoin() = stopKoin()
-
+/**
+ * Generic koin unit test runner
+ * with setup before and teardown after
+ */
 fun koinRunTest(
-    before: () -> Unit = {},
-    after: () -> Unit = {},
-    block: suspend TestScope.() -> Unit,
+    setupBefore: () -> Unit = {},
+    cleanUpAfter: () -> Unit = { stopKoin() },
+    testBlock: suspend TestScope.() -> Unit,
 ) = runTest {
     try {
-        before()
-        block()
+        setupBefore()
+        testBlock()
     } finally {
-        after()
+        cleanUpAfter()
     }
 }

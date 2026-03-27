@@ -1,10 +1,11 @@
-package eu.caraus.kmp.database
+package eu.caraus.kmp.notes.data
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 
 @Module
-@ComponentScan("eu.caraus.kmp.database")
+@ComponentScan("eu.caraus.kmp.notes.data")
 @Configuration
-class DatabaseDiModule
+object Di
+
