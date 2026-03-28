@@ -4,8 +4,6 @@
 # Runs coverage on ci
 #
 
-export JAVA_HOME=/usr/bin
-
 ./gradlew clean && \
 ./gradlew testAndroid && \
 ./gradlew connectedAndroidTest && \
