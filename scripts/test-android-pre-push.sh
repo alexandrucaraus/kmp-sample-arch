@@ -31,7 +31,7 @@ echo "Test emulator serial: $EMULATOR_SERIAL"
 echo "Running tests"
 
 export ANDROID_SERIAL="$EMULATOR_SERIAL"
-./gradlew testAndroid connectedAndroidTest
+./gradlew testAndroid verifyPaparazzi connectedAndroidTest
 TEST_STATUS=$?
 
 ./scripts/emulator.sh stop

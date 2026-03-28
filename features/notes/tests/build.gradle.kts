@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.koin.compiler)
+    alias(libs.plugins.paparazzi)
 }
 
 kotlin {

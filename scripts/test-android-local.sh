@@ -16,7 +16,7 @@ done
 
 ./gradlew clean
 
-./gradlew testAndroid connectedAndroidTest
+./gradlew testAndroid verifyPaparazzi connectedAndroidTest
 
 ./gradlew androidFeatureCoverageReport androidTotalCoverageReport kmpTotalCoverageReport
 

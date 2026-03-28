@@ -5,6 +5,7 @@
 #
 
 ./gradlew clean && \
+./gradlew verifyPaparazzi
 ./gradlew testAndroid && \
 ./gradlew connectedAndroidTest && \
 ./gradlew androidFeatureCoverageReport && \
