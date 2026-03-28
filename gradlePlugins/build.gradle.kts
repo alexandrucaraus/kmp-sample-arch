@@ -38,10 +38,6 @@ tasks.withType<ProcessResources>().configureEach {
 
 gradlePlugin {
     plugins {
-//        create("koinKsp") {
-//            id = "kmp.koin.ksp"
-//            implementationClass = "eu.caraus.kmp.KMPKoinKsp"
-//        }
         create("roomKsp") {
             id = "kmp.room.ksp"
             implementationClass = "eu.caraus.kmp.KMPRoomKsp"
