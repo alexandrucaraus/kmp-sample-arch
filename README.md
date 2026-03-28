@@ -9,16 +9,12 @@ https://github.com/alexandrucaraus/kmp-sample-arch/actions/workflows/pull-reques
 
 ### TODOs
 
-1. Test
-  [] Finish test setup for snapshot testing when paparazzi 2.0.0-alpha05 is ready
-
-2. Test Coverage
-  [] Add kover for the common code report
-
-3. CI/CD
-   [] Coverage display android and common separate
-   [] Build artifacts
-   [] Publish
+1. Test Coverage
+- [ ] Proper display investigate
+2. CI/CD
+- [ ] Coverage display android and kmp common separate
+- [ ] Build artifacts
+- [ ] Publish
 
 ### Modules Structure
 
