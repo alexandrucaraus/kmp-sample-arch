@@ -5,8 +5,6 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.modulegraph)
-    alias(libs.plugins.room) apply false
-    alias(libs.plugins.ksp) apply false
     id("app-total-android-test-coverage")
     id("app-feature-android-test-coverage")
     id("app-total-kmp-test-coverage")
