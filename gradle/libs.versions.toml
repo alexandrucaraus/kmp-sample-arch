@@ -23,14 +23,13 @@ compose-nav3-adaptive = "1.3.0-alpha06"
 compose-nav3-viewmodel = "2.10.0"
 
 androidx-activityCompose = "1.13.0"
-androidx-uiTest = "1.10.5"
+androidx-uiTest = "1.10.6"
 
 koin = "4.2.0"
-#koin-ksp ="2.3.2-Beta1"
 koin-plugin = "0.4.1"
 
-room = "2.8.4"
-sqlite = "2.6.2"
+room = "3.0.0-alpha02"
+sqlite = "2.7.0-alpha02"
 
 modulegraph="0.13.0"
 
@@ -54,7 +53,7 @@ appcompat = "1.6.1"
 material = "1.10.0"
 
 [libraries]
-androidx-room-gradle-plugin = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
+
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
@@ -78,10 +77,10 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+room-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room" }
+#room-ktx = { module = "androidx.room3:room3-ktx", version.ref = "room" }
+room-testing = { module = "androidx.room3:room3-testing", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -97,6 +96,7 @@ detekt-rules-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatt
 detekt-rules-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-rules-compose" }
 
 # Local plugin dev deps
+androidx-room-gradle-plugin = { module = "androidx.room3:room3-gradle-plugin", version.ref = "room" }
 kotlin-gradle-plugin-dev = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 agp-gradle-plugin-dev = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
 multiplatform-gradle-plugin-dev = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
@@ -119,7 +119,7 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 koin-compiler = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
-room = { id = "androidx.room", version.ref="room"  }
+room = { id = "androidx.room3", version.ref="room"  }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }

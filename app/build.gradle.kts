@@ -38,6 +38,9 @@ kotlin {
             }
         }
         testCoverage {}
+        androidResources {
+            enable = false
+        }
     }
     listOf(
         iosArm64(),
@@ -85,3 +88,10 @@ kotlin {
         }
     }
 }
+
+tasks
+    .matching {
+        it.name == "copyAndroidDeviceTestComposeResourcesToAndroidAssets"
+    }.configureEach {
+        enabled = false
+    }

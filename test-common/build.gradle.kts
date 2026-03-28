@@ -11,7 +11,7 @@ plugins {
     // https://github.com/cashapp/paparazzi/pull/2115/files
     // when 2.0.0-alpha04 is out apply it
     // alias(libs.plugins.paparazzi) apply true
-    //id("kmp.koin.ksp")
+    // id("kmp.koin.ksp")
 }
 
 kotlin {

@@ -31,8 +31,9 @@ class NotesListViewModelTest : KoinTest {
 
     @Before
     fun setup() {
-        inject<AppDatabase>().value.clearAllTables()
-        inject<AppDatabase>().value.openHelper.readableDatabase
+        runBlocking {
+            inject<AppDatabase>().value.clearAllTables()
+        }
     }
 
     @Test

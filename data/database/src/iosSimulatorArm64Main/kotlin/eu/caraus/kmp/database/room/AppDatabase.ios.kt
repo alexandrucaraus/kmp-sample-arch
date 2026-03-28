@@ -1,6 +1,6 @@
 package eu.caraus.kmp.database.room
 
-import androidx.room.Room
+import androidx.room3.Room
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -15,11 +15,12 @@ fun appDatabaseBuilder(): AppDatabase {
 
     return Room
         .databaseBuilder<AppDatabase>(name = dbFilePath)
-        .fallbackToDestructiveMigration(false)
+        .fallbackToDestructiveMigration(true)
         .setDriver(
             androidx.sqlite.driver.bundled
                 .BundledSQLiteDriver(),
-        ).setQueryCoroutineContext(Dispatchers.IO).build()
+        ).setQueryCoroutineContext(Dispatchers.IO)
+        .build()
 }
 
 @OptIn(ExperimentalForeignApi::class)
@@ -29,7 +30,7 @@ private fun documentDirectory(): String {
             directory = NSDocumentDirectory,
             inDomain = NSUserDomainMask,
             appropriateForURL = null,
-            create = false,
+            create = true,
             error = null,
         )
     return requireNotNull(documentDirectory?.path)

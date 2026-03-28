@@ -8,4 +8,3 @@ import org.koin.core.annotation.Module
 @ComponentScan("eu.caraus.kmp.notes.domain")
 @Configuration
 object Di
-

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import shadow.bundletool.com.android.tools.r8.internal.tR
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -7,13 +8,13 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.koin.compiler)
-    //alias(libs.plugins.ksp)
-    //id("kmp.room.ksp") apply true
+    // alias(libs.plugins.ksp)
+    // id("kmp.room.ksp") apply true
 }
 
-//kmpKoinKsp {
+// kmpKoinKsp {
 //    useKoinViewModel = true
-//}
+// }
 
 kotlin {
     applyDefaultHierarchyTemplate()
@@ -39,6 +40,9 @@ kotlin {
         withDeviceTest {
             enableCoverage = true
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            androidResources {
+                enable = true
+            }
         }
         androidResources {
             enable = true
@@ -63,6 +67,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.room.runtime)
             implementation(libs.compose.material3.icons.extended)
             implementation(libs.compose.material3)
             implementation(libs.compose.nav3)
@@ -116,6 +121,6 @@ kotlin {
 }
 
 dependencies {
-    //add("androidDeviceTestImplementation",libs.room.compiler)
+    // add("androidDeviceTestImplementation",libs.room.compiler)
     add("androidHostTestImplementation", libs.paparazzi.classgraph)
 }

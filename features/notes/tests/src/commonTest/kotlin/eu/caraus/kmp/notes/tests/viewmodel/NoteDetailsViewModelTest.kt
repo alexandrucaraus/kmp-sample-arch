@@ -19,7 +19,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NoteDetailsViewModelTest : KoinTest {
-
     @Test
     fun list_notes_on_init() =
         koinTest {

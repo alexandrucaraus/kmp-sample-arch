@@ -32,14 +32,14 @@ import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class NotesDetailsViewModelTest : KoinTest {
-
     @get:Rule
     val koinAndroidTestRule = KoinAndroidTestRule { startKoin<IntegrationTestDi> { it() } }
 
     @Before
     fun setup() {
-        inject<AppDatabase>().value.clearAllTables()
-        inject<AppDatabase>().value.openHelper.readableDatabase
+        runBlocking {
+            inject<AppDatabase>().value.clearAllTables()
+        }
     }
 
     @Test

@@ -1,9 +1,7 @@
 package eu.caraus.kmp.test.common.rules
 
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinApplication
 import org.koin.core.context.stopKoin
 import org.koin.core.error.KoinApplicationAlreadyStartedException
