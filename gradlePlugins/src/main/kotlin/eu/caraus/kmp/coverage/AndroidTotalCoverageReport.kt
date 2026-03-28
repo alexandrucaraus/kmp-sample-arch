@@ -34,6 +34,21 @@ class AndroidTotalCoverageReport : Plugin<Project> {
             group = "Reporting"
             description = "Total coverage report android unit and instrumented coverage report"
 
+            mustRunAfter(
+                project.subprojects
+                    .exclude(excludedProjects)
+                    .flatMap { subproject ->
+                        subproject.tasks.filter { task ->
+                            task.name.startsWith("compile") ||
+                                task.name.startsWith("process") ||
+                                task.name.startsWith("generate") ||
+                                task.name.startsWith("package") ||
+                                task.name.startsWith("merge") ||
+                                task.name.startsWith("check")
+                        }
+                    }
+            )
+
             sourceDirectories.setFrom(
                 project.provider {
                     project.files(

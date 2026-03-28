@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.koin.compiler)
     id("kmp.room.ksp")
-    // alias(libs.plugins.ksp)
-    // alias(libs.plugins.room)
 }
 
 koinCompiler {
@@ -69,20 +67,3 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
-
-// room3 {
-//    schemaDirectory("${project.rootDir}/data/database/schema")
-// }
-//
-// ksp {
-//    arg("room.incremental", "true")
-//    arg("room.expandProjection", "true")
-// }
-//
-// dependencies {
-//    ksp(libs.room.compiler)
-//    add("kspCommonMainMetadata", libs.room.compiler)
-//    add("kspAndroid", libs.room.compiler)
-//    add("kspIosArm64", libs.room.compiler)
-//    add("kspIosSimulatorArm64", libs.room.compiler)
-// }
