@@ -12,10 +12,7 @@ class KmpTotalCoverageReport : Plugin<Project> {
 
     private val rootCoverageTaskName = "kmpTotalCoverageReport"
 
-    val excludedProjects = setOf(
-        "test-common",
-        "tests"
-    )
+    val excludedProjects = ExcludedModulesFromCoverage.excluded
 
     override fun apply(project: Project) {
         require(project == project.rootProject) {

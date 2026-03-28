@@ -13,10 +13,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 class AndroidTotalCoverageReport : Plugin<Project> {
     private val rootCoverageTaskName = "androidTotalCoverageReport"
 
-    val excludedProjects = setOf(
-        "test-common",
-        "tests"
-    )
+    val excludedProjects = ExcludedModulesFromCoverage.excluded
 
     override fun apply(project: Project) {
         require(project == project.rootProject) {
