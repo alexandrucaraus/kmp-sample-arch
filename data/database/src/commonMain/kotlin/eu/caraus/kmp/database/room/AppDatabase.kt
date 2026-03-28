@@ -9,6 +9,7 @@ import eu.caraus.kmp.notes.data.NoteDto
 
 val AppDatabase.Companion.DATABASE_FILE_NAME: String get() = "notes_room.db"
 
+@Suppress("NO_ACTUAL_FOR_EXPECT")
 @Database(
     version = AppDatabase.LATEST_VERSION,
     entities = [
@@ -25,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
+@Suppress("KotlinNoActualForExpect", "NO_ACTUAL_FOR_EXPECT")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }

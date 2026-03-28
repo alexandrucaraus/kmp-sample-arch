@@ -2,8 +2,11 @@
 
 echo "Running pre-push checks..."
 
-# Uncomment bellow line when running by IDE Button ^^
-# cd ..
+is_project_root="$(stat ./gradlew 2>/dev/null)"
+while [ ! "$is_project_root" ]; do
+    cd ..
+    is_project_root="$(stat ./gradlew 2>/dev/null)"
+done
 
 # Run linters
 

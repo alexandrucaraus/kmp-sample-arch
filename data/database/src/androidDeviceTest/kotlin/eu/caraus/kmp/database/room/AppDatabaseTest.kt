@@ -1,8 +1,6 @@
 package eu.caraus.kmp.database.room
 
-import androidx.room3.Ignore
 import androidx.room3.testing.MigrationTestHelper
-import androidx.sqlite.SQLiteDriver
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

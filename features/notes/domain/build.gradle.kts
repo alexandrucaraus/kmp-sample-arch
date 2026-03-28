@@ -6,8 +6,7 @@ plugins {
 }
 
 koinCompiler {
-    compileSafety = false // Enabled by default
-    skipDefaultValues = true // Enabled by default
+    compileSafety = false
 }
 
 kotlin {
