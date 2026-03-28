@@ -42,10 +42,10 @@ gradlePlugin {
 //            id = "kmp.koin.ksp"
 //            implementationClass = "eu.caraus.kmp.KMPKoinKsp"
 //        }
-//        create("roomKsp") {
-//            id = "kmp.room.ksp"
-//            implementationClass = "eu.caraus.kmp.KMPRoomKsp"
-//        }
+        create("roomKsp") {
+            id = "kmp.room.ksp"
+            implementationClass = "eu.caraus.kmp.KMPRoomKsp"
+        }
         create("androidFeatureCoverageReport") {
             id = "app-feature-android-test-coverage"
             implementationClass = "eu.caraus.kmp.coverage.AndroidFeatureCoverageReport"

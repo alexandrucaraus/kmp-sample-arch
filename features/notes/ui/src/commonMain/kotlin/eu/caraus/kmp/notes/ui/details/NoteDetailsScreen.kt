@@ -31,9 +31,9 @@ fun NoteDetailsScreen(
     modifier = modifier,
     topBar = {
         TopActionBar(
-            title= "",
+            title = "",
             backAction = { note.leave(close) },
-            deleteAction = { note.delete(close) }
+            deleteAction = { note.delete(close) },
         )
     },
     content = { padding ->

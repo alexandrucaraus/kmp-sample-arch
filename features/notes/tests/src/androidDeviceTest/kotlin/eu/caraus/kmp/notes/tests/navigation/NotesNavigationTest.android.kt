@@ -17,6 +17,7 @@ import eu.caraus.kmp.notes.ui.navigation.NotesNavGraph
 import eu.caraus.kmp.notes.ui.navigation.NotesSerializerModule
 import eu.caraus.kmp.test.common.navigation.NavDisplayTest
 import eu.caraus.kmp.test.common.rules.KoinAndroidTestRule
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,12 +32,16 @@ class NotesNavigationTest : KoinTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val koinAndroidTestRule = KoinAndroidTestRule { startKoin<IntegrationTestDi>() }
+    val koinAndroidTestRule =
+        KoinAndroidTestRule {
+            startKoin<IntegrationTestDi>()
+        }
 
     @Before
     fun setup() {
-        inject<AppDatabase>().value.clearAllTables()
-        inject<AppDatabase>().value.openHelper.readableDatabase
+        runBlocking {
+            inject<AppDatabase>().value.clearAllTables()
+        }
     }
 
     @Test

@@ -3,16 +3,16 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.koin.compiler)
-    alias(libs.plugins.room)
-    alias(libs.plugins.ksp)
+    // alias(libs.plugins.room)
+    // alias(libs.plugins.ksp)
 
 //    id("com.google.devtools.ksp")
-    //id("kmp.room.ksp") apply true
+    id("kmp.room.ksp")
 }
 
 koinCompiler {
-    compileSafety = false       // Enabled by default
-    skipDefaultValues = true   // Enabled by default
+    compileSafety = false // Enabled by default
+    skipDefaultValues = true // Enabled by default
 }
 
 kotlin {
@@ -32,6 +32,9 @@ kotlin {
                 .get()
                 .toInt()
         withJava()
+        androidResources {
+            enable = true
+        }
     }
     iosArm64()
     iosSimulatorArm64()
@@ -46,21 +49,24 @@ kotlin {
             implementation(libs.koin.annotations)
         }
     }
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 }
 
-room {
-    schemaDirectory("$rootProject/data/database/schema")
-}
-
-ksp {
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-}
-
-dependencies {
-    ksp(libs.room.compiler)
-    add("kspCommonMainMetadata", libs.room.compiler)
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-}
+// room3 {
+//    schemaDirectory("$rootProject/data/database/schema")
+// }
+//
+// ksp {
+//    arg("room.incremental", "true")
+//    arg("room.expandProjection", "true")
+// }
+//
+// dependencies {
+//    ksp(libs.room.compiler)
+//    add("kspCommonMainMetadata", libs.room.compiler)
+//    add("kspAndroid", libs.room.compiler)
+//    add("kspIosArm64", libs.room.compiler)
+//    add("kspIosSimulatorArm64", libs.room.compiler)
+// }

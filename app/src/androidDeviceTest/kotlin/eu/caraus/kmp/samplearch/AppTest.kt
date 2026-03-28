@@ -10,10 +10,12 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import eu.caraus.kmp.test.common.rules.KoinAndroidTestRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.android.ext.koin.androidContext
 import org.koin.plugin.module.dsl.startKoin
 import org.koin.test.KoinTest
 
@@ -23,7 +25,14 @@ class AppTest : KoinTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val koinAndroidTestRule = KoinAndroidTestRule { startKoin<AppDi>() }
+    val koinAndroidTestRule =
+        KoinAndroidTestRule {
+            startKoin<AppDi> {
+                androidContext(
+                    InstrumentationRegistry.getInstrumentation().targetContext,
+                )
+            }
+        }
 
     @Test
     fun sanityCheck() {

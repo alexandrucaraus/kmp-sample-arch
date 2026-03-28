@@ -1,9 +1,9 @@
 package eu.caraus.kmp.database.room
 
-import androidx.room.ConstructedBy
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
+import androidx.room3.ConstructedBy
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.RoomDatabaseConstructor
 import eu.caraus.kmp.notes.data.NoteDao
 import eu.caraus.kmp.notes.data.NoteDto
 
@@ -16,7 +16,7 @@ val AppDatabase.Companion.DATABASE_FILE_NAME: String get() = "notes_room.db"
     ],
     exportSchema = true,
 )
-//@ConstructedBy(AppDatabaseConstructor::class)
+@ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
 
@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
         const val LATEST_VERSION = 1
     }
 }
-//@Suppress("All")
-//expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-//    override fun initialize(): AppDatabase
-//}
+
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}

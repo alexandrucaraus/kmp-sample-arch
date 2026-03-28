@@ -12,6 +12,7 @@ plugins {
     id("app-total-kmp-test-coverage")
     id("kmp.linter")
     id("kmp.feature.skeleton") apply false
+    id("kmp.room.ksp") apply false
 }
 
 // Design system
