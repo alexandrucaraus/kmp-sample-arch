@@ -188,14 +188,14 @@ get_system_image() {
 
 setup_emulator() {
     log_info "Setting up $EMULATOR_NAME"
-    system_image=get_system_image "$API_LEVEL"
+    system_image="$(get_system_image "$API_LEVEL")"
     log_info "Creating AVD $EMULATOR_NAME with system_image $system_image"
     # Accept licenses
     echo "y" | "$SDK_MANAGER_CMD" --licenses >/dev/null 2>&1
     # Install system image if needed
     if ! "$SDK_MANAGER_CMD" --list_installed 2>/dev/null | grep -q "$system_image"; then
         log_info "Installing system image $system_image"
-        echo "y" | "$SDK_MANAGER_CMD $system_image"
+        echo "y" | "$SDK_MANAGER_CMD" "$system_image"
         if [ $? -ne 0 ]; then
             log_error "Failed to install system image, trying fallback..."
             fallback_api=$((API_LEVEL - 1))
@@ -211,14 +211,14 @@ setup_emulator() {
         fi
     fi
     # Create AVD
-    echo "no" | "AVD_MANAGER_CMD" create avd \
+    echo "no" | "$AVD_MANAGER_CMD" create avd \
         --force \
         --name "$EMULATOR_NAME" \
         --package "$system_image" \
         --device "pixel_3a" 2>/dev/null
     if [ $? -eq 0 ]; then
         log_success "Successfully created AVD: $EMULATOR_NAME"
-        return 1
+        return 0
     else
         log_error "Failed to create AVD"
         exit 1

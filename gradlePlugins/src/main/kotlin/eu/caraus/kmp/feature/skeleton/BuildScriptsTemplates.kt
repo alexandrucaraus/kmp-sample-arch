@@ -8,12 +8,16 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
+}
+
+koinCompiler {
+    compileSafety = false
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk
@@ -36,7 +40,6 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-
             implementation(libs.koin.core)
             implementation(libs.koin.annotations)
         }
@@ -53,24 +56,17 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.room.schema)
+    alias(libs.plugins.koin.compiler)
     id("kmp.room.ksp")
-    id("kmp.koin.ksp")
 }
 
-ksp {
-    arg("room.schemaLocation", "${'$'}rootDir/data/database/schema")
-    arg("room.incremental", "true")
-    arg("room.expandProjection", "true")
-}
-
-room {
-    schemaDirectory("${'$'}rootDir/data/database/schema")
+koinCompiler {
+    compileSafety = false
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk
@@ -116,7 +112,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
+}
+
+koinCompiler {
+    compileSafety = false
 }
 
 kotlin {
@@ -177,16 +177,16 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
-    id("kmp.koin.ksp")
+    alias(libs.plugins.koin.compiler)
 }
 
-kmpKoinKsp {
-    useKoinViewModel = true
+koinCompiler {
+    compileSafety = false
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidLibrary {
+    android {
         namespace = "$packageName.$layer"
         compileSdk =
             libs.versions.android.compileSdk

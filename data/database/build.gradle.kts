@@ -1,19 +1,15 @@
-import com.android.tools.r8.internal.fa
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.multiplatform.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    // alias(libs.plugins.room)
     alias(libs.plugins.koin.compiler)
-    // id("com.google.devtools.ksp")
-    // alias(libs.plugins.ksp)
     id("kmp.room.ksp")
+    //alias(libs.plugins.ksp)
+    //alias(libs.plugins.room)
 }
 
 koinCompiler {
-    compileSafety = false // Enabled by default
-    skipDefaultValues = true // Enabled by default
+    compileSafety = true
 }
 
 kotlin {
@@ -47,8 +43,8 @@ kotlin {
     iosSimulatorArm64()
     sourceSets {
         commonMain.dependencies {
-            api(projects.features.notes.data)
-            api(libs.room.runtime)
+            implementation(projects.features.notes.data)
+            implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
@@ -57,12 +53,7 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
-        androidMain.dependencies {
-            // implementation(libs.room.ktx)
-        }
-
         getByName("androidDeviceTest") {
-
             dependencies {
                 implementation(libs.koin.test)
                 implementation(libs.koin.core.viewmodel)
