@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.koin.compiler)
     id("kmp.room.ksp")
-    //alias(libs.plugins.ksp)
-    //alias(libs.plugins.room)
+    // alias(libs.plugins.ksp)
+    // alias(libs.plugins.room)
 }
 
 koinCompiler {
