@@ -74,6 +74,19 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
             group = "Reporting"
             description = "Feature level Android unit and instrumented coverage report"
 
+            mustRunAfter(
+                targetProjects.flatMap { subproject ->
+                    subproject.tasks.filter { task ->
+                        task.name.startsWith("compile") ||
+                            task.name.startsWith("process") ||
+                            task.name.startsWith("generate") ||
+                            task.name.startsWith("package") ||
+                            task.name.startsWith("merge") ||
+                            task.name.startsWith("check")
+                    }
+                }
+            )
+
             sourceDirectories.setFrom(
                 targetProjects.map { subproject ->
                     subproject.files(
@@ -120,6 +133,18 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
             module.tasks.register<JacocoReport>(nonFeatureModuleCoverageReport) {
                 group = "Reporting"
                 description = "Non feature module Android unit and instrumented coverage report"
+
+                mustRunAfter(
+                    module.tasks.filter { task ->
+                        task.name.startsWith("compile") ||
+                            task.name.startsWith("process") ||
+                            task.name.startsWith("generate") ||
+                            task.name.startsWith("package") ||
+                            task.name.startsWith("merge") ||
+                            task.name.startsWith("check")
+                    }
+                )
+
                 sourceDirectories.setFrom(
                     module.files(
                         coverageSources
