@@ -13,10 +13,11 @@ import kotlin.test.Test
 
 class NotesSnapshotTest {
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = PIXEL_5,
-        theme = "android:Theme.Material.Light.NoActionBar",
-    )
+    val paparazzi =
+        Paparazzi(
+            deviceConfig = PIXEL_5,
+            theme = "android:Theme.Material.Light.NoActionBar",
+        )
 
     @Test
     fun test() {
@@ -26,17 +27,26 @@ class NotesSnapshotTest {
             paparazzi.snapshot(name = previewFunction.name()) {
                 CompositionLocalProvider(LocalInspectionMode provides true) {
                     SnapshotTestWrapper {
-                        val args = when (val paramCount = previewFunction.parameters.size) {
-                            2 -> arrayOf(currentComposer, 0)
-                            3 -> arrayOf(null, currentComposer, 0)
-                            else -> Array(paramCount) { i ->
-                                when (i) {
-                                    paramCount - 2 -> currentComposer
-                                    paramCount - 1 -> 0
-                                    else -> null
+                        val args =
+                            when (val paramCount = previewFunction.parameters.size) {
+                                2 -> {
+                                    arrayOf(currentComposer, 0)
+                                }
+
+                                3 -> {
+                                    arrayOf(null, currentComposer, 0)
+                                }
+
+                                else -> {
+                                    Array(paramCount) { i ->
+                                        when (i) {
+                                            paramCount - 2 -> currentComposer
+                                            paramCount - 1 -> 0
+                                            else -> null
+                                        }
+                                    }
                                 }
                             }
-                        }
                         previewFunction.invoke(null, *args)
                     }
                 }

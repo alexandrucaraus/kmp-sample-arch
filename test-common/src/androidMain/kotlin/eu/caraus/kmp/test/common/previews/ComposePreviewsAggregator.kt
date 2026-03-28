@@ -30,5 +30,6 @@ class ComposePreviewsAggregator {
 }
 
 fun Method.name(): String =
-    name.replace(Regex("([A-Z])")) { "_${it.value.lowercase()}" }
+    name
+        .replace(Regex("([A-Z])")) { "_${it.value.lowercase()}" }
         .trimStart('_')
