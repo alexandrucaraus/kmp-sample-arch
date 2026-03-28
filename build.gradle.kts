@@ -7,9 +7,9 @@ plugins {
     alias(libs.plugins.modulegraph)
     alias(libs.plugins.room) apply false
     alias(libs.plugins.ksp) apply false
-    id("app-total-android-test-coverage")
-    id("app-feature-android-test-coverage")
-    id("app-total-kmp-test-coverage")
+    id("app-android-feature-test-coverage")
+    id("app-android-total-test-coverage")
+    id("app-kmp-total-test-coverage")
     id("kmp.linter")
     id("kmp.feature.skeleton") apply false
     id("kmp.room.ksp") apply false

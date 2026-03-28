@@ -19,9 +19,7 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
     private val featureModulesCoverageReport = "androidFeatureModulesCoverageReport"
     private val nonFeatureModuleCoverageReport = "androidNonFeatureModuleCoverageReport"
 
-    val excluded = setOf(
-        "test-common"
-    )
+    val excluded = ExcludedModulesFromCoverage.excluded
 
     override fun apply(project: Project) {
         require(project == project.rootProject) {
