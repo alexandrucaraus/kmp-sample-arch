@@ -13,12 +13,12 @@ EMULATOR_NAME="$DEFAULT_EMULATOR_NAME"
 TIMEOUT="$DEFAULT_TIMEOUT"
 API_LEVEL="$DEFAULT_API_LEVEL"
 
-main () {
+main() {
 
-# Parse command line arguments
-while [ $# -gt 0 ]; do
-    case $1 in
-        start|stop|status|setup)
+    # Parse command line arguments
+    while [ $# -gt 0 ]; do
+        case $1 in
+        start | stop | status | setup)
             COMMAND="$1"
             shift
             ;;
@@ -34,7 +34,7 @@ while [ $# -gt 0 ]; do
             API_LEVEL="$2"
             shift 2
             ;;
-        --help|-h)
+        --help | -h)
             usage
             exit 0
             ;;
@@ -43,17 +43,17 @@ while [ $# -gt 0 ]; do
             usage
             exit 1
             ;;
-    esac
-done
+        esac
+    done
 
-if [ -z "$COMMAND" ]; then
-    echo "Error: No command specified"
-    usage
-    exit 1
-fi
+    if [ -z "$COMMAND" ]; then
+        echo "Error: No command specified"
+        usage
+        exit 1
+    fi
 
-# Main command execution
-case "$COMMAND" in
+    # Main command execution
+    case "$COMMAND" in
     start)
         start
         ;;
@@ -65,7 +65,7 @@ case "$COMMAND" in
         usage
         exit 1
         ;;
-esac
+    esac
 }
 
 # Usage function
@@ -121,14 +121,42 @@ is_emulator_running() {
 init_sdk_info() {
     log_info "Setting up sdk paths..."
 
+    # Setup JAVA_HOME
+    if [ -z "$JAVA_HOME" ]; then
+        # Try to derive it from the java binary in PATH
+        if command -v java >/dev/null 2>&1; then
+            JAVA_HOME=$(java -XshowSettings:property -version 2>&1 |
+                grep 'java.home' |
+                awk '{print $3}')
+            export JAVA_HOME
+        fi
+
+        # Fallback: Android Studio bundles its own JDK (works with Flatpak too)
+        if [ -z "$JAVA_HOME" ]; then
+            for jdk_path in \
+                "$HOME/.local/share/flatpak/app/com.google.AndroidStudio/current/active/files/extra/studio/jbr" \
+                "/var/lib/flatpak/app/com.google.AndroidStudio/current/active/files/extra/studio/jbr"; do
+                if [ -d "$jdk_path" ]; then
+                    JAVA_HOME="$jdk_path"
+                    export JAVA_HOME
+                    break
+                fi
+            done
+        fi
+
+        if [ -z "$JAVA_HOME" ]; then
+            log_error "JAVA_HOME not set and no JDK found."
+            exit 1
+        fi
+    fi
+
     # Setup ANDROID_HOME var
     if [ -z "$ANDROID_HOME" ]; then
         for sdk_path in \
-            "$HOME/.android/sdk" \
+            "$HOME/.android/Sdk" \
             "$HOME/Library/Android/sdk" \
             "$HOME/Android/Sdk" \
-            "/usr/local/android-sdk"
-        do
+            "/usr/local/android-sdk"; do
             if [ -d "$sdk_path" ]; then
                 ANDROID_HOME="$sdk_path"
                 export ANDROID_HOME
@@ -147,10 +175,10 @@ init_sdk_info() {
     else
         cmdline_tools_dir="$ANDROID_HOME/cmdline-tools"
         highest_version_path=$(
-            ls "$cmdline_tools_dir/" 2>/dev/null \
-                | grep -Eo '[0-9]+(\.[0-9]+)*' \
-                | sort -V \
-                | tail -n 1
+            ls "$cmdline_tools_dir/" 2>/dev/null |
+                grep -Eo '[0-9]+(\.[0-9]+)*' |
+                sort -V |
+                tail -n 1
         )
         export ANDROID_SDK_TOOLS="$cmdline_tools_dir/$highest_version_path"
     fi
@@ -158,8 +186,10 @@ init_sdk_info() {
     export SDK_MANAGER_CMD="$ANDROID_SDK_TOOLS/bin/sdkmanager"
     export AVD_MANAGER_CMD="$ANDROID_SDK_TOOLS/bin/avdmanager"
     export EMULATOR_CMD="$ANDROID_HOME/emulator/emulator"
+    export ANDROID_AVD_HOME="$ANDROID_HOME/../avd"
 
     log_info "ANDROID_HOME=<$ANDROID_HOME>"
+    log_info "ANDROID_AVD_HOME=<$ANDROID_AVD_HOME>"
     log_info "ANDROID_SDK_TOOLS=<$ANDROID_SDK_TOOLS>"
     log_info "SDK_MANAGER_CMD=<$SDK_MANAGER_CMD>"
     log_info "AVD_MANAGER_CMD=<$AVD_MANAGER_CMD>"
@@ -192,6 +222,9 @@ setup_emulator() {
     log_info "Creating AVD $EMULATOR_NAME with system_image $system_image"
     # Accept licenses
     echo "y" | "$SDK_MANAGER_CMD" --licenses >/dev/null 2>&1
+
+    "$SDK_MANAGER_CMD" --version
+
     # Install system image if needed
     if ! "$SDK_MANAGER_CMD" --list_installed 2>/dev/null | grep -q "$system_image"; then
         log_info "Installing system image $system_image"
@@ -240,7 +273,7 @@ start_emulator() {
         -wipe-data \
         -gpu swiftshader_indirect \
         -memory 4048 \
-        -cores 4 > /dev/null 2>&1 &
+        -cores 4 >/dev/null 2>&1 &
     EMULATOR_PID=$!
 
     # Wait for a new emulator to appear
@@ -254,43 +287,43 @@ start_emulator() {
         for emu in $current_emulators; do
             if ! echo "$existing_emulators" | grep -q "^$emu$"; then
                 export NEW_EMULATOR_SERIAL="$emu"
-                echo "$NEW_EMULATOR_SERIAL" > /tmp/EMULATOR_SERIAL
-                break 2  # Break both loops
+                echo "$NEW_EMULATOR_SERIAL" >/tmp/EMULATOR_SERIAL
+                break 2 # Break both loops
             fi
         done
 
         sleep 3
         timeout=$((timeout + 3))
         log_info "Waiting for emulator to appear... (${timeout}s/${TIMEOUT}s)"
-        done
+    done
 
-        if [ -z "$NEW_EMULATOR_SERIAL" ]; then
-            log_error "No new emulator detected within ${TIMEOUT} seconds"
-            kill $EMULATOR_PID 2>/dev/null
-            exit 1
-        fi
-
-        log_info "Found new emulator: $NEW_EMULATOR_SERIAL"
-        log_info "Waiting for boot completion..."
-
-        # Now wait for THIS specific emulator to boot
-        timeout=0
-        while [ $timeout -lt "$TIMEOUT" ]; do
-            if "$ADB_COMMAND" -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
-                log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
-                sleep 3
-                "$ADB_COMMAND" devices
-                export EMULATOR_SERIAL="$NEW_EMULATOR_SERIAL"  # Export for later use
-                return 0
-            fi
-            sleep 3
-            timeout=$((timeout + 3))
-            log_info "Booting $NEW_EMULATOR_SERIAL... (${timeout}s/${TIMEOUT}s)"
-        done
-
-        log_error "Emulator $NEW_EMULATOR_SERIAL failed to boot within ${TIMEOUT} seconds"
+    if [ -z "$NEW_EMULATOR_SERIAL" ]; then
+        log_error "No new emulator detected within ${TIMEOUT} seconds"
         kill $EMULATOR_PID 2>/dev/null
         exit 1
+    fi
+
+    log_info "Found new emulator: $NEW_EMULATOR_SERIAL"
+    log_info "Waiting for boot completion..."
+
+    # Now wait for THIS specific emulator to boot
+    timeout=0
+    while [ $timeout -lt "$TIMEOUT" ]; do
+        if "$ADB_COMMAND" -s "$NEW_EMULATOR_SERIAL" shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; then
+            log_success "Emulator $NEW_EMULATOR_SERIAL is ready!"
+            sleep 3
+            "$ADB_COMMAND" devices
+            export EMULATOR_SERIAL="$NEW_EMULATOR_SERIAL" # Export for later use
+            return 0
+        fi
+        sleep 3
+        timeout=$((timeout + 3))
+        log_info "Booting $NEW_EMULATOR_SERIAL... (${timeout}s/${TIMEOUT}s)"
+    done
+
+    log_error "Emulator $NEW_EMULATOR_SERIAL failed to boot within ${TIMEOUT} seconds"
+    kill $EMULATOR_PID 2>/dev/null
+    exit 1
 }
 
 stop_emulator() {
@@ -298,7 +331,7 @@ stop_emulator() {
     EMULATOR_PID="$(pidof "$EMULATOR_NAME")"
     if [ -n "$EMULATOR_PID" ]; then
         log_info "Emulator $EMULATOR_NAME pid $EMULATOR_PID found"
-        kill "$EMULATOR_PID">/dev/null 2>&1
+        kill "$EMULATOR_PID" >/dev/null 2>&1
         rm -f /tmp/EMULATOR_SERIAL
     else
         log_warning "Emulator $EMULATOR_NAME is not running"
@@ -310,7 +343,7 @@ stop_emulator() {
 pidof() {
     PIDOF_NAME=$1
     # shellcheck disable=SC2009
-    ps e| grep "$PIDOF_NAME" | grep -v grep | awk '{print $1}'
+    ps e | grep "$PIDOF_NAME" | grep -v grep | awk '{print $1}'
 }
 
 log_info() {
