@@ -149,7 +149,7 @@ abstract class CreateFeatureModuleTask : DefaultTask() {
         }
 
         File(testModuleDir, "build.gradle.kts").writeText(
-            BuildScriptsTemplates.data(packageName!!, layer)
+            BuildScriptsTemplates.tests(packageName!!, layer)
         )
 
         val packageNamePath = packageName.plus(".$layer").replace(".", "/")

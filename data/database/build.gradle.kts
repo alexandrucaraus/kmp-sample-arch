@@ -6,10 +6,6 @@ plugins {
     id("kmp.room.ksp")
 }
 
-koinCompiler {
-    compileSafety = true
-}
-
 kotlin {
     android {
         namespace = "eu.caraus.kmp.database"

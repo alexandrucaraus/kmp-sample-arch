@@ -6,8 +6,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import java.io.File
 
 class KMPRoomKsp : Plugin<Project> {
     override fun apply(project: Project) {
@@ -39,23 +39,16 @@ class KMPRoomKsp : Plugin<Project> {
         }
 
         project.extensions.configure<RoomExtension> {
-            schemaDirectory("${project.rootDir}/data/database/schema")
+            val schemaDir = File("${project.rootDir}/data/database/schema")
+            require(schemaDir.exists() && schemaDir.isDirectory) {
+                "Room schema directory not set or path incorrect! check <kmp.room.ksp> gradlePlugins"
+            }
+            schemaDirectory(schemaDir.absolutePath)
         }
 
         project.extensions.configure<KspExtension> {
             arg("room.incremental", "true")
             arg("room.expandProjection", "true")
         }
-
-//        project.afterEvaluate {
-//            project.dependencies {
-//
-//                //add("ksp", roomCompiler)
-//                add("kspCommonMainMetadata", roomCompiler)
-//                add("kspAndroid", roomCompiler)
-//                add("kspIosArm64", roomCompiler)
-//                add("kspIosSimulatorArm64", roomCompiler)
-//            }
-//        }
     }
 }
