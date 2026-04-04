@@ -188,6 +188,13 @@ init_sdk_info() {
     export EMULATOR_CMD="$ANDROID_HOME/emulator/emulator"
     export ANDROID_AVD_HOME="$ANDROID_HOME/../avd"
 
+    if command -v adb >/dev/null 2>&1; then
+        # shellcheck disable=SC2155
+        export ADB_COMMAND="$(which adb)"
+    else
+        export ADB_COMMAND="$ANDROID_HOME/platform-tools/adb"
+    fi
+
     log_info "ANDROID_HOME=<$ANDROID_HOME>"
     log_info "ANDROID_AVD_HOME=<$ANDROID_AVD_HOME>"
     log_info "ANDROID_SDK_TOOLS=<$ANDROID_SDK_TOOLS>"
