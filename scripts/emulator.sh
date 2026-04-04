@@ -188,6 +188,14 @@ init_sdk_info() {
     export EMULATOR_CMD="$ANDROID_HOME/emulator/emulator"
     export ANDROID_AVD_HOME="$ANDROID_HOME/../avd"
 
+    if command -v adb >/dev/null 2>&1; then
+        log_info "USING BUITIN ADB"
+        ADB_COMMAND=$(which adb)
+    else
+        log_info "USING CUSTOM"
+        ADB_COMMAND="$ANDROID_HOME/platform-tools/adb"
+    fi
+
     log_info "ANDROID_HOME=<$ANDROID_HOME>"
     log_info "ANDROID_AVD_HOME=<$ANDROID_AVD_HOME>"
     log_info "ANDROID_SDK_TOOLS=<$ANDROID_SDK_TOOLS>"
@@ -260,7 +268,6 @@ setup_emulator() {
 
 start_emulator() {
     log_info "Starting $EMULATOR_NAME"
-    ADB_COMMAND="$ANDROID_HOME/platform-tools/adb"
 
     existing_emulators=$($ADB_COMMAND devices | grep "emulator-" | awk '{print $1}' 2>/dev/null)
 
@@ -328,7 +335,7 @@ start_emulator() {
 
 stop_emulator() {
     log_info "Stopping emulator name <$EMULATOR_NAME>"
-    EMULATOR_PID="$(pidof "$EMULATOR_NAME")"
+    EMULATOR_PID="$(pgrep -f "emulator.*-avd.*$EMULATOR_NAME")"
     if [ -n "$EMULATOR_PID" ]; then
         log_info "Emulator $EMULATOR_NAME pid $EMULATOR_PID found"
         kill "$EMULATOR_PID" >/dev/null 2>&1
