@@ -68,11 +68,11 @@ class AndroidTotalCoverageReport : Plugin<Project> {
                     project.files(
                         project.subprojects
                             .exclude(excludedProjects)
-                            .flatMap { sub ->
+                            .map { sub ->
                                 sub.fileTree(sub.layout.buildDirectory) {
                                     include(*coverageClasses)
                                     exclude(*coverageExcludedClasses)
-                                }
+                                }.filter { !it.hasComposablePreview() }
                             }
                     )
                 }
@@ -113,7 +113,6 @@ class AndroidTotalCoverageReport : Plugin<Project> {
     )
 
     val coverageExcludedClasses = arrayOf(
-        "**/*Preview*.*",
         "**/ksp/generated/**",
         "**/test/common/**/*.*",
         "**/tests/**/*.*"

@@ -101,7 +101,7 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                     subproject.fileTree(subproject.layout.buildDirectory) {
                         include(*coverageClasses)
                         exclude(*coverageExcludedClasses)
-                    }
+                    }.filter { !it.hasComposablePreview() }
                 }
             )
 
@@ -211,7 +211,6 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
     )
 
     val coverageExcludedClasses = arrayOf(
-        "**/*Preview*.*",
         "**/ksp/generated/**",
         "**/tests/**/*.*"
     )

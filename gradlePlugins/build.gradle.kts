@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.ktlint.gradle.plugin.dev)
     implementation(libs.detekt.gradle.plugin.dev)
     implementation(libs.kover.gradle.plugin.dev)
+    implementation(libs.asm)
     implementation(libs.androidx.room.gradle.plugin)
     // todo check why warning on compiler version in the classpath
 //  implementation(libs.ktlint.rules.compose)
