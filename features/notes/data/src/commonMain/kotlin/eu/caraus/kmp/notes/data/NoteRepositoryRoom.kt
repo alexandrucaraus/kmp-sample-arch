@@ -14,7 +14,6 @@ import org.koin.core.annotation.Factory
 class NoteRepositoryRoom(
     private val noteDao: NoteDao,
 ) : NoteRepository {
-
     init {
         testFunction("testing")
     }

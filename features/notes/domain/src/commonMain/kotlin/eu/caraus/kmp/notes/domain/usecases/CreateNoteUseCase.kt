@@ -88,6 +88,6 @@ internal class UpdateNoteUseCase(
     }
 }
 
-fun testFunction(string:String) {
+fun testFunction(string: String) {
     println("Testing coverage")
 }
