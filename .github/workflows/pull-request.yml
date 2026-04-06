@@ -98,16 +98,6 @@ jobs:
                     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
                     script: ./scripts/test-android-coverage-ci.sh
 
-            -   name: Cache build outputs
-                uses: actions/cache@v4
-                with:
-                    path: |
-                        app/build
-                        build
-                    key: ${{ runner.os }}-build-${{ github.sha }}
-                    restore-keys: |
-                        ${{ runner.os }}-build-
-
             -   name: Android Coverage (JaCoCo)
                 id: androidCoverage
                 uses: madrapps/jacoco-report@v1.7.2
