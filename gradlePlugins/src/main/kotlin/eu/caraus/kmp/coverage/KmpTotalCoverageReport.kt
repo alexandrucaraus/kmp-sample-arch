@@ -11,6 +11,9 @@ import org.gradle.kotlin.dsl.project
 class KmpTotalCoverageReport : Plugin<Project> {
 
     private val rootCoverageTaskName = "kmpTotalCoverageReport"
+    private val appCoverageTaskName = "kmpAppCoverageReport"
+    private val featuresCoverageTaskName = "kmpFeaturesCoverageReport"
+    private val otherCoverageTaskName = "kmpOtherCoverageReport"
 
     val excludedProjects = ExcludedModulesFromCoverage.excluded
 
@@ -31,10 +34,45 @@ class KmpTotalCoverageReport : Plugin<Project> {
         project.extensions.configure<KoverProjectExtension>("kover") {
             currentProject {
                 createVariant("custom") {}
+                copyVariant("app", "custom")
+                copyVariant("features", "custom")
+                copyVariant("other", "custom")
+            }
+            reports {
+                variant("app") {
+                    filters {
+                        includes {
+                            packages("eu.caraus.kmp.samplearch")
+                        }
+                    }
+                }
+                variant("features") {
+                    filters {
+                        includes {
+                            packages(featurePackages(project))
+                        }
+                    }
+                }
+                variant("other") {
+                    filters {
+                        excludes {
+                            packages(listOf("eu.caraus.kmp.samplearch") + featurePackages(project))
+                        }
+                    }
+                }
             }
         }
         applySubProjectsPlugin(project)
         configureRootTask(project)
+        configurePerCategoryTasks(project)
+    }
+
+    private fun featurePackages(project: Project): List<String> {
+        return project.subprojects
+            .filter { it.path.matches("^:features(:[^:]+){2}$".toRegex()) }
+            .mapNotNull { it.path.split(":").getOrNull(2) }
+            .distinct()
+            .map { "eu.caraus.kmp.$it" }
     }
 
     private fun configureRootTask(project: Project) {
@@ -42,6 +80,24 @@ class KmpTotalCoverageReport : Plugin<Project> {
             group = "Reporting"
             description = "Kover total coverage report"
             dependsOn("koverHtmlReport", "koverXmlReport")
+        }
+    }
+
+    private fun configurePerCategoryTasks(project: Project) {
+        project.tasks.register(appCoverageTaskName) {
+            group = "Reporting"
+            description = "Kover app modules coverage report"
+            dependsOn("koverXmlReportApp")
+        }
+        project.tasks.register(featuresCoverageTaskName) {
+            group = "Reporting"
+            description = "Kover feature modules coverage report"
+            dependsOn("koverXmlReportFeatures")
+        }
+        project.tasks.register(otherCoverageTaskName) {
+            group = "Reporting"
+            description = "Kover other modules coverage report"
+            dependsOn("koverXmlReportOther")
         }
     }
 

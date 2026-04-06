@@ -108,16 +108,102 @@ jobs:
                     restore-keys: |
                         ${{ runner.os }}-build-
 
-            -   name: Add coverage to PR
-                id: androidCoverage
+            -   name: Android App Coverage
+                id: androidAppCoverage
                 uses: madrapps/jacoco-report@v1.7.2
                 with:
                     paths: |
-                        **/build/reports/jacoco/**/**.xml
+                        app/build/reports/jacoco/**/*.xml
+                        androidApp/build/reports/jacoco/**/*.xml
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
                     min-coverage-overall: 80
                     min-coverage-changed-files: 80
-                    title: '# :lobster: `Android Coverage Report`'
+                    title: '## :lobster: Android Coverage: App'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Android Feature Coverage
+                id: androidFeatureCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        features/**/build/reports/jacoco/**/*.xml
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '## :lobster: Android Coverage: Features'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Android Other Modules Coverage
+                id: androidOtherCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        data/**/build/reports/jacoco/**/*.xml
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '## :lobster: Android Coverage: Other Modules'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Common App Coverage
+                id: commonAppCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        build/reports/kover/reportApp.xml
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '## :crab: Common Coverage: App'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Common Feature Coverage
+                id: commonFeatureCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        build/reports/kover/reportFeatures.xml
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '## :crab: Common Coverage: Features'
+                    update-comment: true
+                    comment-type: 'both'
+                    pass-emoji: ':green_circle:'
+                    fail-emoji: ':red_circle:'
+                    continue-on-error: true
+                    debug-mode: true
+
+            -   name: Common Other Modules Coverage
+                id: commonOtherCoverage
+                uses: madrapps/jacoco-report@v1.7.2
+                with:
+                    paths: |
+                        build/reports/kover/reportOther.xml
+                    token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
+                    min-coverage-overall: 80
+                    min-coverage-changed-files: 80
+                    title: '## :crab: Common Coverage: Other Modules'
                     update-comment: true
                     comment-type: 'both'
                     pass-emoji: ':green_circle:'
@@ -127,8 +213,12 @@ jobs:
 
             -   name: Get the Coverage info
                 run: |
-                    echo "Total coverage ${{ steps.androidCoverage.outputs.coverage-overall }}"
-                    echo "Changed Files coverage ${{ steps.androidCoverage.outputs.coverage-changed-files }}"
+                    echo "Android App - Total: ${{ steps.androidAppCoverage.outputs.coverage-overall }} Changed: ${{ steps.androidAppCoverage.outputs.coverage-changed-files }}"
+                    echo "Android Features - Total: ${{ steps.androidFeatureCoverage.outputs.coverage-overall }} Changed: ${{ steps.androidFeatureCoverage.outputs.coverage-changed-files }}"
+                    echo "Android Other - Total: ${{ steps.androidOtherCoverage.outputs.coverage-overall }} Changed: ${{ steps.androidOtherCoverage.outputs.coverage-changed-files }}"
+                    echo "Common App - Total: ${{ steps.commonAppCoverage.outputs.coverage-overall }} Changed: ${{ steps.commonAppCoverage.outputs.coverage-changed-files }}"
+                    echo "Common Features - Total: ${{ steps.commonFeatureCoverage.outputs.coverage-overall }} Changed: ${{ steps.commonFeatureCoverage.outputs.coverage-changed-files }}"
+                    echo "Common Other - Total: ${{ steps.commonOtherCoverage.outputs.coverage-overall }} Changed: ${{ steps.commonOtherCoverage.outputs.coverage-changed-files }}"
 
             -   name: Upload Coverage Report
                 uses: actions/upload-artifact@v4
@@ -137,6 +227,10 @@ jobs:
                     path: |
                         build/reports/jacoco/
                         build/reports/kover/
+                        app/build/reports/jacoco/
+                        androidApp/build/reports/jacoco/
+                        features/notes/tests/build/reports/jacoco/
+                        data/database/build/reports/jacoco/
                     retention-days: 14
 
             -   name: Upload coverage to Codecov
@@ -144,5 +238,5 @@ jobs:
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     files: |
-                        build/reports/jacoco/**/*.xml
+                        **/build/reports/jacoco/**/*.xml
                         build/reports/kover/**/*.xml

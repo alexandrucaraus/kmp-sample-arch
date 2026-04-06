@@ -10,4 +10,5 @@
 ./gradlew connectedAndroidTest && \
 ./gradlew androidFeatureCoverageReport && \
 ./gradlew androidTotalCoverageReport && \
-./gradlew kmpTotalCoverageReport
+./gradlew kmpTotalCoverageReport && \
+./gradlew kmpAppCoverageReport kmpFeaturesCoverageReport kmpOtherCoverageReport
