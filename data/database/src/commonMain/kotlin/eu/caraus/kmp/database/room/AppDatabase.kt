@@ -21,6 +21,10 @@ val AppDatabase.Companion.DATABASE_FILE_NAME: String get() = "notes_room.db"
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
 
+    init {
+        println("Testing")
+    }
+
     companion object {
         const val LATEST_VERSION = 1
     }

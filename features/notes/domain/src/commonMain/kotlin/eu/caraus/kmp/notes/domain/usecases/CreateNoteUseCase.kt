@@ -20,6 +20,7 @@ class SaveNoteUseCase(
         title: String,
         content: String,
     ) {
+        testFunction("testing")
         if (noteId == Note.NO_ID) {
             if (title.isNotBlank() && content.isNotBlank()) {
                 createNote(
@@ -85,4 +86,8 @@ internal class UpdateNoteUseCase(
             )
         } ?: error("Note not found id=$id")
     }
+}
+
+fun testFunction(string:String) {
+    println("Testing coverage")
 }

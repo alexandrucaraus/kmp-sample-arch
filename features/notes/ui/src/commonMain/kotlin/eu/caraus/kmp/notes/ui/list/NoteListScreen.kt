@@ -53,6 +53,7 @@ fun NoteListScreen(
         )
     },
     content = { padding ->
+        testFunction("testing")
         if (state.notes.isEmpty()) {
             EmptyNoteList()
         } else {

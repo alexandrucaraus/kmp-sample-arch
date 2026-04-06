@@ -1,6 +1,7 @@
 #!/bin/sh
 
-COMMIT_MESSAGE="test ci reports"
+# shellcheck disable=SC3057
+COMMIT_MESSAGE="${1:wip}"
 
 is_project_root="$(stat ./gradlew 2>/dev/null)"
 while [ ! "$is_project_root" ]; do
