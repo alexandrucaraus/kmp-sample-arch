@@ -6,8 +6,6 @@
 
 ./gradlew clean && \
 ./gradlew verifyPaparazzi && \
-./gradlew testAndroid && \
+./gradlew testAndroid kmpTotalCoverageReport && \
 ./gradlew connectedAndroidTest && \
-./gradlew androidFeatureCoverageReport && \
-./gradlew androidTotalCoverageReport && \
-./gradlew kmpTotalCoverageReport
+./gradlew androidFeatureCoverageReport androidTotalCoverageReport

@@ -85,6 +85,11 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                 }
             )
 
+            val testTask = testProject.tasks.findByName("testAndroidHostTest")
+            if (testTask != null) {
+                dependsOn(testTask)
+            }
+
             sourceDirectories.setFrom(
                 targetProjects.map { subproject ->
                     subproject.files(
@@ -101,7 +106,7 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                     subproject.fileTree(subproject.layout.buildDirectory) {
                         include(*coverageClasses)
                         exclude(*coverageExcludedClasses)
-                    }
+                    }.filter { !it.hasComposablePreview() }
                 }
             )
 
@@ -142,6 +147,10 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                             task.name.startsWith("check")
                     }
                 )
+
+//                project.tasks.named(nonFeatureModuleCoverageReport) {
+//                    dependsOn(project.tasks.matching { it.name == "testAndroidHostTest" })
+//                }
 
                 sourceDirectories.setFrom(
                     module.files(
@@ -211,7 +220,6 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
     )
 
     val coverageExcludedClasses = arrayOf(
-        "**/*Preview*.*",
         "**/ksp/generated/**",
         "**/tests/**/*.*"
     )
