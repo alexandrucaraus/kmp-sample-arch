@@ -85,6 +85,10 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                 }
             )
 
+//            project.tasks.named(featureModulesCoverageReport) {
+//                dependsOn(project.tasks.matching { it.name == "testAndroidHostTest" })
+//            }
+
             sourceDirectories.setFrom(
                 targetProjects.map { subproject ->
                     subproject.files(
@@ -142,6 +146,10 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                             task.name.startsWith("check")
                     }
                 )
+
+//                project.tasks.named(nonFeatureModuleCoverageReport) {
+//                    dependsOn(project.tasks.matching { it.name == "testAndroidHostTest" })
+//                }
 
                 sourceDirectories.setFrom(
                     module.files(

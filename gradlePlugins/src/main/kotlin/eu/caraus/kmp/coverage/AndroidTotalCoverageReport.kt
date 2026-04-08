@@ -46,6 +46,13 @@ class AndroidTotalCoverageReport : Plugin<Project> {
                     }
             )
 
+            project.tasks.named("androidFeatureModulesCoverageReport") {
+                val testTask = project.tasks.findByName("testAndroidHostTest")
+                if (testTask != null) {
+                    dependsOn(testTask)
+                }
+            }
+
             sourceDirectories.setFrom(
                 project.provider {
                     project.files(
