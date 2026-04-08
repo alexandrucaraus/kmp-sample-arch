@@ -85,9 +85,10 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
                 }
             )
 
-//            project.tasks.named(featureModulesCoverageReport) {
-//                dependsOn(project.tasks.matching { it.name == "testAndroidHostTest" })
-//            }
+            val testTask = testProject.tasks.findByName("testAndroidHostTest")
+            if (testTask != null) {
+                dependsOn(testTask)
+            }
 
             sourceDirectories.setFrom(
                 targetProjects.map { subproject ->
