@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.caraus.kmp.notes.domain.Note
-import eu.caraus.kmp.notes.domain.usecases.testFunction
 
 private val thinBorder = 0.5.dp
 private val thickBorder = 2.dp
@@ -54,7 +53,6 @@ fun NoteListScreen(
         )
     },
     content = { padding ->
-        testFunction("testing")
         if (state.notes.isEmpty()) {
             EmptyNoteList()
         } else {

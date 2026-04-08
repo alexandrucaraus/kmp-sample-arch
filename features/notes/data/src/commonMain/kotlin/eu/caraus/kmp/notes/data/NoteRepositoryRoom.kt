@@ -3,7 +3,6 @@ package eu.caraus.kmp.notes.data
 import eu.caraus.kmp.notes.domain.Note
 import eu.caraus.kmp.notes.domain.NoteId
 import eu.caraus.kmp.notes.domain.NoteRepository
-import eu.caraus.kmp.notes.domain.usecases.testFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -14,10 +13,6 @@ import org.koin.core.annotation.Factory
 class NoteRepositoryRoom(
     private val noteDao: NoteDao,
 ) : NoteRepository {
-    init {
-        testFunction("testing")
-    }
-
     override suspend fun save(note: Note) = noteDao.insert(note.toDto())
 
     override suspend fun delete(notes: List<Note>) =

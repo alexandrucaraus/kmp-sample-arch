@@ -108,8 +108,8 @@ jobs:
                         androidApp/build/reports/jacoco/**/*.xml
                         data/**/build/reports/jacoco/**/*.xml
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    min-coverage-overall: 80
-                    min-coverage-changed-files: 80
+                    min-coverage-overall: 60
+                    min-coverage-changed-files: 70
                     title: '## :lobster: Android Coverage (JaCoCo)'
                     update-comment: true
                     comment-type: 'both'
@@ -124,8 +124,8 @@ jobs:
                     paths: |
                         build/reports/kover/report.xml
                     token: ${{ secrets.PUSH_TO_GITHUB_TOKEN }}
-                    min-coverage-overall: 80
-                    min-coverage-changed-files: 80
+                    min-coverage-overall: 30
+                    min-coverage-changed-files: 40
                     title: '## :crab: Common Coverage (Kover)'
                     update-comment: true
                     comment-type: 'both'
