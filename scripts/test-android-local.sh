@@ -13,9 +13,11 @@ done
 ./gradlew ktlintCheck detekt
 
 ./scripts/emulator.sh start
+EMULATOR_SERIAL=$(cat /tmp/EMULATOR_SERIAL)
 
 ./gradlew clean
 
+EMULATOR_SERIAL=$(cat /tmp/EMULATOR_SERIAL)
 ./gradlew testAndroid verifyPaparazzi connectedAndroidTest
 
 ./gradlew androidFeatureCoverageReport androidTotalCoverageReport kmpTotalCoverageReport
