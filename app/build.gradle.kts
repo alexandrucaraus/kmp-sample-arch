@@ -53,6 +53,7 @@ kotlin {
             linkerOpts.add("-lsqlite3")
         }
     }
+    jvm()
     sourceSets {
         commonMain {
             dependencies {
@@ -69,11 +70,15 @@ kotlin {
                 implementation(libs.koin.annotations)
             }
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
             implementation(libs.koin.android)
+        }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
         }
         getByName("androidDeviceTest") {
             dependencies {

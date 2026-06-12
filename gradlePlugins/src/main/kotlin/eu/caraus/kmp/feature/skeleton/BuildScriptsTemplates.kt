@@ -35,6 +35,7 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+    jvm()
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
@@ -84,6 +85,7 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+    jvm()
     sourceSets {
         commonMain.dependencies {
             // Common deps
@@ -140,6 +142,7 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+    jvm()
     sourceSets {
         commonMain.dependencies {
             // Common deps

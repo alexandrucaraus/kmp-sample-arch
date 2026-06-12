@@ -35,6 +35,7 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+    jvm()
     sourceSets {
         commonMain.dependencies {
             implementation(projects.features.notes.data)
