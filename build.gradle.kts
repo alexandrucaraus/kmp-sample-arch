@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.multiplatform.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.compose) apply false
+    alias(libs.plugins.compose.hot.reload) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.modulegraph)
     alias(libs.plugins.room) apply false

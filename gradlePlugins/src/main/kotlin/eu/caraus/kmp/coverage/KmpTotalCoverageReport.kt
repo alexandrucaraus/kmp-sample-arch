@@ -150,6 +150,21 @@ class KmpTotalCoverageReport : Plugin<Project> {
                             }
                         }
                     }
+                    // JVM-only KMP modules (e.g. desktopApp) never apply the Android library
+                    // plugin, so the branch above is skipped; the android check must happen
+                    // after evaluation because plugins are applied in declaration order.
+                    afterEvaluate {
+                        if (!pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
+                            apply(plugin = "org.jetbrains.kotlinx.kover")
+                            configure<KoverProjectExtension> {
+                                currentProject {
+                                    createVariant("custom") {
+                                        add("jvm")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

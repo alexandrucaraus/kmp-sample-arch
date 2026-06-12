@@ -221,7 +221,10 @@ class AndroidFeatureCoverageReport : Plugin<Project> {
 
     val coverageExcludedClasses = arrayOf(
         "**/ksp/generated/**",
-        "**/tests/**/*.*"
+        "**/tests/**/*.*",
+        // Desktop/JVM target output duplicates the Android classes and breaks JaCoCo
+        // ("Can't add different class with same name"); this is an Android-only report.
+        "**/classes/kotlin/jvm/**"
     )
 
     val coverageOutput = arrayOf(

@@ -12,6 +12,11 @@ pluginManagement {
     }
 }
 
+// Provisions the JetBrains Runtime required by Compose Hot Reload
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 dependencyResolutionManagement {
     repositories {
         includeBuild("gradlePlugins")
@@ -27,6 +32,7 @@ rootProject.name = "KMP_Sample_Arch"
 include(":test-common")
 
 include(":androidApp")
+include(":desktopApp")
 include(":app")
 
 // App common db
