@@ -1,11 +1,52 @@
-*.iml
-.gradle
-.idea
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Keep the Gradle wrapper jar tracked despite *.jar above
+!gradle/wrapper/gradle-wrapper.jar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
+/.kotlin
+
+.idea/*
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/runConfigurations/
+
+.gradle/*
+**/.gradle/*
 .DS_Store
-build
+**/build/*
 captures
 .externalNativeBuild
 .cxx
 local.properties
 xcuserdata
-/.kotlin/
+/.idea/inspectionProfiles/Project_Default.xml
+/gradlePlugins/.kotlin/sessions/*
+
+# Cargo/Rust build output and temp artifacts (features/audio-engine/domain/rust)
+**/target/
+**/*.rs.bk
+**/*.pdb

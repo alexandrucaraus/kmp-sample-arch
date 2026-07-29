@@ -60,7 +60,7 @@ kotlin {
                 implementation(projects.features.notes.domain)
                 implementation(projects.features.notes.data)
                 implementation(projects.features.notes.ui)
-                implementation(projects.data.database)
+                implementation(projects.infra.database)
 
                 implementation(libs.compose.material3)
                 implementation(libs.compose.nav3)
@@ -82,7 +82,7 @@ kotlin {
         }
         getByName("androidDeviceTest") {
             dependencies {
-                implementation(projects.testCommon)
+                implementation(projects.common.test)
                 implementation(libs.koin.test)
                 implementation(libs.koin.core.viewmodel)
                 implementation(libs.androidx.test.compose.manifest)

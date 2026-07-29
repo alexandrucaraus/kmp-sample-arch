@@ -29,14 +29,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "KMP_Sample_Arch"
 
-include(":test-common")
+include(":common:test")
 
 include(":androidApp")
 include(":desktopApp")
 include(":app")
 
 // App common db
-include(":data:database")
+include(":infra:database")
 
 // Feature notes
 include(":features:notes:domain")

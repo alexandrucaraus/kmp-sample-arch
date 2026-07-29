@@ -46,11 +46,11 @@ kotlin {
     iosSimulatorArm64()
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.testCommon)
+            implementation(projects.common.test)
             implementation(projects.features.notes.domain)
             implementation(projects.features.notes.ui)
             implementation(projects.features.notes.data)
-            implementation(projects.data.database)
+            implementation(projects.infra.database)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)

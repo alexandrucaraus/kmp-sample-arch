@@ -39,7 +39,7 @@ class KMPRoomKsp : Plugin<Project> {
         }
 
         project.extensions.configure<RoomExtension> {
-            val schemaDir = File("${project.rootDir}/data/database/schema")
+            val schemaDir = File("${project.rootDir}/infra/database/schema")
             require(schemaDir.exists() && schemaDir.isDirectory) {
                 "Room schema directory not set or path incorrect! check <kmp.room.ksp> gradlePlugins"
             }
